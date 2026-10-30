@@ -16,7 +16,7 @@ services:
   neo4j:
     image: neo4j:latest
     environment:
-      NEO4J_AUTH: ${NEO4J_AUTH}
+      NEO4J_AUTH: ${NEO4J_AUTH:-none}
     ports:
       - "7474:7474"
       - "7687:7687"
@@ -29,6 +29,10 @@ services:
       dockerfile: Dockerfile
     env_file:
       - .env
+    environment:
+      MONGO_URI: ${MONGO_URI:-mongodb://mongodb:27017}
+      NEO4J_URI: ${NEO4J_URI:-bolt://neo4j:7687}
+      REDIS_HOST: ${REDIS_HOST:-redis}
     ports:
       - "8501:8501"
     depends_on:

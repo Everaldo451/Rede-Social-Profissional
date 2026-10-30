@@ -1,4 +1,0 @@
-streamlit
-pymongo
-redis
-neo4j-driver

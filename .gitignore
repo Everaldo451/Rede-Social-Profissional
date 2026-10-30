@@ -2,6 +2,7 @@ __pycache__/
 *.py[cod]
 *.pic
 venv/
+.venv/
 .env
 .env.*
 !.env.example
