@@ -10,10 +10,17 @@ desenvolvimento/testes:
 uv sync
 ```
 
-Para executar a aplicação ou os testes dentro do ambiente:
+Para iniciar a aplicação em containers, execute:
 
 ```powershell
 docker compose -f docker/docker-compose.yaml up --build
+```
+
+O container inicia o Streamlit automaticamente. Acesse `http://localhost:8501`.
+
+Para executar a aplicação ou os testes localmente, use:
+
+```powershell
 uv run streamlit run src/app.py
 uv run pytest
 ```
