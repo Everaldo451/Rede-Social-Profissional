@@ -37,11 +37,16 @@ docker compose -f docker/docker-compose.test.yaml up -d --build app
 ```
 
 O container `app` executa o Streamlit e também contém `pytest` e Playwright.
-Rode os testes unitários, de integração e de interface dentro desse mesmo
-container:
+Para acessar o container interativamente:
 
 ```powershell
-docker compose -f docker/docker-compose.test.yaml exec app uv run pytest
+docker compose -f docker/docker-compose.test.yaml exec app sh
+```
+
+Já dentro do container, execute:
+
+```sh
+uv run pytest
 ```
 
 Depois dos testes, encerre o ambiente:
