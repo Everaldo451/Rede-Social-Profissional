@@ -2,7 +2,7 @@ FROM python:latest
 
 WORKDIR /app
 
-ENV PYTHONPATH=/app
+ENV PYTHONPATH=/app/src
 ENV PATH="/app/.venv/bin:$PATH"
 
 RUN pip install --no-cache-dir uv==0.13.6
@@ -14,4 +14,4 @@ COPY . .
 
 EXPOSE 8501
 
-CMD ["streamlit", "run", "app.py", "--server.address=0.0.0.0"]
+CMD ["streamlit", "run", "src/app.py", "--server.address=0.0.0.0"]

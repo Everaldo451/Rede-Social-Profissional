@@ -13,7 +13,8 @@ uv sync
 Para executar a aplicação ou os testes dentro do ambiente:
 
 ```powershell
-uv run streamlit run app.py
+docker compose -f docker/docker-compose.yaml up --build
+uv run streamlit run src/app.py
 uv run pytest
 ```
 
@@ -21,3 +22,23 @@ Adicione dependências da aplicação com `uv add <pacote>` e dependências de
 desenvolvimento/testes com `uv add --group dev <pacote>`. Mantenha `uv.lock`
 versionado para reproduzir as mesmas versões resolvidas. A imagem Docker instala
 somente as dependências da aplicação, sem o grupo `dev`.
+
+Para subir a aplicação com dependências de teste e bancos isolados:
+
+```powershell
+docker compose -f docker/docker-compose.test.yaml up -d --build app
+```
+
+O container `app` executa o Streamlit e também contém `pytest` e Playwright.
+Rode os testes unitários, de integração e de interface dentro desse mesmo
+container:
+
+```powershell
+docker compose -f docker/docker-compose.test.yaml exec app uv run pytest
+```
+
+Depois dos testes, encerre o ambiente:
+
+```powershell
+docker compose -f docker/docker-compose.test.yaml down
+```

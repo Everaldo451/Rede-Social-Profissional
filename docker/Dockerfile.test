@@ -1,0 +1,16 @@
+FROM python:latest
+
+WORKDIR /app
+
+ENV PYTHONPATH=/app/src
+ENV PATH="/app/.venv/bin:$PATH"
+
+RUN pip install --no-cache-dir uv==0.13.6
+
+COPY pyproject.toml uv.lock ./
+RUN uv sync --locked --group dev --no-install-project
+RUN uv run playwright install --with-deps chromium
+
+COPY . .
+
+CMD ["uv", "run", "streamlit", "run", "src/app.py", "--server.address=0.0.0.0"]

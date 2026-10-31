@@ -5,3 +5,6 @@ venv/
 .venv/
 .env*
 tests/
+docker/
+docker-compose*.yaml
+docker-compose*.yml
