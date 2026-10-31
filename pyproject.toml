@@ -5,6 +5,7 @@ requires-python = ">=3.10"
 dependencies = [
     "neo4j-driver",
     "pymongo",
+    "pydantic",
     "python-dotenv>=1.2.4",
     "redis",
     "streamlit",
