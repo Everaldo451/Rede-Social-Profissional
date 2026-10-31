@@ -13,4 +13,4 @@ RUN uv run playwright install --with-deps chromium
 
 COPY . .
 
-CMD ["uv", "run", "streamlit", "run", "src/app.py", "--server.address=0.0.0.0"]
+CMD ["streamlit", "run", "src/app.py", "--server.address=0.0.0.0"]
