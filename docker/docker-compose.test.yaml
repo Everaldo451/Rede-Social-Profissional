@@ -2,11 +2,11 @@ name: rede-social-test
 
 services:
   mongodb:
-    image: mongo:latest
+    image: mongo:4.4.29
     ports:
       - "27018:27017"
     healthcheck:
-      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      test: ["CMD", "mongo", "--quiet", "--eval", "db.adminCommand('ping').ok"]
       interval: 5s
       timeout: 5s
       retries: 20
