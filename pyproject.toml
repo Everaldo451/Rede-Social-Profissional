@@ -15,6 +15,7 @@ dependencies = [
 [dependency-groups]
 dev = [
     "pytest",
+    "pytest-mock",
     "playwright",
     "pytest-playwright",
 ]
