@@ -3,5 +3,6 @@ from pydantic import BaseModel
 
 
 class BaseResponse(BaseModel):
-    data: dict[str, Any]
-    status: int
+    status: bool
+    data: Any = None
+    message: str | None = None
