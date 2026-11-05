@@ -5,10 +5,7 @@ class SessionRepository:
     def get_by_id(self, session_id):
         pass
 
-    def get_current_user(self):
-        pass
-
-    def get_all_sessions_for_current_user(self):
+    def get_all_session_for_user(self, user_id):
         pass
 
     def update(self, session_id, data):
