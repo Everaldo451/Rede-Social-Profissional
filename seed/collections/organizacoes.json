@@ -1,0 +1,205 @@
+[
+    {
+        "site": "https://example.com",
+        "status_verificacao": "pendente",
+        "setor": "Tecnologia",
+        "criado_em": {
+            "$date": "2026-10-27T12:00:00Z"
+        },
+        "criado_por_usuario_id": {
+            "$oid": "671a2b3c4d5e6f7890123456"
+        },
+        "cidade": "João Pessoa",
+        "nome_normalizado": "tech solutions",
+        "_id": {
+            "$oid": "671a2b3c4d5e6f7890124201"
+        },
+        "estado": "PB",
+        "nome": "Tech Solutions",
+        "tipos": [
+            "empresa"
+        ]
+    },
+    {
+        "sigla": "UFPB",
+        "site": "https://www.ufpb.br",
+        "status_verificacao": "verificada",
+        "criado_em": {
+            "$date": "2026-10-27T12:00:00Z"
+        },
+        "criado_por_usuario_id": {
+            "$oid": "671a2b3c4d5e6f7890123456"
+        },
+        "cidade": "João Pessoa",
+        "nome_normalizado": "universidade federal da paraíba",
+        "_id": {
+            "$oid": "671a2b3c4d5e6f7890124202"
+        },
+        "estado": "PB",
+        "nome": "Universidade Federal da Paraíba",
+        "tipos": [
+            "instituicao_ensino"
+        ]
+    },
+    {
+        "site": "https://aws.amazon.com",
+        "status_verificacao": "verificada",
+        "criado_em": {
+            "$date": "2026-10-27T12:00:00Z"
+        },
+        "criado_por_usuario_id": {
+            "$oid": "671a2b3c4d5e6f7890123456"
+        },
+        "cidade": null,
+        "nome_normalizado": "amazon web services",
+        "_id": {
+            "$oid": "671a2b3c4d5e6f7890124203"
+        },
+        "estado": null,
+        "nome": "Amazon Web Services",
+        "tipos": [
+            "empresa",
+            "emissor_certificacao"
+        ]
+    },
+    {
+        "site": "https://example.com/organizacao-4",
+        "status_verificacao": "pendente",
+        "criado_em": {
+            "$date": "2026-10-27T12:00:00Z"
+        },
+        "criado_por_usuario_id": {
+            "$oid": "671a2b3c4d5e6f7890123456"
+        },
+        "cidade": "João Pessoa",
+        "nome_normalizado": "inova digital",
+        "_id": {
+            "$oid": "a30000000000000000000004"
+        },
+        "estado": "PB",
+        "nome": "Inova Digital",
+        "tipos": [
+            "empresa"
+        ]
+    },
+    {
+        "site": "https://example.com/organizacao-5",
+        "status_verificacao": "pendente",
+        "criado_em": {
+            "$date": "2026-10-27T12:00:00Z"
+        },
+        "criado_por_usuario_id": {
+            "$oid": "671a2b3c4d5e6f7890123456"
+        },
+        "cidade": "João Pessoa",
+        "nome_normalizado": "instituto de tecnologia",
+        "_id": {
+            "$oid": "a30000000000000000000005"
+        },
+        "estado": "PB",
+        "nome": "Instituto de Tecnologia",
+        "tipos": [
+            "empresa"
+        ]
+    },
+    {
+        "site": "https://example.com/organizacao-6",
+        "status_verificacao": "pendente",
+        "criado_em": {
+            "$date": "2026-10-27T12:00:00Z"
+        },
+        "criado_por_usuario_id": {
+            "$oid": "671a2b3c4d5e6f7890123456"
+        },
+        "cidade": "João Pessoa",
+        "nome_normalizado": "cloud norte",
+        "_id": {
+            "$oid": "a30000000000000000000006"
+        },
+        "estado": "PB",
+        "nome": "Cloud Norte",
+        "tipos": [
+            "empresa"
+        ]
+    },
+    {
+        "site": "https://example.com/organizacao-7",
+        "status_verificacao": "pendente",
+        "criado_em": {
+            "$date": "2026-10-27T12:00:00Z"
+        },
+        "criado_por_usuario_id": {
+            "$oid": "671a2b3c4d5e6f7890123456"
+        },
+        "cidade": "João Pessoa",
+        "nome_normalizado": "dev nordeste",
+        "_id": {
+            "$oid": "a30000000000000000000007"
+        },
+        "estado": "PB",
+        "nome": "Dev Nordeste",
+        "tipos": [
+            "empresa"
+        ]
+    },
+    {
+        "site": "https://example.com/organizacao-8",
+        "status_verificacao": "pendente",
+        "criado_em": {
+            "$date": "2026-10-27T12:00:00Z"
+        },
+        "criado_por_usuario_id": {
+            "$oid": "671a2b3c4d5e6f7890123456"
+        },
+        "cidade": "João Pessoa",
+        "nome_normalizado": "conecta sistemas",
+        "_id": {
+            "$oid": "a30000000000000000000008"
+        },
+        "estado": "PB",
+        "nome": "Conecta Sistemas",
+        "tipos": [
+            "empresa"
+        ]
+    },
+    {
+        "site": "https://example.com/organizacao-9",
+        "status_verificacao": "pendente",
+        "criado_em": {
+            "$date": "2026-10-27T12:00:00Z"
+        },
+        "criado_por_usuario_id": {
+            "$oid": "671a2b3c4d5e6f7890123456"
+        },
+        "cidade": "João Pessoa",
+        "nome_normalizado": "universidade estadual da paraíba",
+        "_id": {
+            "$oid": "a30000000000000000000009"
+        },
+        "estado": "PB",
+        "nome": "Universidade Estadual da Paraíba",
+        "tipos": [
+            "instituicao_ensino"
+        ]
+    },
+    {
+        "site": "https://example.com/organizacao-10",
+        "status_verificacao": "pendente",
+        "criado_em": {
+            "$date": "2026-10-27T12:00:00Z"
+        },
+        "criado_por_usuario_id": {
+            "$oid": "671a2b3c4d5e6f7890123456"
+        },
+        "cidade": "João Pessoa",
+        "nome_normalizado": "data labs",
+        "_id": {
+            "$oid": "a30000000000000000000010"
+        },
+        "estado": "PB",
+        "nome": "Data Labs",
+        "tipos": [
+            "empresa"
+        ]
+    }
+]

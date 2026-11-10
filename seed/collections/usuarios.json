@@ -1,0 +1,3503 @@
+[
+    {
+        "localizacao": "João Pessoa, PB",
+        "criado_em": {
+            "$date": "2026-10-01T10:00:00Z"
+        },
+        "habilidades": [
+            {
+                "habilidade_id": {
+                    "$oid": "671a2b3c4d5e6f7890123459"
+                },
+                "nivel": "intermediário",
+                "anos_experiencia": 2
+            },
+            {
+                "habilidade_id": {
+                    "$oid": "671a2b3c4d5e6f7890123460"
+                },
+                "nivel": "avançado",
+                "anos_experiencia": 4
+            }
+        ],
+        "headline": "Desenvolvedora Backend",
+        "formacao": [
+            {
+                "curso": "Ciência da Computação",
+                "grau": "Bacharelado",
+                "instituicao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124202"
+                },
+                "ano_conclusao": null,
+                "ano_inicio": 2022
+            }
+        ],
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "experiencias": [
+            {
+                "data_inicio": {
+                    "$date": "2024-03-01T00:00:00Z"
+                },
+                "data_fim": null,
+                "descricao": "Desenvolvimento de APIs REST",
+                "organizacao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124201"
+                },
+                "atual": true,
+                "cargo": "Desenvolvedora Backend"
+            }
+        ],
+        "aceita_mentoria": true,
+        "nivel_carreira": "Pleno",
+        "senha": "RedeSocial@2026",
+        "nome": "Ana Silva",
+        "certificacoes": [
+            {
+                "emissor_id": {
+                    "$oid": "671a2b3c4d5e6f7890124203"
+                },
+                "url": "https://example.com/certificado",
+                "nome": "AWS Cloud Practitioner",
+                "data_emissao": {
+                    "$date": "2025-06-15T00:00:00Z"
+                }
+            }
+        ],
+        "_id": {
+            "$oid": "671a2b3c4d5e6f7890123456"
+        },
+        "email": "ana@example.com"
+    },
+    {
+        "localizacao": "Recife, PE",
+        "criado_em": {
+            "$date": "2026-10-02T10:00:00Z"
+        },
+        "habilidades": [],
+        "headline": "Desenvolvedor de Software",
+        "formacao": [],
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "experiencias": [],
+        "aceita_mentoria": false,
+        "nivel_carreira": "Júnior",
+        "senha": "RedeSocial@2026",
+        "nome": "Bruno Souza",
+        "certificacoes": [],
+        "_id": {
+            "$oid": "671a2b3c4d5e6f7890123457"
+        },
+        "email": "bruno@example.com"
+    },
+    {
+        "localizacao": "Natal, RN",
+        "criado_em": {
+            "$date": "2026-10-03T10:00:00Z"
+        },
+        "habilidades": [
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000003"
+                },
+                "nivel": "avançado",
+                "anos_experiencia": 3
+            },
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000004"
+                },
+                "nivel": "iniciante",
+                "anos_experiencia": 4
+            },
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000005"
+                },
+                "nivel": "intermediário",
+                "anos_experiencia": 5
+            }
+        ],
+        "headline": "Desenvolvedora Backend",
+        "formacao": [
+            {
+                "curso": "Ciência da Computação",
+                "grau": "Bacharelado",
+                "instituicao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124202"
+                },
+                "ano_conclusao": null,
+                "ano_inicio": 2020
+            }
+        ],
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "experiencias": [
+            {
+                "data_inicio": {
+                    "$date": "2022-03-01T00:00:00Z"
+                },
+                "data_fim": null,
+                "descricao": "Atuação profissional de Carla Almeida.",
+                "organizacao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124203"
+                },
+                "atual": true,
+                "cargo": "Desenvolvedora Backend"
+            }
+        ],
+        "aceita_mentoria": true,
+        "nivel_carreira": "Júnior",
+        "senha": "RedeSocial@2026",
+        "nome": "Carla Almeida",
+        "certificacoes": [
+            {
+                "emissor_id": {
+                    "$oid": "671a2b3c4d5e6f7890124203"
+                },
+                "url": "https://example.com/certificado",
+                "nome": "AWS Cloud Practitioner",
+                "data_emissao": {
+                    "$date": "2025-06-15T00:00:00Z"
+                }
+            }
+        ],
+        "_id": {
+            "$oid": "a10000000000000000000003"
+        },
+        "email": "carla.almeida@example.com"
+    },
+    {
+        "localizacao": "Fortaleza, CE",
+        "criado_em": {
+            "$date": "2026-10-04T10:00:00Z"
+        },
+        "habilidades": [
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000004"
+                },
+                "nivel": "iniciante",
+                "anos_experiencia": 4
+            }
+        ],
+        "headline": "Desenvolvedor Full Stack",
+        "formacao": [
+            {
+                "curso": "Ciência da Computação",
+                "grau": "Bacharelado",
+                "instituicao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124202"
+                },
+                "ano_conclusao": null,
+                "ano_inicio": 2021
+            }
+        ],
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "experiencias": [
+            {
+                "data_inicio": {
+                    "$date": "2022-03-01T00:00:00Z"
+                },
+                "data_fim": null,
+                "descricao": "Atuação profissional de Daniel Almeida.",
+                "organizacao_id": {
+                    "$oid": "a30000000000000000000004"
+                },
+                "atual": true,
+                "cargo": "Desenvolvedor Full Stack"
+            }
+        ],
+        "aceita_mentoria": false,
+        "nivel_carreira": "Pleno",
+        "senha": "RedeSocial@2026",
+        "nome": "Daniel Almeida",
+        "certificacoes": [
+            {
+                "emissor_id": {
+                    "$oid": "671a2b3c4d5e6f7890124203"
+                },
+                "url": "https://example.com/certificado",
+                "nome": "AWS Cloud Practitioner",
+                "data_emissao": {
+                    "$date": "2025-06-15T00:00:00Z"
+                }
+            }
+        ],
+        "_id": {
+            "$oid": "a10000000000000000000004"
+        },
+        "email": "daniel.almeida@example.com"
+    },
+    {
+        "localizacao": "São Paulo, SP",
+        "criado_em": {
+            "$date": "2026-10-05T10:00:00Z"
+        },
+        "habilidades": [
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000005"
+                },
+                "nivel": "intermediário",
+                "anos_experiencia": 5
+            },
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000006"
+                },
+                "nivel": "avançado",
+                "anos_experiencia": 6
+            }
+        ],
+        "headline": "Analista de Dados",
+        "formacao": [
+            {
+                "curso": "Ciência da Computação",
+                "grau": "Bacharelado",
+                "instituicao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124202"
+                },
+                "ano_conclusao": null,
+                "ano_inicio": 2022
+            }
+        ],
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "experiencias": [
+            {
+                "data_inicio": {
+                    "$date": "2022-03-01T00:00:00Z"
+                },
+                "data_fim": null,
+                "descricao": "Atuação profissional de Eduarda Almeida.",
+                "organizacao_id": {
+                    "$oid": "a30000000000000000000005"
+                },
+                "atual": true,
+                "cargo": "Analista de Dados"
+            }
+        ],
+        "aceita_mentoria": true,
+        "nivel_carreira": "Sênior",
+        "senha": "RedeSocial@2026",
+        "nome": "Eduarda Almeida",
+        "certificacoes": [
+            {
+                "emissor_id": {
+                    "$oid": "671a2b3c4d5e6f7890124203"
+                },
+                "url": "https://example.com/certificado",
+                "nome": "AWS Cloud Practitioner",
+                "data_emissao": {
+                    "$date": "2025-06-15T00:00:00Z"
+                }
+            }
+        ],
+        "_id": {
+            "$oid": "a10000000000000000000005"
+        },
+        "email": "eduarda.almeida@example.com"
+    },
+    {
+        "localizacao": "João Pessoa, PB",
+        "criado_em": {
+            "$date": "2026-10-06T10:00:00Z"
+        },
+        "habilidades": [
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000006"
+                },
+                "nivel": "avançado",
+                "anos_experiencia": 6
+            },
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000007"
+                },
+                "nivel": "iniciante",
+                "anos_experiencia": 7
+            },
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000008"
+                },
+                "nivel": "intermediário",
+                "anos_experiencia": 8
+            }
+        ],
+        "headline": "Engenheira de Software",
+        "formacao": [
+            {
+                "curso": "Ciência da Computação",
+                "grau": "Bacharelado",
+                "instituicao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124202"
+                },
+                "ano_conclusao": null,
+                "ano_inicio": 2023
+            }
+        ],
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "experiencias": [
+            {
+                "data_inicio": {
+                    "$date": "2022-03-01T00:00:00Z"
+                },
+                "data_fim": null,
+                "descricao": "Atuação profissional de Felipe Almeida.",
+                "organizacao_id": {
+                    "$oid": "a30000000000000000000006"
+                },
+                "atual": true,
+                "cargo": "Engenheira de Software"
+            }
+        ],
+        "aceita_mentoria": false,
+        "nivel_carreira": "Júnior",
+        "senha": "RedeSocial@2026",
+        "nome": "Felipe Almeida",
+        "certificacoes": [
+            {
+                "emissor_id": {
+                    "$oid": "671a2b3c4d5e6f7890124203"
+                },
+                "url": "https://example.com/certificado",
+                "nome": "AWS Cloud Practitioner",
+                "data_emissao": {
+                    "$date": "2025-06-15T00:00:00Z"
+                }
+            }
+        ],
+        "_id": {
+            "$oid": "a10000000000000000000006"
+        },
+        "email": "felipe.almeida@example.com"
+    },
+    {
+        "localizacao": "Recife, PE",
+        "criado_em": {
+            "$date": "2026-10-07T10:00:00Z"
+        },
+        "habilidades": [
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000007"
+                },
+                "nivel": "iniciante",
+                "anos_experiencia": 7
+            }
+        ],
+        "headline": "Designer de Produto",
+        "formacao": [
+            {
+                "curso": "Ciência da Computação",
+                "grau": "Bacharelado",
+                "instituicao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124202"
+                },
+                "ano_conclusao": null,
+                "ano_inicio": 2018
+            }
+        ],
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "experiencias": [
+            {
+                "data_inicio": {
+                    "$date": "2022-03-01T00:00:00Z"
+                },
+                "data_fim": null,
+                "descricao": "Atuação profissional de Gabriela Almeida.",
+                "organizacao_id": {
+                    "$oid": "a30000000000000000000007"
+                },
+                "atual": true,
+                "cargo": "Designer de Produto"
+            }
+        ],
+        "aceita_mentoria": true,
+        "nivel_carreira": "Pleno",
+        "senha": "RedeSocial@2026",
+        "nome": "Gabriela Almeida",
+        "certificacoes": [
+            {
+                "emissor_id": {
+                    "$oid": "671a2b3c4d5e6f7890124203"
+                },
+                "url": "https://example.com/certificado",
+                "nome": "AWS Cloud Practitioner",
+                "data_emissao": {
+                    "$date": "2025-06-15T00:00:00Z"
+                }
+            }
+        ],
+        "_id": {
+            "$oid": "a10000000000000000000007"
+        },
+        "email": "gabriela.almeida@example.com"
+    },
+    {
+        "localizacao": "Natal, RN",
+        "criado_em": {
+            "$date": "2026-10-08T10:00:00Z"
+        },
+        "habilidades": [
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000008"
+                },
+                "nivel": "intermediário",
+                "anos_experiencia": 8
+            },
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000009"
+                },
+                "nivel": "avançado",
+                "anos_experiencia": 1
+            }
+        ],
+        "headline": "Desenvolvedora Backend",
+        "formacao": [
+            {
+                "curso": "Ciência da Computação",
+                "grau": "Bacharelado",
+                "instituicao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124202"
+                },
+                "ano_conclusao": null,
+                "ano_inicio": 2019
+            }
+        ],
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "experiencias": [
+            {
+                "data_inicio": {
+                    "$date": "2022-03-01T00:00:00Z"
+                },
+                "data_fim": null,
+                "descricao": "Atuação profissional de Henrique Almeida.",
+                "organizacao_id": {
+                    "$oid": "a30000000000000000000008"
+                },
+                "atual": true,
+                "cargo": "Desenvolvedora Backend"
+            }
+        ],
+        "aceita_mentoria": false,
+        "nivel_carreira": "Sênior",
+        "senha": "RedeSocial@2026",
+        "nome": "Henrique Almeida",
+        "certificacoes": [
+            {
+                "emissor_id": {
+                    "$oid": "671a2b3c4d5e6f7890124203"
+                },
+                "url": "https://example.com/certificado",
+                "nome": "AWS Cloud Practitioner",
+                "data_emissao": {
+                    "$date": "2025-06-15T00:00:00Z"
+                }
+            }
+        ],
+        "_id": {
+            "$oid": "a10000000000000000000008"
+        },
+        "email": "henrique.almeida@example.com"
+    },
+    {
+        "localizacao": "Fortaleza, CE",
+        "criado_em": {
+            "$date": "2026-10-09T10:00:00Z"
+        },
+        "habilidades": [
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000009"
+                },
+                "nivel": "avançado",
+                "anos_experiencia": 1
+            },
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000010"
+                },
+                "nivel": "iniciante",
+                "anos_experiencia": 2
+            },
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000011"
+                },
+                "nivel": "intermediário",
+                "anos_experiencia": 3
+            }
+        ],
+        "headline": "Desenvolvedor Full Stack",
+        "formacao": [
+            {
+                "curso": "Ciência da Computação",
+                "grau": "Bacharelado",
+                "instituicao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124202"
+                },
+                "ano_conclusao": null,
+                "ano_inicio": 2020
+            }
+        ],
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "experiencias": [
+            {
+                "data_inicio": {
+                    "$date": "2022-03-01T00:00:00Z"
+                },
+                "data_fim": null,
+                "descricao": "Atuação profissional de Isabela Almeida.",
+                "organizacao_id": {
+                    "$oid": "a30000000000000000000009"
+                },
+                "atual": true,
+                "cargo": "Desenvolvedor Full Stack"
+            }
+        ],
+        "aceita_mentoria": true,
+        "nivel_carreira": "Júnior",
+        "senha": "RedeSocial@2026",
+        "nome": "Isabela Almeida",
+        "certificacoes": [
+            {
+                "emissor_id": {
+                    "$oid": "671a2b3c4d5e6f7890124203"
+                },
+                "url": "https://example.com/certificado",
+                "nome": "AWS Cloud Practitioner",
+                "data_emissao": {
+                    "$date": "2025-06-15T00:00:00Z"
+                }
+            }
+        ],
+        "_id": {
+            "$oid": "a10000000000000000000009"
+        },
+        "email": "isabela.almeida@example.com"
+    },
+    {
+        "localizacao": "São Paulo, SP",
+        "criado_em": {
+            "$date": "2026-10-10T10:00:00Z"
+        },
+        "habilidades": [
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000010"
+                },
+                "nivel": "iniciante",
+                "anos_experiencia": 2
+            }
+        ],
+        "headline": "Analista de Dados",
+        "formacao": [
+            {
+                "curso": "Ciência da Computação",
+                "grau": "Bacharelado",
+                "instituicao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124202"
+                },
+                "ano_conclusao": null,
+                "ano_inicio": 2021
+            }
+        ],
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "experiencias": [
+            {
+                "data_inicio": {
+                    "$date": "2022-03-01T00:00:00Z"
+                },
+                "data_fim": null,
+                "descricao": "Atuação profissional de João Almeida.",
+                "organizacao_id": {
+                    "$oid": "a30000000000000000000010"
+                },
+                "atual": true,
+                "cargo": "Analista de Dados"
+            }
+        ],
+        "aceita_mentoria": false,
+        "nivel_carreira": "Pleno",
+        "senha": "RedeSocial@2026",
+        "nome": "João Almeida",
+        "certificacoes": [
+            {
+                "emissor_id": {
+                    "$oid": "671a2b3c4d5e6f7890124203"
+                },
+                "url": "https://example.com/certificado",
+                "nome": "AWS Cloud Practitioner",
+                "data_emissao": {
+                    "$date": "2025-06-15T00:00:00Z"
+                }
+            }
+        ],
+        "_id": {
+            "$oid": "a10000000000000000000010"
+        },
+        "email": "jo.o.almeida@example.com"
+    },
+    {
+        "localizacao": "João Pessoa, PB",
+        "criado_em": {
+            "$date": "2026-10-11T10:00:00Z"
+        },
+        "habilidades": [
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000011"
+                },
+                "nivel": "intermediário",
+                "anos_experiencia": 3
+            },
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000012"
+                },
+                "nivel": "avançado",
+                "anos_experiencia": 4
+            }
+        ],
+        "headline": "Engenheira de Software",
+        "formacao": [
+            {
+                "curso": "Ciência da Computação",
+                "grau": "Bacharelado",
+                "instituicao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124202"
+                },
+                "ano_conclusao": null,
+                "ano_inicio": 2022
+            }
+        ],
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "experiencias": [
+            {
+                "data_inicio": {
+                    "$date": "2022-03-01T00:00:00Z"
+                },
+                "data_fim": null,
+                "descricao": "Atuação profissional de Larissa Almeida.",
+                "organizacao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124201"
+                },
+                "atual": true,
+                "cargo": "Engenheira de Software"
+            }
+        ],
+        "aceita_mentoria": true,
+        "nivel_carreira": "Sênior",
+        "senha": "RedeSocial@2026",
+        "nome": "Larissa Almeida",
+        "certificacoes": [
+            {
+                "emissor_id": {
+                    "$oid": "671a2b3c4d5e6f7890124203"
+                },
+                "url": "https://example.com/certificado",
+                "nome": "AWS Cloud Practitioner",
+                "data_emissao": {
+                    "$date": "2025-06-15T00:00:00Z"
+                }
+            }
+        ],
+        "_id": {
+            "$oid": "a10000000000000000000011"
+        },
+        "email": "larissa.almeida@example.com"
+    },
+    {
+        "localizacao": "Recife, PE",
+        "criado_em": {
+            "$date": "2026-10-12T10:00:00Z"
+        },
+        "habilidades": [
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000012"
+                },
+                "nivel": "avançado",
+                "anos_experiencia": 4
+            },
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000013"
+                },
+                "nivel": "iniciante",
+                "anos_experiencia": 5
+            },
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000014"
+                },
+                "nivel": "intermediário",
+                "anos_experiencia": 6
+            }
+        ],
+        "headline": "Designer de Produto",
+        "formacao": [
+            {
+                "curso": "Ciência da Computação",
+                "grau": "Bacharelado",
+                "instituicao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124202"
+                },
+                "ano_conclusao": null,
+                "ano_inicio": 2023
+            }
+        ],
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "experiencias": [
+            {
+                "data_inicio": {
+                    "$date": "2022-03-01T00:00:00Z"
+                },
+                "data_fim": null,
+                "descricao": "Atuação profissional de Marcos Almeida.",
+                "organizacao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124202"
+                },
+                "atual": true,
+                "cargo": "Designer de Produto"
+            }
+        ],
+        "aceita_mentoria": false,
+        "nivel_carreira": "Júnior",
+        "senha": "RedeSocial@2026",
+        "nome": "Marcos Almeida",
+        "certificacoes": [
+            {
+                "emissor_id": {
+                    "$oid": "671a2b3c4d5e6f7890124203"
+                },
+                "url": "https://example.com/certificado",
+                "nome": "AWS Cloud Practitioner",
+                "data_emissao": {
+                    "$date": "2025-06-15T00:00:00Z"
+                }
+            }
+        ],
+        "_id": {
+            "$oid": "a10000000000000000000012"
+        },
+        "email": "marcos.almeida@example.com"
+    },
+    {
+        "localizacao": "Natal, RN",
+        "criado_em": {
+            "$date": "2026-10-13T10:00:00Z"
+        },
+        "habilidades": [
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000013"
+                },
+                "nivel": "iniciante",
+                "anos_experiencia": 5
+            }
+        ],
+        "headline": "Desenvolvedora Backend",
+        "formacao": [
+            {
+                "curso": "Ciência da Computação",
+                "grau": "Bacharelado",
+                "instituicao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124202"
+                },
+                "ano_conclusao": null,
+                "ano_inicio": 2018
+            }
+        ],
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "experiencias": [
+            {
+                "data_inicio": {
+                    "$date": "2022-03-01T00:00:00Z"
+                },
+                "data_fim": null,
+                "descricao": "Atuação profissional de Natália Almeida.",
+                "organizacao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124203"
+                },
+                "atual": true,
+                "cargo": "Desenvolvedora Backend"
+            }
+        ],
+        "aceita_mentoria": true,
+        "nivel_carreira": "Pleno",
+        "senha": "RedeSocial@2026",
+        "nome": "Natália Almeida",
+        "certificacoes": [
+            {
+                "emissor_id": {
+                    "$oid": "671a2b3c4d5e6f7890124203"
+                },
+                "url": "https://example.com/certificado",
+                "nome": "AWS Cloud Practitioner",
+                "data_emissao": {
+                    "$date": "2025-06-15T00:00:00Z"
+                }
+            }
+        ],
+        "_id": {
+            "$oid": "a10000000000000000000013"
+        },
+        "email": "nat.lia.almeida@example.com"
+    },
+    {
+        "localizacao": "Fortaleza, CE",
+        "criado_em": {
+            "$date": "2026-10-14T10:00:00Z"
+        },
+        "habilidades": [
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000014"
+                },
+                "nivel": "intermediário",
+                "anos_experiencia": 6
+            },
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000015"
+                },
+                "nivel": "avançado",
+                "anos_experiencia": 7
+            }
+        ],
+        "headline": "Desenvolvedor Full Stack",
+        "formacao": [
+            {
+                "curso": "Ciência da Computação",
+                "grau": "Bacharelado",
+                "instituicao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124202"
+                },
+                "ano_conclusao": null,
+                "ano_inicio": 2019
+            }
+        ],
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "experiencias": [
+            {
+                "data_inicio": {
+                    "$date": "2022-03-01T00:00:00Z"
+                },
+                "data_fim": null,
+                "descricao": "Atuação profissional de Otávio Barbosa.",
+                "organizacao_id": {
+                    "$oid": "a30000000000000000000004"
+                },
+                "atual": true,
+                "cargo": "Desenvolvedor Full Stack"
+            }
+        ],
+        "aceita_mentoria": false,
+        "nivel_carreira": "Sênior",
+        "senha": "RedeSocial@2026",
+        "nome": "Otávio Barbosa",
+        "certificacoes": [
+            {
+                "emissor_id": {
+                    "$oid": "671a2b3c4d5e6f7890124203"
+                },
+                "url": "https://example.com/certificado",
+                "nome": "AWS Cloud Practitioner",
+                "data_emissao": {
+                    "$date": "2025-06-15T00:00:00Z"
+                }
+            }
+        ],
+        "_id": {
+            "$oid": "a10000000000000000000014"
+        },
+        "email": "ot.vio.barbosa@example.com"
+    },
+    {
+        "localizacao": "São Paulo, SP",
+        "criado_em": {
+            "$date": "2026-10-15T10:00:00Z"
+        },
+        "habilidades": [
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000015"
+                },
+                "nivel": "avançado",
+                "anos_experiencia": 7
+            },
+            {
+                "habilidade_id": {
+                    "$oid": "671a2b3c4d5e6f7890123459"
+                },
+                "nivel": "iniciante",
+                "anos_experiencia": 8
+            },
+            {
+                "habilidade_id": {
+                    "$oid": "671a2b3c4d5e6f7890123460"
+                },
+                "nivel": "intermediário",
+                "anos_experiencia": 1
+            }
+        ],
+        "headline": "Analista de Dados",
+        "formacao": [
+            {
+                "curso": "Ciência da Computação",
+                "grau": "Bacharelado",
+                "instituicao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124202"
+                },
+                "ano_conclusao": null,
+                "ano_inicio": 2020
+            }
+        ],
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "experiencias": [
+            {
+                "data_inicio": {
+                    "$date": "2022-03-01T00:00:00Z"
+                },
+                "data_fim": null,
+                "descricao": "Atuação profissional de Paula Barbosa.",
+                "organizacao_id": {
+                    "$oid": "a30000000000000000000005"
+                },
+                "atual": true,
+                "cargo": "Analista de Dados"
+            }
+        ],
+        "aceita_mentoria": true,
+        "nivel_carreira": "Júnior",
+        "senha": "RedeSocial@2026",
+        "nome": "Paula Barbosa",
+        "certificacoes": [
+            {
+                "emissor_id": {
+                    "$oid": "671a2b3c4d5e6f7890124203"
+                },
+                "url": "https://example.com/certificado",
+                "nome": "AWS Cloud Practitioner",
+                "data_emissao": {
+                    "$date": "2025-06-15T00:00:00Z"
+                }
+            }
+        ],
+        "_id": {
+            "$oid": "a10000000000000000000015"
+        },
+        "email": "paula.barbosa@example.com"
+    },
+    {
+        "localizacao": "João Pessoa, PB",
+        "criado_em": {
+            "$date": "2026-10-16T10:00:00Z"
+        },
+        "habilidades": [
+            {
+                "habilidade_id": {
+                    "$oid": "671a2b3c4d5e6f7890123459"
+                },
+                "nivel": "iniciante",
+                "anos_experiencia": 8
+            }
+        ],
+        "headline": "Engenheira de Software",
+        "formacao": [
+            {
+                "curso": "Ciência da Computação",
+                "grau": "Bacharelado",
+                "instituicao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124202"
+                },
+                "ano_conclusao": null,
+                "ano_inicio": 2021
+            }
+        ],
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "experiencias": [
+            {
+                "data_inicio": {
+                    "$date": "2022-03-01T00:00:00Z"
+                },
+                "data_fim": null,
+                "descricao": "Atuação profissional de Rafael Barbosa.",
+                "organizacao_id": {
+                    "$oid": "a30000000000000000000006"
+                },
+                "atual": true,
+                "cargo": "Engenheira de Software"
+            }
+        ],
+        "aceita_mentoria": false,
+        "nivel_carreira": "Pleno",
+        "senha": "RedeSocial@2026",
+        "nome": "Rafael Barbosa",
+        "certificacoes": [
+            {
+                "emissor_id": {
+                    "$oid": "671a2b3c4d5e6f7890124203"
+                },
+                "url": "https://example.com/certificado",
+                "nome": "AWS Cloud Practitioner",
+                "data_emissao": {
+                    "$date": "2025-06-15T00:00:00Z"
+                }
+            }
+        ],
+        "_id": {
+            "$oid": "a10000000000000000000016"
+        },
+        "email": "rafael.barbosa@example.com"
+    },
+    {
+        "localizacao": "Recife, PE",
+        "criado_em": {
+            "$date": "2026-10-17T10:00:00Z"
+        },
+        "habilidades": [
+            {
+                "habilidade_id": {
+                    "$oid": "671a2b3c4d5e6f7890123460"
+                },
+                "nivel": "intermediário",
+                "anos_experiencia": 1
+            },
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000003"
+                },
+                "nivel": "avançado",
+                "anos_experiencia": 2
+            }
+        ],
+        "headline": "Designer de Produto",
+        "formacao": [
+            {
+                "curso": "Ciência da Computação",
+                "grau": "Bacharelado",
+                "instituicao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124202"
+                },
+                "ano_conclusao": null,
+                "ano_inicio": 2022
+            }
+        ],
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "experiencias": [
+            {
+                "data_inicio": {
+                    "$date": "2022-03-01T00:00:00Z"
+                },
+                "data_fim": null,
+                "descricao": "Atuação profissional de Sofia Barbosa.",
+                "organizacao_id": {
+                    "$oid": "a30000000000000000000007"
+                },
+                "atual": true,
+                "cargo": "Designer de Produto"
+            }
+        ],
+        "aceita_mentoria": true,
+        "nivel_carreira": "Sênior",
+        "senha": "RedeSocial@2026",
+        "nome": "Sofia Barbosa",
+        "certificacoes": [
+            {
+                "emissor_id": {
+                    "$oid": "671a2b3c4d5e6f7890124203"
+                },
+                "url": "https://example.com/certificado",
+                "nome": "AWS Cloud Practitioner",
+                "data_emissao": {
+                    "$date": "2025-06-15T00:00:00Z"
+                }
+            }
+        ],
+        "_id": {
+            "$oid": "a10000000000000000000017"
+        },
+        "email": "sofia.barbosa@example.com"
+    },
+    {
+        "localizacao": "Natal, RN",
+        "criado_em": {
+            "$date": "2026-10-18T10:00:00Z"
+        },
+        "habilidades": [
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000003"
+                },
+                "nivel": "avançado",
+                "anos_experiencia": 2
+            },
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000004"
+                },
+                "nivel": "iniciante",
+                "anos_experiencia": 3
+            },
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000005"
+                },
+                "nivel": "intermediário",
+                "anos_experiencia": 4
+            }
+        ],
+        "headline": "Desenvolvedora Backend",
+        "formacao": [
+            {
+                "curso": "Ciência da Computação",
+                "grau": "Bacharelado",
+                "instituicao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124202"
+                },
+                "ano_conclusao": null,
+                "ano_inicio": 2023
+            }
+        ],
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "experiencias": [
+            {
+                "data_inicio": {
+                    "$date": "2022-03-01T00:00:00Z"
+                },
+                "data_fim": null,
+                "descricao": "Atuação profissional de Tiago Barbosa.",
+                "organizacao_id": {
+                    "$oid": "a30000000000000000000008"
+                },
+                "atual": true,
+                "cargo": "Desenvolvedora Backend"
+            }
+        ],
+        "aceita_mentoria": false,
+        "nivel_carreira": "Júnior",
+        "senha": "RedeSocial@2026",
+        "nome": "Tiago Barbosa",
+        "certificacoes": [
+            {
+                "emissor_id": {
+                    "$oid": "671a2b3c4d5e6f7890124203"
+                },
+                "url": "https://example.com/certificado",
+                "nome": "AWS Cloud Practitioner",
+                "data_emissao": {
+                    "$date": "2025-06-15T00:00:00Z"
+                }
+            }
+        ],
+        "_id": {
+            "$oid": "a10000000000000000000018"
+        },
+        "email": "tiago.barbosa@example.com"
+    },
+    {
+        "localizacao": "Fortaleza, CE",
+        "criado_em": {
+            "$date": "2026-10-19T10:00:00Z"
+        },
+        "habilidades": [
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000004"
+                },
+                "nivel": "iniciante",
+                "anos_experiencia": 3
+            }
+        ],
+        "headline": "Desenvolvedor Full Stack",
+        "formacao": [
+            {
+                "curso": "Ciência da Computação",
+                "grau": "Bacharelado",
+                "instituicao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124202"
+                },
+                "ano_conclusao": null,
+                "ano_inicio": 2018
+            }
+        ],
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "experiencias": [
+            {
+                "data_inicio": {
+                    "$date": "2022-03-01T00:00:00Z"
+                },
+                "data_fim": null,
+                "descricao": "Atuação profissional de Úrsula Barbosa.",
+                "organizacao_id": {
+                    "$oid": "a30000000000000000000009"
+                },
+                "atual": true,
+                "cargo": "Desenvolvedor Full Stack"
+            }
+        ],
+        "aceita_mentoria": true,
+        "nivel_carreira": "Pleno",
+        "senha": "RedeSocial@2026",
+        "nome": "Úrsula Barbosa",
+        "certificacoes": [
+            {
+                "emissor_id": {
+                    "$oid": "671a2b3c4d5e6f7890124203"
+                },
+                "url": "https://example.com/certificado",
+                "nome": "AWS Cloud Practitioner",
+                "data_emissao": {
+                    "$date": "2025-06-15T00:00:00Z"
+                }
+            }
+        ],
+        "_id": {
+            "$oid": "a10000000000000000000019"
+        },
+        "email": ".rsula.barbosa@example.com"
+    },
+    {
+        "localizacao": "São Paulo, SP",
+        "criado_em": {
+            "$date": "2026-10-20T10:00:00Z"
+        },
+        "habilidades": [
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000005"
+                },
+                "nivel": "intermediário",
+                "anos_experiencia": 4
+            },
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000006"
+                },
+                "nivel": "avançado",
+                "anos_experiencia": 5
+            }
+        ],
+        "headline": "Analista de Dados",
+        "formacao": [
+            {
+                "curso": "Ciência da Computação",
+                "grau": "Bacharelado",
+                "instituicao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124202"
+                },
+                "ano_conclusao": null,
+                "ano_inicio": 2019
+            }
+        ],
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "experiencias": [
+            {
+                "data_inicio": {
+                    "$date": "2022-03-01T00:00:00Z"
+                },
+                "data_fim": null,
+                "descricao": "Atuação profissional de Victor Barbosa.",
+                "organizacao_id": {
+                    "$oid": "a30000000000000000000010"
+                },
+                "atual": true,
+                "cargo": "Analista de Dados"
+            }
+        ],
+        "aceita_mentoria": false,
+        "nivel_carreira": "Sênior",
+        "senha": "RedeSocial@2026",
+        "nome": "Victor Barbosa",
+        "certificacoes": [
+            {
+                "emissor_id": {
+                    "$oid": "671a2b3c4d5e6f7890124203"
+                },
+                "url": "https://example.com/certificado",
+                "nome": "AWS Cloud Practitioner",
+                "data_emissao": {
+                    "$date": "2025-06-15T00:00:00Z"
+                }
+            }
+        ],
+        "_id": {
+            "$oid": "a10000000000000000000020"
+        },
+        "email": "victor.barbosa@example.com"
+    },
+    {
+        "localizacao": "João Pessoa, PB",
+        "criado_em": {
+            "$date": "2026-10-21T10:00:00Z"
+        },
+        "habilidades": [
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000006"
+                },
+                "nivel": "avançado",
+                "anos_experiencia": 5
+            },
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000007"
+                },
+                "nivel": "iniciante",
+                "anos_experiencia": 6
+            },
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000008"
+                },
+                "nivel": "intermediário",
+                "anos_experiencia": 7
+            }
+        ],
+        "headline": "Engenheira de Software",
+        "formacao": [
+            {
+                "curso": "Ciência da Computação",
+                "grau": "Bacharelado",
+                "instituicao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124202"
+                },
+                "ano_conclusao": null,
+                "ano_inicio": 2020
+            }
+        ],
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "experiencias": [
+            {
+                "data_inicio": {
+                    "$date": "2022-03-01T00:00:00Z"
+                },
+                "data_fim": null,
+                "descricao": "Atuação profissional de Yasmin Barbosa.",
+                "organizacao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124201"
+                },
+                "atual": true,
+                "cargo": "Engenheira de Software"
+            }
+        ],
+        "aceita_mentoria": true,
+        "nivel_carreira": "Júnior",
+        "senha": "RedeSocial@2026",
+        "nome": "Yasmin Barbosa",
+        "certificacoes": [
+            {
+                "emissor_id": {
+                    "$oid": "671a2b3c4d5e6f7890124203"
+                },
+                "url": "https://example.com/certificado",
+                "nome": "AWS Cloud Practitioner",
+                "data_emissao": {
+                    "$date": "2025-06-15T00:00:00Z"
+                }
+            }
+        ],
+        "_id": {
+            "$oid": "a10000000000000000000021"
+        },
+        "email": "yasmin.barbosa@example.com"
+    },
+    {
+        "localizacao": "Recife, PE",
+        "criado_em": {
+            "$date": "2026-10-22T10:00:00Z"
+        },
+        "habilidades": [
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000007"
+                },
+                "nivel": "iniciante",
+                "anos_experiencia": 6
+            }
+        ],
+        "headline": "Designer de Produto",
+        "formacao": [
+            {
+                "curso": "Ciência da Computação",
+                "grau": "Bacharelado",
+                "instituicao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124202"
+                },
+                "ano_conclusao": null,
+                "ano_inicio": 2021
+            }
+        ],
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "experiencias": [
+            {
+                "data_inicio": {
+                    "$date": "2022-03-01T00:00:00Z"
+                },
+                "data_fim": null,
+                "descricao": "Atuação profissional de Caio Barbosa.",
+                "organizacao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124202"
+                },
+                "atual": true,
+                "cargo": "Designer de Produto"
+            }
+        ],
+        "aceita_mentoria": false,
+        "nivel_carreira": "Pleno",
+        "senha": "RedeSocial@2026",
+        "nome": "Caio Barbosa",
+        "certificacoes": [
+            {
+                "emissor_id": {
+                    "$oid": "671a2b3c4d5e6f7890124203"
+                },
+                "url": "https://example.com/certificado",
+                "nome": "AWS Cloud Practitioner",
+                "data_emissao": {
+                    "$date": "2025-06-15T00:00:00Z"
+                }
+            }
+        ],
+        "_id": {
+            "$oid": "a10000000000000000000022"
+        },
+        "email": "caio.barbosa@example.com"
+    },
+    {
+        "localizacao": "Natal, RN",
+        "criado_em": {
+            "$date": "2026-10-23T10:00:00Z"
+        },
+        "habilidades": [
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000008"
+                },
+                "nivel": "intermediário",
+                "anos_experiencia": 7
+            },
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000009"
+                },
+                "nivel": "avançado",
+                "anos_experiencia": 8
+            }
+        ],
+        "headline": "Desenvolvedora Backend",
+        "formacao": [
+            {
+                "curso": "Ciência da Computação",
+                "grau": "Bacharelado",
+                "instituicao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124202"
+                },
+                "ano_conclusao": null,
+                "ano_inicio": 2022
+            }
+        ],
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "experiencias": [
+            {
+                "data_inicio": {
+                    "$date": "2022-03-01T00:00:00Z"
+                },
+                "data_fim": null,
+                "descricao": "Atuação profissional de Carla Barbosa.",
+                "organizacao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124203"
+                },
+                "atual": true,
+                "cargo": "Desenvolvedora Backend"
+            }
+        ],
+        "aceita_mentoria": true,
+        "nivel_carreira": "Sênior",
+        "senha": "RedeSocial@2026",
+        "nome": "Carla Barbosa",
+        "certificacoes": [
+            {
+                "emissor_id": {
+                    "$oid": "671a2b3c4d5e6f7890124203"
+                },
+                "url": "https://example.com/certificado",
+                "nome": "AWS Cloud Practitioner",
+                "data_emissao": {
+                    "$date": "2025-06-15T00:00:00Z"
+                }
+            }
+        ],
+        "_id": {
+            "$oid": "a10000000000000000000023"
+        },
+        "email": "carla.barbosa@example.com"
+    },
+    {
+        "localizacao": "Fortaleza, CE",
+        "criado_em": {
+            "$date": "2026-10-24T10:00:00Z"
+        },
+        "habilidades": [
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000009"
+                },
+                "nivel": "avançado",
+                "anos_experiencia": 8
+            },
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000010"
+                },
+                "nivel": "iniciante",
+                "anos_experiencia": 1
+            },
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000011"
+                },
+                "nivel": "intermediário",
+                "anos_experiencia": 2
+            }
+        ],
+        "headline": "Desenvolvedor Full Stack",
+        "formacao": [
+            {
+                "curso": "Ciência da Computação",
+                "grau": "Bacharelado",
+                "instituicao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124202"
+                },
+                "ano_conclusao": null,
+                "ano_inicio": 2023
+            }
+        ],
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "experiencias": [
+            {
+                "data_inicio": {
+                    "$date": "2022-03-01T00:00:00Z"
+                },
+                "data_fim": null,
+                "descricao": "Atuação profissional de Daniel Barbosa.",
+                "organizacao_id": {
+                    "$oid": "a30000000000000000000004"
+                },
+                "atual": true,
+                "cargo": "Desenvolvedor Full Stack"
+            }
+        ],
+        "aceita_mentoria": false,
+        "nivel_carreira": "Júnior",
+        "senha": "RedeSocial@2026",
+        "nome": "Daniel Barbosa",
+        "certificacoes": [
+            {
+                "emissor_id": {
+                    "$oid": "671a2b3c4d5e6f7890124203"
+                },
+                "url": "https://example.com/certificado",
+                "nome": "AWS Cloud Practitioner",
+                "data_emissao": {
+                    "$date": "2025-06-15T00:00:00Z"
+                }
+            }
+        ],
+        "_id": {
+            "$oid": "a10000000000000000000024"
+        },
+        "email": "daniel.barbosa@example.com"
+    },
+    {
+        "localizacao": "São Paulo, SP",
+        "criado_em": {
+            "$date": "2026-10-25T10:00:00Z"
+        },
+        "habilidades": [
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000010"
+                },
+                "nivel": "iniciante",
+                "anos_experiencia": 1
+            }
+        ],
+        "headline": "Analista de Dados",
+        "formacao": [
+            {
+                "curso": "Ciência da Computação",
+                "grau": "Bacharelado",
+                "instituicao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124202"
+                },
+                "ano_conclusao": null,
+                "ano_inicio": 2018
+            }
+        ],
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "experiencias": [
+            {
+                "data_inicio": {
+                    "$date": "2022-03-01T00:00:00Z"
+                },
+                "data_fim": null,
+                "descricao": "Atuação profissional de Eduarda Barbosa.",
+                "organizacao_id": {
+                    "$oid": "a30000000000000000000005"
+                },
+                "atual": true,
+                "cargo": "Analista de Dados"
+            }
+        ],
+        "aceita_mentoria": true,
+        "nivel_carreira": "Pleno",
+        "senha": "RedeSocial@2026",
+        "nome": "Eduarda Barbosa",
+        "certificacoes": [
+            {
+                "emissor_id": {
+                    "$oid": "671a2b3c4d5e6f7890124203"
+                },
+                "url": "https://example.com/certificado",
+                "nome": "AWS Cloud Practitioner",
+                "data_emissao": {
+                    "$date": "2025-06-15T00:00:00Z"
+                }
+            }
+        ],
+        "_id": {
+            "$oid": "a10000000000000000000025"
+        },
+        "email": "eduarda.barbosa@example.com"
+    },
+    {
+        "localizacao": "João Pessoa, PB",
+        "criado_em": {
+            "$date": "2026-10-26T10:00:00Z"
+        },
+        "habilidades": [
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000011"
+                },
+                "nivel": "intermediário",
+                "anos_experiencia": 2
+            },
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000012"
+                },
+                "nivel": "avançado",
+                "anos_experiencia": 3
+            }
+        ],
+        "headline": "Engenheira de Software",
+        "formacao": [
+            {
+                "curso": "Ciência da Computação",
+                "grau": "Bacharelado",
+                "instituicao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124202"
+                },
+                "ano_conclusao": null,
+                "ano_inicio": 2019
+            }
+        ],
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "experiencias": [
+            {
+                "data_inicio": {
+                    "$date": "2022-03-01T00:00:00Z"
+                },
+                "data_fim": null,
+                "descricao": "Atuação profissional de Felipe Barbosa.",
+                "organizacao_id": {
+                    "$oid": "a30000000000000000000006"
+                },
+                "atual": true,
+                "cargo": "Engenheira de Software"
+            }
+        ],
+        "aceita_mentoria": false,
+        "nivel_carreira": "Sênior",
+        "senha": "RedeSocial@2026",
+        "nome": "Felipe Barbosa",
+        "certificacoes": [
+            {
+                "emissor_id": {
+                    "$oid": "671a2b3c4d5e6f7890124203"
+                },
+                "url": "https://example.com/certificado",
+                "nome": "AWS Cloud Practitioner",
+                "data_emissao": {
+                    "$date": "2025-06-15T00:00:00Z"
+                }
+            }
+        ],
+        "_id": {
+            "$oid": "a10000000000000000000026"
+        },
+        "email": "felipe.barbosa@example.com"
+    },
+    {
+        "localizacao": "Recife, PE",
+        "criado_em": {
+            "$date": "2026-10-27T10:00:00Z"
+        },
+        "habilidades": [
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000012"
+                },
+                "nivel": "avançado",
+                "anos_experiencia": 3
+            },
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000013"
+                },
+                "nivel": "iniciante",
+                "anos_experiencia": 4
+            },
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000014"
+                },
+                "nivel": "intermediário",
+                "anos_experiencia": 5
+            }
+        ],
+        "headline": "Designer de Produto",
+        "formacao": [
+            {
+                "curso": "Ciência da Computação",
+                "grau": "Bacharelado",
+                "instituicao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124202"
+                },
+                "ano_conclusao": null,
+                "ano_inicio": 2020
+            }
+        ],
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "experiencias": [
+            {
+                "data_inicio": {
+                    "$date": "2022-03-01T00:00:00Z"
+                },
+                "data_fim": null,
+                "descricao": "Atuação profissional de Gabriela Barbosa.",
+                "organizacao_id": {
+                    "$oid": "a30000000000000000000007"
+                },
+                "atual": true,
+                "cargo": "Designer de Produto"
+            }
+        ],
+        "aceita_mentoria": true,
+        "nivel_carreira": "Júnior",
+        "senha": "RedeSocial@2026",
+        "nome": "Gabriela Barbosa",
+        "certificacoes": [
+            {
+                "emissor_id": {
+                    "$oid": "671a2b3c4d5e6f7890124203"
+                },
+                "url": "https://example.com/certificado",
+                "nome": "AWS Cloud Practitioner",
+                "data_emissao": {
+                    "$date": "2025-06-15T00:00:00Z"
+                }
+            }
+        ],
+        "_id": {
+            "$oid": "a10000000000000000000027"
+        },
+        "email": "gabriela.barbosa@example.com"
+    },
+    {
+        "localizacao": "Natal, RN",
+        "criado_em": {
+            "$date": "2026-10-28T10:00:00Z"
+        },
+        "habilidades": [
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000013"
+                },
+                "nivel": "iniciante",
+                "anos_experiencia": 4
+            }
+        ],
+        "headline": "Desenvolvedora Backend",
+        "formacao": [
+            {
+                "curso": "Ciência da Computação",
+                "grau": "Bacharelado",
+                "instituicao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124202"
+                },
+                "ano_conclusao": null,
+                "ano_inicio": 2021
+            }
+        ],
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "experiencias": [
+            {
+                "data_inicio": {
+                    "$date": "2022-03-01T00:00:00Z"
+                },
+                "data_fim": null,
+                "descricao": "Atuação profissional de Henrique Barbosa.",
+                "organizacao_id": {
+                    "$oid": "a30000000000000000000008"
+                },
+                "atual": true,
+                "cargo": "Desenvolvedora Backend"
+            }
+        ],
+        "aceita_mentoria": false,
+        "nivel_carreira": "Pleno",
+        "senha": "RedeSocial@2026",
+        "nome": "Henrique Barbosa",
+        "certificacoes": [
+            {
+                "emissor_id": {
+                    "$oid": "671a2b3c4d5e6f7890124203"
+                },
+                "url": "https://example.com/certificado",
+                "nome": "AWS Cloud Practitioner",
+                "data_emissao": {
+                    "$date": "2025-06-15T00:00:00Z"
+                }
+            }
+        ],
+        "_id": {
+            "$oid": "a10000000000000000000028"
+        },
+        "email": "henrique.barbosa@example.com"
+    },
+    {
+        "localizacao": "Fortaleza, CE",
+        "criado_em": {
+            "$date": "2026-10-01T10:00:00Z"
+        },
+        "habilidades": [
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000014"
+                },
+                "nivel": "intermediário",
+                "anos_experiencia": 5
+            },
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000015"
+                },
+                "nivel": "avançado",
+                "anos_experiencia": 6
+            }
+        ],
+        "headline": "Desenvolvedor Full Stack",
+        "formacao": [
+            {
+                "curso": "Ciência da Computação",
+                "grau": "Bacharelado",
+                "instituicao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124202"
+                },
+                "ano_conclusao": null,
+                "ano_inicio": 2022
+            }
+        ],
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "experiencias": [
+            {
+                "data_inicio": {
+                    "$date": "2022-03-01T00:00:00Z"
+                },
+                "data_fim": null,
+                "descricao": "Atuação profissional de Isabela Barbosa.",
+                "organizacao_id": {
+                    "$oid": "a30000000000000000000009"
+                },
+                "atual": true,
+                "cargo": "Desenvolvedor Full Stack"
+            }
+        ],
+        "aceita_mentoria": true,
+        "nivel_carreira": "Sênior",
+        "senha": "RedeSocial@2026",
+        "nome": "Isabela Barbosa",
+        "certificacoes": [
+            {
+                "emissor_id": {
+                    "$oid": "671a2b3c4d5e6f7890124203"
+                },
+                "url": "https://example.com/certificado",
+                "nome": "AWS Cloud Practitioner",
+                "data_emissao": {
+                    "$date": "2025-06-15T00:00:00Z"
+                }
+            }
+        ],
+        "_id": {
+            "$oid": "a10000000000000000000029"
+        },
+        "email": "isabela.barbosa@example.com"
+    },
+    {
+        "localizacao": "São Paulo, SP",
+        "criado_em": {
+            "$date": "2026-10-02T10:00:00Z"
+        },
+        "habilidades": [
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000015"
+                },
+                "nivel": "avançado",
+                "anos_experiencia": 6
+            },
+            {
+                "habilidade_id": {
+                    "$oid": "671a2b3c4d5e6f7890123459"
+                },
+                "nivel": "iniciante",
+                "anos_experiencia": 7
+            },
+            {
+                "habilidade_id": {
+                    "$oid": "671a2b3c4d5e6f7890123460"
+                },
+                "nivel": "intermediário",
+                "anos_experiencia": 8
+            }
+        ],
+        "headline": "Analista de Dados",
+        "formacao": [
+            {
+                "curso": "Ciência da Computação",
+                "grau": "Bacharelado",
+                "instituicao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124202"
+                },
+                "ano_conclusao": null,
+                "ano_inicio": 2023
+            }
+        ],
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "experiencias": [
+            {
+                "data_inicio": {
+                    "$date": "2022-03-01T00:00:00Z"
+                },
+                "data_fim": null,
+                "descricao": "Atuação profissional de João Barbosa.",
+                "organizacao_id": {
+                    "$oid": "a30000000000000000000010"
+                },
+                "atual": true,
+                "cargo": "Analista de Dados"
+            }
+        ],
+        "aceita_mentoria": false,
+        "nivel_carreira": "Júnior",
+        "senha": "RedeSocial@2026",
+        "nome": "João Barbosa",
+        "certificacoes": [
+            {
+                "emissor_id": {
+                    "$oid": "671a2b3c4d5e6f7890124203"
+                },
+                "url": "https://example.com/certificado",
+                "nome": "AWS Cloud Practitioner",
+                "data_emissao": {
+                    "$date": "2025-06-15T00:00:00Z"
+                }
+            }
+        ],
+        "_id": {
+            "$oid": "a10000000000000000000030"
+        },
+        "email": "jo.o.barbosa@example.com"
+    },
+    {
+        "localizacao": "João Pessoa, PB",
+        "criado_em": {
+            "$date": "2026-10-03T10:00:00Z"
+        },
+        "habilidades": [
+            {
+                "habilidade_id": {
+                    "$oid": "671a2b3c4d5e6f7890123459"
+                },
+                "nivel": "iniciante",
+                "anos_experiencia": 7
+            }
+        ],
+        "headline": "Engenheira de Software",
+        "formacao": [
+            {
+                "curso": "Ciência da Computação",
+                "grau": "Bacharelado",
+                "instituicao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124202"
+                },
+                "ano_conclusao": null,
+                "ano_inicio": 2018
+            }
+        ],
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "experiencias": [
+            {
+                "data_inicio": {
+                    "$date": "2022-03-01T00:00:00Z"
+                },
+                "data_fim": null,
+                "descricao": "Atuação profissional de Larissa Barbosa.",
+                "organizacao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124201"
+                },
+                "atual": true,
+                "cargo": "Engenheira de Software"
+            }
+        ],
+        "aceita_mentoria": true,
+        "nivel_carreira": "Pleno",
+        "senha": "RedeSocial@2026",
+        "nome": "Larissa Barbosa",
+        "certificacoes": [
+            {
+                "emissor_id": {
+                    "$oid": "671a2b3c4d5e6f7890124203"
+                },
+                "url": "https://example.com/certificado",
+                "nome": "AWS Cloud Practitioner",
+                "data_emissao": {
+                    "$date": "2025-06-15T00:00:00Z"
+                }
+            }
+        ],
+        "_id": {
+            "$oid": "a10000000000000000000031"
+        },
+        "email": "larissa.barbosa@example.com"
+    },
+    {
+        "localizacao": "Recife, PE",
+        "criado_em": {
+            "$date": "2026-10-04T10:00:00Z"
+        },
+        "habilidades": [
+            {
+                "habilidade_id": {
+                    "$oid": "671a2b3c4d5e6f7890123460"
+                },
+                "nivel": "intermediário",
+                "anos_experiencia": 8
+            },
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000003"
+                },
+                "nivel": "avançado",
+                "anos_experiencia": 1
+            }
+        ],
+        "headline": "Designer de Produto",
+        "formacao": [
+            {
+                "curso": "Ciência da Computação",
+                "grau": "Bacharelado",
+                "instituicao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124202"
+                },
+                "ano_conclusao": null,
+                "ano_inicio": 2019
+            }
+        ],
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "experiencias": [
+            {
+                "data_inicio": {
+                    "$date": "2022-03-01T00:00:00Z"
+                },
+                "data_fim": null,
+                "descricao": "Atuação profissional de Marcos Barbosa.",
+                "organizacao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124202"
+                },
+                "atual": true,
+                "cargo": "Designer de Produto"
+            }
+        ],
+        "aceita_mentoria": false,
+        "nivel_carreira": "Sênior",
+        "senha": "RedeSocial@2026",
+        "nome": "Marcos Barbosa",
+        "certificacoes": [
+            {
+                "emissor_id": {
+                    "$oid": "671a2b3c4d5e6f7890124203"
+                },
+                "url": "https://example.com/certificado",
+                "nome": "AWS Cloud Practitioner",
+                "data_emissao": {
+                    "$date": "2025-06-15T00:00:00Z"
+                }
+            }
+        ],
+        "_id": {
+            "$oid": "a10000000000000000000032"
+        },
+        "email": "marcos.barbosa@example.com"
+    },
+    {
+        "localizacao": "Natal, RN",
+        "criado_em": {
+            "$date": "2026-10-05T10:00:00Z"
+        },
+        "habilidades": [
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000003"
+                },
+                "nivel": "avançado",
+                "anos_experiencia": 1
+            },
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000004"
+                },
+                "nivel": "iniciante",
+                "anos_experiencia": 2
+            },
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000005"
+                },
+                "nivel": "intermediário",
+                "anos_experiencia": 3
+            }
+        ],
+        "headline": "Desenvolvedora Backend",
+        "formacao": [
+            {
+                "curso": "Ciência da Computação",
+                "grau": "Bacharelado",
+                "instituicao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124202"
+                },
+                "ano_conclusao": null,
+                "ano_inicio": 2020
+            }
+        ],
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "experiencias": [
+            {
+                "data_inicio": {
+                    "$date": "2022-03-01T00:00:00Z"
+                },
+                "data_fim": null,
+                "descricao": "Atuação profissional de Natália Costa.",
+                "organizacao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124203"
+                },
+                "atual": true,
+                "cargo": "Desenvolvedora Backend"
+            }
+        ],
+        "aceita_mentoria": true,
+        "nivel_carreira": "Júnior",
+        "senha": "RedeSocial@2026",
+        "nome": "Natália Costa",
+        "certificacoes": [
+            {
+                "emissor_id": {
+                    "$oid": "671a2b3c4d5e6f7890124203"
+                },
+                "url": "https://example.com/certificado",
+                "nome": "AWS Cloud Practitioner",
+                "data_emissao": {
+                    "$date": "2025-06-15T00:00:00Z"
+                }
+            }
+        ],
+        "_id": {
+            "$oid": "a10000000000000000000033"
+        },
+        "email": "nat.lia.costa@example.com"
+    },
+    {
+        "localizacao": "Fortaleza, CE",
+        "criado_em": {
+            "$date": "2026-10-06T10:00:00Z"
+        },
+        "habilidades": [
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000004"
+                },
+                "nivel": "iniciante",
+                "anos_experiencia": 2
+            }
+        ],
+        "headline": "Desenvolvedor Full Stack",
+        "formacao": [
+            {
+                "curso": "Ciência da Computação",
+                "grau": "Bacharelado",
+                "instituicao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124202"
+                },
+                "ano_conclusao": null,
+                "ano_inicio": 2021
+            }
+        ],
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "experiencias": [
+            {
+                "data_inicio": {
+                    "$date": "2022-03-01T00:00:00Z"
+                },
+                "data_fim": null,
+                "descricao": "Atuação profissional de Otávio Costa.",
+                "organizacao_id": {
+                    "$oid": "a30000000000000000000004"
+                },
+                "atual": true,
+                "cargo": "Desenvolvedor Full Stack"
+            }
+        ],
+        "aceita_mentoria": false,
+        "nivel_carreira": "Pleno",
+        "senha": "RedeSocial@2026",
+        "nome": "Otávio Costa",
+        "certificacoes": [
+            {
+                "emissor_id": {
+                    "$oid": "671a2b3c4d5e6f7890124203"
+                },
+                "url": "https://example.com/certificado",
+                "nome": "AWS Cloud Practitioner",
+                "data_emissao": {
+                    "$date": "2025-06-15T00:00:00Z"
+                }
+            }
+        ],
+        "_id": {
+            "$oid": "a10000000000000000000034"
+        },
+        "email": "ot.vio.costa@example.com"
+    },
+    {
+        "localizacao": "São Paulo, SP",
+        "criado_em": {
+            "$date": "2026-10-07T10:00:00Z"
+        },
+        "habilidades": [
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000005"
+                },
+                "nivel": "intermediário",
+                "anos_experiencia": 3
+            },
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000006"
+                },
+                "nivel": "avançado",
+                "anos_experiencia": 4
+            }
+        ],
+        "headline": "Analista de Dados",
+        "formacao": [
+            {
+                "curso": "Ciência da Computação",
+                "grau": "Bacharelado",
+                "instituicao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124202"
+                },
+                "ano_conclusao": null,
+                "ano_inicio": 2022
+            }
+        ],
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "experiencias": [
+            {
+                "data_inicio": {
+                    "$date": "2022-03-01T00:00:00Z"
+                },
+                "data_fim": null,
+                "descricao": "Atuação profissional de Paula Costa.",
+                "organizacao_id": {
+                    "$oid": "a30000000000000000000005"
+                },
+                "atual": true,
+                "cargo": "Analista de Dados"
+            }
+        ],
+        "aceita_mentoria": true,
+        "nivel_carreira": "Sênior",
+        "senha": "RedeSocial@2026",
+        "nome": "Paula Costa",
+        "certificacoes": [
+            {
+                "emissor_id": {
+                    "$oid": "671a2b3c4d5e6f7890124203"
+                },
+                "url": "https://example.com/certificado",
+                "nome": "AWS Cloud Practitioner",
+                "data_emissao": {
+                    "$date": "2025-06-15T00:00:00Z"
+                }
+            }
+        ],
+        "_id": {
+            "$oid": "a10000000000000000000035"
+        },
+        "email": "paula.costa@example.com"
+    },
+    {
+        "localizacao": "João Pessoa, PB",
+        "criado_em": {
+            "$date": "2026-10-08T10:00:00Z"
+        },
+        "habilidades": [
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000006"
+                },
+                "nivel": "avançado",
+                "anos_experiencia": 4
+            },
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000007"
+                },
+                "nivel": "iniciante",
+                "anos_experiencia": 5
+            },
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000008"
+                },
+                "nivel": "intermediário",
+                "anos_experiencia": 6
+            }
+        ],
+        "headline": "Engenheira de Software",
+        "formacao": [
+            {
+                "curso": "Ciência da Computação",
+                "grau": "Bacharelado",
+                "instituicao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124202"
+                },
+                "ano_conclusao": null,
+                "ano_inicio": 2023
+            }
+        ],
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "experiencias": [
+            {
+                "data_inicio": {
+                    "$date": "2022-03-01T00:00:00Z"
+                },
+                "data_fim": null,
+                "descricao": "Atuação profissional de Rafael Costa.",
+                "organizacao_id": {
+                    "$oid": "a30000000000000000000006"
+                },
+                "atual": true,
+                "cargo": "Engenheira de Software"
+            }
+        ],
+        "aceita_mentoria": false,
+        "nivel_carreira": "Júnior",
+        "senha": "RedeSocial@2026",
+        "nome": "Rafael Costa",
+        "certificacoes": [
+            {
+                "emissor_id": {
+                    "$oid": "671a2b3c4d5e6f7890124203"
+                },
+                "url": "https://example.com/certificado",
+                "nome": "AWS Cloud Practitioner",
+                "data_emissao": {
+                    "$date": "2025-06-15T00:00:00Z"
+                }
+            }
+        ],
+        "_id": {
+            "$oid": "a10000000000000000000036"
+        },
+        "email": "rafael.costa@example.com"
+    },
+    {
+        "localizacao": "Recife, PE",
+        "criado_em": {
+            "$date": "2026-10-09T10:00:00Z"
+        },
+        "habilidades": [
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000007"
+                },
+                "nivel": "iniciante",
+                "anos_experiencia": 5
+            }
+        ],
+        "headline": "Designer de Produto",
+        "formacao": [
+            {
+                "curso": "Ciência da Computação",
+                "grau": "Bacharelado",
+                "instituicao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124202"
+                },
+                "ano_conclusao": null,
+                "ano_inicio": 2018
+            }
+        ],
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "experiencias": [
+            {
+                "data_inicio": {
+                    "$date": "2022-03-01T00:00:00Z"
+                },
+                "data_fim": null,
+                "descricao": "Atuação profissional de Sofia Costa.",
+                "organizacao_id": {
+                    "$oid": "a30000000000000000000007"
+                },
+                "atual": true,
+                "cargo": "Designer de Produto"
+            }
+        ],
+        "aceita_mentoria": true,
+        "nivel_carreira": "Pleno",
+        "senha": "RedeSocial@2026",
+        "nome": "Sofia Costa",
+        "certificacoes": [
+            {
+                "emissor_id": {
+                    "$oid": "671a2b3c4d5e6f7890124203"
+                },
+                "url": "https://example.com/certificado",
+                "nome": "AWS Cloud Practitioner",
+                "data_emissao": {
+                    "$date": "2025-06-15T00:00:00Z"
+                }
+            }
+        ],
+        "_id": {
+            "$oid": "a10000000000000000000037"
+        },
+        "email": "sofia.costa@example.com"
+    },
+    {
+        "localizacao": "Natal, RN",
+        "criado_em": {
+            "$date": "2026-10-10T10:00:00Z"
+        },
+        "habilidades": [
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000008"
+                },
+                "nivel": "intermediário",
+                "anos_experiencia": 6
+            },
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000009"
+                },
+                "nivel": "avançado",
+                "anos_experiencia": 7
+            }
+        ],
+        "headline": "Desenvolvedora Backend",
+        "formacao": [
+            {
+                "curso": "Ciência da Computação",
+                "grau": "Bacharelado",
+                "instituicao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124202"
+                },
+                "ano_conclusao": null,
+                "ano_inicio": 2019
+            }
+        ],
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "experiencias": [
+            {
+                "data_inicio": {
+                    "$date": "2022-03-01T00:00:00Z"
+                },
+                "data_fim": null,
+                "descricao": "Atuação profissional de Tiago Costa.",
+                "organizacao_id": {
+                    "$oid": "a30000000000000000000008"
+                },
+                "atual": true,
+                "cargo": "Desenvolvedora Backend"
+            }
+        ],
+        "aceita_mentoria": false,
+        "nivel_carreira": "Sênior",
+        "senha": "RedeSocial@2026",
+        "nome": "Tiago Costa",
+        "certificacoes": [
+            {
+                "emissor_id": {
+                    "$oid": "671a2b3c4d5e6f7890124203"
+                },
+                "url": "https://example.com/certificado",
+                "nome": "AWS Cloud Practitioner",
+                "data_emissao": {
+                    "$date": "2025-06-15T00:00:00Z"
+                }
+            }
+        ],
+        "_id": {
+            "$oid": "a10000000000000000000038"
+        },
+        "email": "tiago.costa@example.com"
+    },
+    {
+        "localizacao": "Fortaleza, CE",
+        "criado_em": {
+            "$date": "2026-10-11T10:00:00Z"
+        },
+        "habilidades": [
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000009"
+                },
+                "nivel": "avançado",
+                "anos_experiencia": 7
+            },
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000010"
+                },
+                "nivel": "iniciante",
+                "anos_experiencia": 8
+            },
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000011"
+                },
+                "nivel": "intermediário",
+                "anos_experiencia": 1
+            }
+        ],
+        "headline": "Desenvolvedor Full Stack",
+        "formacao": [
+            {
+                "curso": "Ciência da Computação",
+                "grau": "Bacharelado",
+                "instituicao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124202"
+                },
+                "ano_conclusao": null,
+                "ano_inicio": 2020
+            }
+        ],
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "experiencias": [
+            {
+                "data_inicio": {
+                    "$date": "2022-03-01T00:00:00Z"
+                },
+                "data_fim": null,
+                "descricao": "Atuação profissional de Úrsula Costa.",
+                "organizacao_id": {
+                    "$oid": "a30000000000000000000009"
+                },
+                "atual": true,
+                "cargo": "Desenvolvedor Full Stack"
+            }
+        ],
+        "aceita_mentoria": true,
+        "nivel_carreira": "Júnior",
+        "senha": "RedeSocial@2026",
+        "nome": "Úrsula Costa",
+        "certificacoes": [
+            {
+                "emissor_id": {
+                    "$oid": "671a2b3c4d5e6f7890124203"
+                },
+                "url": "https://example.com/certificado",
+                "nome": "AWS Cloud Practitioner",
+                "data_emissao": {
+                    "$date": "2025-06-15T00:00:00Z"
+                }
+            }
+        ],
+        "_id": {
+            "$oid": "a10000000000000000000039"
+        },
+        "email": ".rsula.costa@example.com"
+    },
+    {
+        "localizacao": "São Paulo, SP",
+        "criado_em": {
+            "$date": "2026-10-12T10:00:00Z"
+        },
+        "habilidades": [
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000010"
+                },
+                "nivel": "iniciante",
+                "anos_experiencia": 8
+            }
+        ],
+        "headline": "Analista de Dados",
+        "formacao": [
+            {
+                "curso": "Ciência da Computação",
+                "grau": "Bacharelado",
+                "instituicao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124202"
+                },
+                "ano_conclusao": null,
+                "ano_inicio": 2021
+            }
+        ],
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "experiencias": [
+            {
+                "data_inicio": {
+                    "$date": "2022-03-01T00:00:00Z"
+                },
+                "data_fim": null,
+                "descricao": "Atuação profissional de Victor Costa.",
+                "organizacao_id": {
+                    "$oid": "a30000000000000000000010"
+                },
+                "atual": true,
+                "cargo": "Analista de Dados"
+            }
+        ],
+        "aceita_mentoria": false,
+        "nivel_carreira": "Pleno",
+        "senha": "RedeSocial@2026",
+        "nome": "Victor Costa",
+        "certificacoes": [
+            {
+                "emissor_id": {
+                    "$oid": "671a2b3c4d5e6f7890124203"
+                },
+                "url": "https://example.com/certificado",
+                "nome": "AWS Cloud Practitioner",
+                "data_emissao": {
+                    "$date": "2025-06-15T00:00:00Z"
+                }
+            }
+        ],
+        "_id": {
+            "$oid": "a10000000000000000000040"
+        },
+        "email": "victor.costa@example.com"
+    },
+    {
+        "localizacao": "João Pessoa, PB",
+        "criado_em": {
+            "$date": "2026-10-13T10:00:00Z"
+        },
+        "habilidades": [
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000011"
+                },
+                "nivel": "intermediário",
+                "anos_experiencia": 1
+            },
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000012"
+                },
+                "nivel": "avançado",
+                "anos_experiencia": 2
+            }
+        ],
+        "headline": "Engenheira de Software",
+        "formacao": [
+            {
+                "curso": "Ciência da Computação",
+                "grau": "Bacharelado",
+                "instituicao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124202"
+                },
+                "ano_conclusao": null,
+                "ano_inicio": 2022
+            }
+        ],
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "experiencias": [
+            {
+                "data_inicio": {
+                    "$date": "2022-03-01T00:00:00Z"
+                },
+                "data_fim": null,
+                "descricao": "Atuação profissional de Yasmin Costa.",
+                "organizacao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124201"
+                },
+                "atual": true,
+                "cargo": "Engenheira de Software"
+            }
+        ],
+        "aceita_mentoria": true,
+        "nivel_carreira": "Sênior",
+        "senha": "RedeSocial@2026",
+        "nome": "Yasmin Costa",
+        "certificacoes": [
+            {
+                "emissor_id": {
+                    "$oid": "671a2b3c4d5e6f7890124203"
+                },
+                "url": "https://example.com/certificado",
+                "nome": "AWS Cloud Practitioner",
+                "data_emissao": {
+                    "$date": "2025-06-15T00:00:00Z"
+                }
+            }
+        ],
+        "_id": {
+            "$oid": "a10000000000000000000041"
+        },
+        "email": "yasmin.costa@example.com"
+    },
+    {
+        "localizacao": "Recife, PE",
+        "criado_em": {
+            "$date": "2026-10-14T10:00:00Z"
+        },
+        "habilidades": [
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000012"
+                },
+                "nivel": "avançado",
+                "anos_experiencia": 2
+            },
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000013"
+                },
+                "nivel": "iniciante",
+                "anos_experiencia": 3
+            },
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000014"
+                },
+                "nivel": "intermediário",
+                "anos_experiencia": 4
+            }
+        ],
+        "headline": "Designer de Produto",
+        "formacao": [
+            {
+                "curso": "Ciência da Computação",
+                "grau": "Bacharelado",
+                "instituicao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124202"
+                },
+                "ano_conclusao": null,
+                "ano_inicio": 2023
+            }
+        ],
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "experiencias": [
+            {
+                "data_inicio": {
+                    "$date": "2022-03-01T00:00:00Z"
+                },
+                "data_fim": null,
+                "descricao": "Atuação profissional de Caio Costa.",
+                "organizacao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124202"
+                },
+                "atual": true,
+                "cargo": "Designer de Produto"
+            }
+        ],
+        "aceita_mentoria": false,
+        "nivel_carreira": "Júnior",
+        "senha": "RedeSocial@2026",
+        "nome": "Caio Costa",
+        "certificacoes": [
+            {
+                "emissor_id": {
+                    "$oid": "671a2b3c4d5e6f7890124203"
+                },
+                "url": "https://example.com/certificado",
+                "nome": "AWS Cloud Practitioner",
+                "data_emissao": {
+                    "$date": "2025-06-15T00:00:00Z"
+                }
+            }
+        ],
+        "_id": {
+            "$oid": "a10000000000000000000042"
+        },
+        "email": "caio.costa@example.com"
+    },
+    {
+        "localizacao": "Natal, RN",
+        "criado_em": {
+            "$date": "2026-10-15T10:00:00Z"
+        },
+        "habilidades": [
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000013"
+                },
+                "nivel": "iniciante",
+                "anos_experiencia": 3
+            }
+        ],
+        "headline": "Desenvolvedora Backend",
+        "formacao": [
+            {
+                "curso": "Ciência da Computação",
+                "grau": "Bacharelado",
+                "instituicao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124202"
+                },
+                "ano_conclusao": null,
+                "ano_inicio": 2018
+            }
+        ],
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "experiencias": [
+            {
+                "data_inicio": {
+                    "$date": "2022-03-01T00:00:00Z"
+                },
+                "data_fim": null,
+                "descricao": "Atuação profissional de Carla Costa.",
+                "organizacao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124203"
+                },
+                "atual": true,
+                "cargo": "Desenvolvedora Backend"
+            }
+        ],
+        "aceita_mentoria": true,
+        "nivel_carreira": "Pleno",
+        "senha": "RedeSocial@2026",
+        "nome": "Carla Costa",
+        "certificacoes": [
+            {
+                "emissor_id": {
+                    "$oid": "671a2b3c4d5e6f7890124203"
+                },
+                "url": "https://example.com/certificado",
+                "nome": "AWS Cloud Practitioner",
+                "data_emissao": {
+                    "$date": "2025-06-15T00:00:00Z"
+                }
+            }
+        ],
+        "_id": {
+            "$oid": "a10000000000000000000043"
+        },
+        "email": "carla.costa@example.com"
+    },
+    {
+        "localizacao": "Fortaleza, CE",
+        "criado_em": {
+            "$date": "2026-10-16T10:00:00Z"
+        },
+        "habilidades": [
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000014"
+                },
+                "nivel": "intermediário",
+                "anos_experiencia": 4
+            },
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000015"
+                },
+                "nivel": "avançado",
+                "anos_experiencia": 5
+            }
+        ],
+        "headline": "Desenvolvedor Full Stack",
+        "formacao": [
+            {
+                "curso": "Ciência da Computação",
+                "grau": "Bacharelado",
+                "instituicao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124202"
+                },
+                "ano_conclusao": null,
+                "ano_inicio": 2019
+            }
+        ],
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "experiencias": [
+            {
+                "data_inicio": {
+                    "$date": "2022-03-01T00:00:00Z"
+                },
+                "data_fim": null,
+                "descricao": "Atuação profissional de Daniel Costa.",
+                "organizacao_id": {
+                    "$oid": "a30000000000000000000004"
+                },
+                "atual": true,
+                "cargo": "Desenvolvedor Full Stack"
+            }
+        ],
+        "aceita_mentoria": false,
+        "nivel_carreira": "Sênior",
+        "senha": "RedeSocial@2026",
+        "nome": "Daniel Costa",
+        "certificacoes": [
+            {
+                "emissor_id": {
+                    "$oid": "671a2b3c4d5e6f7890124203"
+                },
+                "url": "https://example.com/certificado",
+                "nome": "AWS Cloud Practitioner",
+                "data_emissao": {
+                    "$date": "2025-06-15T00:00:00Z"
+                }
+            }
+        ],
+        "_id": {
+            "$oid": "a10000000000000000000044"
+        },
+        "email": "daniel.costa@example.com"
+    },
+    {
+        "localizacao": "São Paulo, SP",
+        "criado_em": {
+            "$date": "2026-10-17T10:00:00Z"
+        },
+        "habilidades": [
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000015"
+                },
+                "nivel": "avançado",
+                "anos_experiencia": 5
+            },
+            {
+                "habilidade_id": {
+                    "$oid": "671a2b3c4d5e6f7890123459"
+                },
+                "nivel": "iniciante",
+                "anos_experiencia": 6
+            },
+            {
+                "habilidade_id": {
+                    "$oid": "671a2b3c4d5e6f7890123460"
+                },
+                "nivel": "intermediário",
+                "anos_experiencia": 7
+            }
+        ],
+        "headline": "Analista de Dados",
+        "formacao": [
+            {
+                "curso": "Ciência da Computação",
+                "grau": "Bacharelado",
+                "instituicao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124202"
+                },
+                "ano_conclusao": null,
+                "ano_inicio": 2020
+            }
+        ],
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "experiencias": [
+            {
+                "data_inicio": {
+                    "$date": "2022-03-01T00:00:00Z"
+                },
+                "data_fim": null,
+                "descricao": "Atuação profissional de Eduarda Costa.",
+                "organizacao_id": {
+                    "$oid": "a30000000000000000000005"
+                },
+                "atual": true,
+                "cargo": "Analista de Dados"
+            }
+        ],
+        "aceita_mentoria": true,
+        "nivel_carreira": "Júnior",
+        "senha": "RedeSocial@2026",
+        "nome": "Eduarda Costa",
+        "certificacoes": [
+            {
+                "emissor_id": {
+                    "$oid": "671a2b3c4d5e6f7890124203"
+                },
+                "url": "https://example.com/certificado",
+                "nome": "AWS Cloud Practitioner",
+                "data_emissao": {
+                    "$date": "2025-06-15T00:00:00Z"
+                }
+            }
+        ],
+        "_id": {
+            "$oid": "a10000000000000000000045"
+        },
+        "email": "eduarda.costa@example.com"
+    },
+    {
+        "localizacao": "João Pessoa, PB",
+        "criado_em": {
+            "$date": "2026-10-18T10:00:00Z"
+        },
+        "habilidades": [
+            {
+                "habilidade_id": {
+                    "$oid": "671a2b3c4d5e6f7890123459"
+                },
+                "nivel": "iniciante",
+                "anos_experiencia": 6
+            }
+        ],
+        "headline": "Engenheira de Software",
+        "formacao": [
+            {
+                "curso": "Ciência da Computação",
+                "grau": "Bacharelado",
+                "instituicao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124202"
+                },
+                "ano_conclusao": null,
+                "ano_inicio": 2021
+            }
+        ],
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "experiencias": [
+            {
+                "data_inicio": {
+                    "$date": "2022-03-01T00:00:00Z"
+                },
+                "data_fim": null,
+                "descricao": "Atuação profissional de Felipe Costa.",
+                "organizacao_id": {
+                    "$oid": "a30000000000000000000006"
+                },
+                "atual": true,
+                "cargo": "Engenheira de Software"
+            }
+        ],
+        "aceita_mentoria": false,
+        "nivel_carreira": "Pleno",
+        "senha": "RedeSocial@2026",
+        "nome": "Felipe Costa",
+        "certificacoes": [
+            {
+                "emissor_id": {
+                    "$oid": "671a2b3c4d5e6f7890124203"
+                },
+                "url": "https://example.com/certificado",
+                "nome": "AWS Cloud Practitioner",
+                "data_emissao": {
+                    "$date": "2025-06-15T00:00:00Z"
+                }
+            }
+        ],
+        "_id": {
+            "$oid": "a10000000000000000000046"
+        },
+        "email": "felipe.costa@example.com"
+    },
+    {
+        "localizacao": "Recife, PE",
+        "criado_em": {
+            "$date": "2026-10-19T10:00:00Z"
+        },
+        "habilidades": [
+            {
+                "habilidade_id": {
+                    "$oid": "671a2b3c4d5e6f7890123460"
+                },
+                "nivel": "intermediário",
+                "anos_experiencia": 7
+            },
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000003"
+                },
+                "nivel": "avançado",
+                "anos_experiencia": 8
+            }
+        ],
+        "headline": "Designer de Produto",
+        "formacao": [
+            {
+                "curso": "Ciência da Computação",
+                "grau": "Bacharelado",
+                "instituicao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124202"
+                },
+                "ano_conclusao": null,
+                "ano_inicio": 2022
+            }
+        ],
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "experiencias": [
+            {
+                "data_inicio": {
+                    "$date": "2022-03-01T00:00:00Z"
+                },
+                "data_fim": null,
+                "descricao": "Atuação profissional de Gabriela Costa.",
+                "organizacao_id": {
+                    "$oid": "a30000000000000000000007"
+                },
+                "atual": true,
+                "cargo": "Designer de Produto"
+            }
+        ],
+        "aceita_mentoria": true,
+        "nivel_carreira": "Sênior",
+        "senha": "RedeSocial@2026",
+        "nome": "Gabriela Costa",
+        "certificacoes": [
+            {
+                "emissor_id": {
+                    "$oid": "671a2b3c4d5e6f7890124203"
+                },
+                "url": "https://example.com/certificado",
+                "nome": "AWS Cloud Practitioner",
+                "data_emissao": {
+                    "$date": "2025-06-15T00:00:00Z"
+                }
+            }
+        ],
+        "_id": {
+            "$oid": "a10000000000000000000047"
+        },
+        "email": "gabriela.costa@example.com"
+    },
+    {
+        "localizacao": "Natal, RN",
+        "criado_em": {
+            "$date": "2026-10-20T10:00:00Z"
+        },
+        "habilidades": [
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000003"
+                },
+                "nivel": "avançado",
+                "anos_experiencia": 8
+            },
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000004"
+                },
+                "nivel": "iniciante",
+                "anos_experiencia": 1
+            },
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000005"
+                },
+                "nivel": "intermediário",
+                "anos_experiencia": 2
+            }
+        ],
+        "headline": "Desenvolvedora Backend",
+        "formacao": [
+            {
+                "curso": "Ciência da Computação",
+                "grau": "Bacharelado",
+                "instituicao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124202"
+                },
+                "ano_conclusao": null,
+                "ano_inicio": 2023
+            }
+        ],
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "experiencias": [
+            {
+                "data_inicio": {
+                    "$date": "2022-03-01T00:00:00Z"
+                },
+                "data_fim": null,
+                "descricao": "Atuação profissional de Henrique Costa.",
+                "organizacao_id": {
+                    "$oid": "a30000000000000000000008"
+                },
+                "atual": true,
+                "cargo": "Desenvolvedora Backend"
+            }
+        ],
+        "aceita_mentoria": false,
+        "nivel_carreira": "Júnior",
+        "senha": "RedeSocial@2026",
+        "nome": "Henrique Costa",
+        "certificacoes": [
+            {
+                "emissor_id": {
+                    "$oid": "671a2b3c4d5e6f7890124203"
+                },
+                "url": "https://example.com/certificado",
+                "nome": "AWS Cloud Practitioner",
+                "data_emissao": {
+                    "$date": "2025-06-15T00:00:00Z"
+                }
+            }
+        ],
+        "_id": {
+            "$oid": "a10000000000000000000048"
+        },
+        "email": "henrique.costa@example.com"
+    },
+    {
+        "localizacao": "Fortaleza, CE",
+        "criado_em": {
+            "$date": "2026-10-21T10:00:00Z"
+        },
+        "habilidades": [
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000004"
+                },
+                "nivel": "iniciante",
+                "anos_experiencia": 1
+            }
+        ],
+        "headline": "Desenvolvedor Full Stack",
+        "formacao": [
+            {
+                "curso": "Ciência da Computação",
+                "grau": "Bacharelado",
+                "instituicao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124202"
+                },
+                "ano_conclusao": null,
+                "ano_inicio": 2018
+            }
+        ],
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "experiencias": [
+            {
+                "data_inicio": {
+                    "$date": "2022-03-01T00:00:00Z"
+                },
+                "data_fim": null,
+                "descricao": "Atuação profissional de Isabela Costa.",
+                "organizacao_id": {
+                    "$oid": "a30000000000000000000009"
+                },
+                "atual": true,
+                "cargo": "Desenvolvedor Full Stack"
+            }
+        ],
+        "aceita_mentoria": true,
+        "nivel_carreira": "Pleno",
+        "senha": "RedeSocial@2026",
+        "nome": "Isabela Costa",
+        "certificacoes": [
+            {
+                "emissor_id": {
+                    "$oid": "671a2b3c4d5e6f7890124203"
+                },
+                "url": "https://example.com/certificado",
+                "nome": "AWS Cloud Practitioner",
+                "data_emissao": {
+                    "$date": "2025-06-15T00:00:00Z"
+                }
+            }
+        ],
+        "_id": {
+            "$oid": "a10000000000000000000049"
+        },
+        "email": "isabela.costa@example.com"
+    },
+    {
+        "localizacao": "São Paulo, SP",
+        "criado_em": {
+            "$date": "2026-10-22T10:00:00Z"
+        },
+        "habilidades": [
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000005"
+                },
+                "nivel": "intermediário",
+                "anos_experiencia": 2
+            },
+            {
+                "habilidade_id": {
+                    "$oid": "a20000000000000000000006"
+                },
+                "nivel": "avançado",
+                "anos_experiencia": 3
+            }
+        ],
+        "headline": "Analista de Dados",
+        "formacao": [
+            {
+                "curso": "Ciência da Computação",
+                "grau": "Bacharelado",
+                "instituicao_id": {
+                    "$oid": "671a2b3c4d5e6f7890124202"
+                },
+                "ano_conclusao": null,
+                "ano_inicio": 2019
+            }
+        ],
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "experiencias": [
+            {
+                "data_inicio": {
+                    "$date": "2022-03-01T00:00:00Z"
+                },
+                "data_fim": null,
+                "descricao": "Atuação profissional de João Costa.",
+                "organizacao_id": {
+                    "$oid": "a30000000000000000000010"
+                },
+                "atual": true,
+                "cargo": "Analista de Dados"
+            }
+        ],
+        "aceita_mentoria": false,
+        "nivel_carreira": "Sênior",
+        "senha": "RedeSocial@2026",
+        "nome": "João Costa",
+        "certificacoes": [
+            {
+                "emissor_id": {
+                    "$oid": "671a2b3c4d5e6f7890124203"
+                },
+                "url": "https://example.com/certificado",
+                "nome": "AWS Cloud Practitioner",
+                "data_emissao": {
+                    "$date": "2025-06-15T00:00:00Z"
+                }
+            }
+        ],
+        "_id": {
+            "$oid": "a10000000000000000000050"
+        },
+        "email": "jo.o.costa@example.com"
+    }
+]

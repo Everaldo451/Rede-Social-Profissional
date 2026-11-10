@@ -1,0 +1,106 @@
+[
+  {
+    "source_id": "671a2b3c4d5e6f7890123457",
+    "target_id": "671a2b3c4d5e6f7890123456",
+    "properties": {
+      "status": "pendente",
+      "criada_em": {
+        "$date": "2026-11-03T09:00:00Z"
+      },
+      "atualizada_em": {
+        "$date": "2026-11-03T09:00:00Z"
+      }
+    }
+  },
+  {
+    "source_id": "a10000000000000000000004",
+    "target_id": "a10000000000000000000003",
+    "properties": {
+      "status": "pendente",
+      "criada_em": {
+        "$date": "2026-11-03T10:00:00Z"
+      },
+      "atualizada_em": {
+        "$date": "2026-11-03T10:00:00Z"
+      }
+    }
+  },
+  {
+    "source_id": "a10000000000000000000006",
+    "target_id": "a10000000000000000000005",
+    "properties": {
+      "status": "pendente",
+      "criada_em": {
+        "$date": "2026-11-04T11:30:00Z"
+      },
+      "atualizada_em": {
+        "$date": "2026-11-04T11:30:00Z"
+      }
+    }
+  },
+  {
+    "source_id": "a10000000000000000000008",
+    "target_id": "a10000000000000000000007",
+    "properties": {
+      "status": "pendente",
+      "criada_em": {
+        "$date": "2026-11-04T13:15:00Z"
+      },
+      "atualizada_em": {
+        "$date": "2026-11-04T13:15:00Z"
+      }
+    }
+  },
+  {
+    "source_id": "a10000000000000000000010",
+    "target_id": "a10000000000000000000009",
+    "properties": {
+      "status": "pendente",
+      "criada_em": {
+        "$date": "2026-11-05T08:45:00Z"
+      },
+      "atualizada_em": {
+        "$date": "2026-11-05T08:45:00Z"
+      }
+    }
+  },
+  {
+    "source_id": "a10000000000000000000012",
+    "target_id": "a10000000000000000000011",
+    "properties": {
+      "status": "pendente",
+      "criada_em": {
+        "$date": "2026-11-05T16:00:00Z"
+      },
+      "atualizada_em": {
+        "$date": "2026-11-05T16:00:00Z"
+      }
+    }
+  },
+  {
+    "source_id": "a10000000000000000000014",
+    "target_id": "a10000000000000000000013",
+    "properties": {
+      "status": "pendente",
+      "criada_em": {
+        "$date": "2026-11-06T09:20:00Z"
+      },
+      "atualizada_em": {
+        "$date": "2026-11-06T09:20:00Z"
+      }
+    }
+  },
+  {
+    "source_id": "a10000000000000000000016",
+    "target_id": "a10000000000000000000015",
+    "properties": {
+      "status": "pendente",
+      "criada_em": {
+        "$date": "2026-11-06T17:10:00Z"
+      },
+      "atualizada_em": {
+        "$date": "2026-11-06T17:10:00Z"
+      }
+    }
+  }
+]

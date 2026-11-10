@@ -1,0 +1,112 @@
+[
+  {
+    "source_id": "671a2b3c4d5e6f7890123456",
+    "target_id": "671a2b3c4d5e6f7890124201",
+    "properties": {
+      "papel": "desenvolvedora",
+      "status": "ativo",
+      "desde": {
+        "$date": "2024-03-01T00:00:00Z"
+      }
+    }
+  },
+  {
+    "source_id": "671a2b3c4d5e6f7890123456",
+    "target_id": "671a2b3c4d5e6f7890124202",
+    "properties": {
+      "papel": "aluna",
+      "status": "ativo",
+      "desde": {
+        "$date": "2022-03-01T00:00:00Z"
+      }
+    }
+  },
+  {
+    "source_id": "a10000000000000000000003",
+    "target_id": "a30000000000000000000004",
+    "properties": {
+      "papel": "colaborador",
+      "status": "ativo",
+      "desde": {
+        "$date": "2023-02-01T00:00:00Z"
+      }
+    }
+  },
+  {
+    "source_id": "a10000000000000000000004",
+    "target_id": "a30000000000000000000005",
+    "properties": {
+      "papel": "analista",
+      "status": "ativo",
+      "desde": {
+        "$date": "2021-08-15T00:00:00Z"
+      }
+    }
+  },
+  {
+    "source_id": "a10000000000000000000005",
+    "target_id": "a30000000000000000000006",
+    "properties": {
+      "papel": "estudante",
+      "status": "ativo",
+      "desde": {
+        "$date": "2020-03-01T00:00:00Z"
+      }
+    }
+  },
+  {
+    "source_id": "a10000000000000000000006",
+    "target_id": "a30000000000000000000007",
+    "properties": {
+      "papel": "engenheira",
+      "status": "ativo",
+      "desde": {
+        "$date": "2022-06-01T00:00:00Z"
+      }
+    }
+  },
+  {
+    "source_id": "a10000000000000000000007",
+    "target_id": "a30000000000000000000008",
+    "properties": {
+      "papel": "pesquisador",
+      "status": "ativo",
+      "desde": {
+        "$date": "2021-02-01T00:00:00Z"
+      }
+    }
+  },
+  {
+    "source_id": "a10000000000000000000008",
+    "target_id": "a30000000000000000000009",
+    "properties": {
+      "papel": "desenvolvedora",
+      "status": "ativo",
+      "desde": {
+        "$date": "2024-01-15T00:00:00Z"
+      }
+    }
+  },
+  {
+    "source_id": "a10000000000000000000009",
+    "target_id": "a30000000000000000000010",
+    "properties": {
+      "papel": "coordenador",
+      "status": "ativo",
+      "desde": {
+        "$date": "2020-11-01T00:00:00Z"
+      }
+    }
+  },
+  {
+    "source_id": "a10000000000000000000010",
+    "target_id": "671a2b3c4d5e6f7890124202",
+    "properties": {
+      "papel": "aluna",
+      "status": "ativo",
+      "desde": {
+        "$date": "2023-03-01T00:00:00Z"
+      }
+    }
+  }
+]

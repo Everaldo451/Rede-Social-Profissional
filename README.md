@@ -54,3 +54,28 @@ Depois dos testes, encerre o ambiente:
 ```powershell
 docker compose -f docker/docker-compose.test.yaml down
 ```
+
+## Carregar dados de exemplo
+
+Com MongoDB, Redis e Neo4j disponíveis, execute o seed a partir da raiz do projeto.
+As contas de demonstração usam a senha `RedeSocial@2026`; o seed converte as
+senhas para hashes bcrypt antes de gravá-las:
+
+```powershell
+$env:MONGO_URI = "mongodb://localhost:27017"
+$env:MONGO_DATABASE = "rede_social"
+$env:REDIS_HOST = "localhost"
+$env:NEO4J_URI = "bolt://localhost:7687"
+uv run python -m seed
+```
+
+O comando atualiza ou insere os documentos dos arquivos em `seed/collections`,
+cria os índices definidos e recalcula `notifications:unread:<user_id>` com base
+nas notificações não lidas do MongoDB. No Neo4j, cria ou atualiza nós e
+relacionamentos derivados de habilidades, experiências, formação e mentorias.
+Os relacionamentos `CONECTADO_COM`, `SOLICITOU_CONEXAO`, `MEMBRO_DE` e `ENSINA`
+são carregados dos arquivos JSON em `seed/rellationships`; `ENSINA` é mantido
+independente de `aceita_mentoria` e das habilidades declaradas nos usuários.
+O seed não apaga documentos MongoDB, chaves Redis, nem nós ou relacionamentos
+existentes fora dos dados de seed. Os metadados em `midias.files.json` não
+incluem os blocos binários `midias.chunks` do GridFS.

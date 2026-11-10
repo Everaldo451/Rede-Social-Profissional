@@ -1,0 +1,482 @@
+[
+    {
+        "autor_id": {
+            "$oid": "671a2b3c4d5e6f7890123456"
+        },
+        "curtidas_count": 4,
+        "_id": {
+            "$oid": "671a2b3c4d5e6f7890124301"
+        },
+        "atualizado_em": {
+            "$date": "2026-10-01T15:40:00Z"
+        },
+        "texto": "Finalizei um projeto de API REST com Django!",
+        "criado_em": {
+            "$date": "2026-10-01T15:40:00Z"
+        }
+    },
+    {
+        "autor_id": {
+            "$oid": "671a2b3c4d5e6f7890123457"
+        },
+        "curtidas_count": 3,
+        "_id": {
+            "$oid": "a40000000000000000000002"
+        },
+        "atualizado_em": {
+            "$date": "2026-10-02T15:40:00Z"
+        },
+        "texto": "Aprendi bastante sobre arquitetura de software neste desafio.",
+        "criado_em": {
+            "$date": "2026-10-02T15:40:00Z"
+        }
+    },
+    {
+        "autor_id": {
+            "$oid": "a10000000000000000000003"
+        },
+        "curtidas_count": 4,
+        "_id": {
+            "$oid": "a40000000000000000000003"
+        },
+        "atualizado_em": {
+            "$date": "2026-10-03T15:40:00Z"
+        },
+        "texto": "Concluí mais uma etapa importante da minha jornada profissional.",
+        "criado_em": {
+            "$date": "2026-10-03T15:40:00Z"
+        }
+    },
+    {
+        "autor_id": {
+            "$oid": "a10000000000000000000004"
+        },
+        "curtidas_count": 3,
+        "_id": {
+            "$oid": "a40000000000000000000004"
+        },
+        "atualizado_em": {
+            "$date": "2026-10-04T15:40:00Z"
+        },
+        "texto": "Explorando novas ferramentas para melhorar a qualidade dos sistemas.",
+        "criado_em": {
+            "$date": "2026-10-04T15:40:00Z"
+        }
+    },
+    {
+        "autor_id": {
+            "$oid": "a10000000000000000000005"
+        },
+        "curtidas_count": 3,
+        "_id": {
+            "$oid": "a40000000000000000000005"
+        },
+        "atualizado_em": {
+            "$date": "2026-10-05T15:40:00Z"
+        },
+        "texto": "Hoje foi dia de colaborar em um projeto open source.",
+        "criado_em": {
+            "$date": "2026-10-05T15:40:00Z"
+        }
+    },
+    {
+        "autor_id": {
+            "$oid": "a10000000000000000000006"
+        },
+        "curtidas_count": 3,
+        "_id": {
+            "$oid": "a40000000000000000000006"
+        },
+        "atualizado_em": {
+            "$date": "2026-10-06T15:40:00Z"
+        },
+        "texto": "Compartilhando um novo projeto desenvolvido com a comunidade.",
+        "criado_em": {
+            "$date": "2026-10-06T15:40:00Z"
+        }
+    },
+    {
+        "autor_id": {
+            "$oid": "a10000000000000000000007"
+        },
+        "curtidas_count": 4,
+        "_id": {
+            "$oid": "a40000000000000000000007"
+        },
+        "atualizado_em": {
+            "$date": "2026-10-07T15:40:00Z"
+        },
+        "texto": "Aprendi bastante sobre arquitetura de software neste desafio.",
+        "criado_em": {
+            "$date": "2026-10-07T15:40:00Z"
+        }
+    },
+    {
+        "autor_id": {
+            "$oid": "a10000000000000000000008"
+        },
+        "curtidas_count": 3,
+        "_id": {
+            "$oid": "a40000000000000000000008"
+        },
+        "atualizado_em": {
+            "$date": "2026-10-08T15:40:00Z"
+        },
+        "texto": "Concluí mais uma etapa importante da minha jornada profissional.",
+        "criado_em": {
+            "$date": "2026-10-08T15:40:00Z"
+        }
+    },
+    {
+        "autor_id": {
+            "$oid": "a10000000000000000000009"
+        },
+        "curtidas_count": 3,
+        "_id": {
+            "$oid": "a40000000000000000000009"
+        },
+        "atualizado_em": {
+            "$date": "2026-10-09T15:40:00Z"
+        },
+        "texto": "Explorando novas ferramentas para melhorar a qualidade dos sistemas.",
+        "criado_em": {
+            "$date": "2026-10-09T15:40:00Z"
+        }
+    },
+    {
+        "autor_id": {
+            "$oid": "a10000000000000000000010"
+        },
+        "curtidas_count": 3,
+        "_id": {
+            "$oid": "a40000000000000000000010"
+        },
+        "atualizado_em": {
+            "$date": "2026-10-10T15:40:00Z"
+        },
+        "texto": "Hoje foi dia de colaborar em um projeto open source.",
+        "criado_em": {
+            "$date": "2026-10-10T15:40:00Z"
+        }
+    },
+    {
+        "autor_id": {
+            "$oid": "a10000000000000000000011"
+        },
+        "curtidas_count": 4,
+        "_id": {
+            "$oid": "a40000000000000000000011"
+        },
+        "atualizado_em": {
+            "$date": "2026-10-11T15:40:00Z"
+        },
+        "texto": "Compartilhando um novo projeto desenvolvido com a comunidade.",
+        "criado_em": {
+            "$date": "2026-10-11T15:40:00Z"
+        }
+    },
+    {
+        "autor_id": {
+            "$oid": "a10000000000000000000012"
+        },
+        "curtidas_count": 3,
+        "_id": {
+            "$oid": "a40000000000000000000012"
+        },
+        "atualizado_em": {
+            "$date": "2026-10-12T15:40:00Z"
+        },
+        "texto": "Aprendi bastante sobre arquitetura de software neste desafio.",
+        "criado_em": {
+            "$date": "2026-10-12T15:40:00Z"
+        }
+    },
+    {
+        "autor_id": {
+            "$oid": "a10000000000000000000013"
+        },
+        "curtidas_count": 3,
+        "_id": {
+            "$oid": "a40000000000000000000013"
+        },
+        "atualizado_em": {
+            "$date": "2026-10-13T15:40:00Z"
+        },
+        "texto": "Concluí mais uma etapa importante da minha jornada profissional.",
+        "criado_em": {
+            "$date": "2026-10-13T15:40:00Z"
+        }
+    },
+    {
+        "autor_id": {
+            "$oid": "a10000000000000000000014"
+        },
+        "curtidas_count": 3,
+        "_id": {
+            "$oid": "a40000000000000000000014"
+        },
+        "atualizado_em": {
+            "$date": "2026-10-14T15:40:00Z"
+        },
+        "texto": "Explorando novas ferramentas para melhorar a qualidade dos sistemas.",
+        "criado_em": {
+            "$date": "2026-10-14T15:40:00Z"
+        }
+    },
+    {
+        "autor_id": {
+            "$oid": "a10000000000000000000015"
+        },
+        "curtidas_count": 4,
+        "_id": {
+            "$oid": "a40000000000000000000015"
+        },
+        "atualizado_em": {
+            "$date": "2026-10-15T15:40:00Z"
+        },
+        "texto": "Hoje foi dia de colaborar em um projeto open source.",
+        "criado_em": {
+            "$date": "2026-10-15T15:40:00Z"
+        }
+    },
+    {
+        "autor_id": {
+            "$oid": "a10000000000000000000016"
+        },
+        "curtidas_count": 4,
+        "_id": {
+            "$oid": "a40000000000000000000016"
+        },
+        "atualizado_em": {
+            "$date": "2026-10-16T15:40:00Z"
+        },
+        "texto": "Compartilhando um novo projeto desenvolvido com a comunidade.",
+        "criado_em": {
+            "$date": "2026-10-16T15:40:00Z"
+        }
+    },
+    {
+        "autor_id": {
+            "$oid": "a10000000000000000000017"
+        },
+        "curtidas_count": 3,
+        "_id": {
+            "$oid": "a40000000000000000000017"
+        },
+        "atualizado_em": {
+            "$date": "2026-10-17T15:40:00Z"
+        },
+        "texto": "Aprendi bastante sobre arquitetura de software neste desafio.",
+        "criado_em": {
+            "$date": "2026-10-17T15:40:00Z"
+        }
+    },
+    {
+        "autor_id": {
+            "$oid": "a10000000000000000000018"
+        },
+        "curtidas_count": 3,
+        "_id": {
+            "$oid": "a40000000000000000000018"
+        },
+        "atualizado_em": {
+            "$date": "2026-10-18T15:40:00Z"
+        },
+        "texto": "Concluí mais uma etapa importante da minha jornada profissional.",
+        "criado_em": {
+            "$date": "2026-10-18T15:40:00Z"
+        }
+    },
+    {
+        "autor_id": {
+            "$oid": "a10000000000000000000019"
+        },
+        "curtidas_count": 3,
+        "_id": {
+            "$oid": "a40000000000000000000019"
+        },
+        "atualizado_em": {
+            "$date": "2026-10-19T15:40:00Z"
+        },
+        "texto": "Explorando novas ferramentas para melhorar a qualidade dos sistemas.",
+        "criado_em": {
+            "$date": "2026-10-19T15:40:00Z"
+        }
+    },
+    {
+        "autor_id": {
+            "$oid": "a10000000000000000000020"
+        },
+        "curtidas_count": 4,
+        "_id": {
+            "$oid": "a40000000000000000000020"
+        },
+        "atualizado_em": {
+            "$date": "2026-10-20T15:40:00Z"
+        },
+        "texto": "Hoje foi dia de colaborar em um projeto open source.",
+        "criado_em": {
+            "$date": "2026-10-20T15:40:00Z"
+        }
+    },
+    {
+        "autor_id": {
+            "$oid": "a10000000000000000000021"
+        },
+        "curtidas_count": 3,
+        "_id": {
+            "$oid": "a40000000000000000000021"
+        },
+        "atualizado_em": {
+            "$date": "2026-10-21T15:40:00Z"
+        },
+        "texto": "Compartilhando um novo projeto desenvolvido com a comunidade.",
+        "criado_em": {
+            "$date": "2026-10-21T15:40:00Z"
+        }
+    },
+    {
+        "autor_id": {
+            "$oid": "a10000000000000000000022"
+        },
+        "curtidas_count": 3,
+        "_id": {
+            "$oid": "a40000000000000000000022"
+        },
+        "atualizado_em": {
+            "$date": "2026-10-22T15:40:00Z"
+        },
+        "texto": "Aprendi bastante sobre arquitetura de software neste desafio.",
+        "criado_em": {
+            "$date": "2026-10-22T15:40:00Z"
+        }
+    },
+    {
+        "autor_id": {
+            "$oid": "a10000000000000000000023"
+        },
+        "curtidas_count": 3,
+        "_id": {
+            "$oid": "a40000000000000000000023"
+        },
+        "atualizado_em": {
+            "$date": "2026-10-23T15:40:00Z"
+        },
+        "texto": "Concluí mais uma etapa importante da minha jornada profissional.",
+        "criado_em": {
+            "$date": "2026-10-23T15:40:00Z"
+        }
+    },
+    {
+        "autor_id": {
+            "$oid": "a10000000000000000000024"
+        },
+        "curtidas_count": 4,
+        "_id": {
+            "$oid": "a40000000000000000000024"
+        },
+        "atualizado_em": {
+            "$date": "2026-10-24T15:40:00Z"
+        },
+        "texto": "Explorando novas ferramentas para melhorar a qualidade dos sistemas.",
+        "criado_em": {
+            "$date": "2026-10-24T15:40:00Z"
+        }
+    },
+    {
+        "autor_id": {
+            "$oid": "a10000000000000000000025"
+        },
+        "curtidas_count": 3,
+        "_id": {
+            "$oid": "a40000000000000000000025"
+        },
+        "atualizado_em": {
+            "$date": "2026-10-25T15:40:00Z"
+        },
+        "texto": "Hoje foi dia de colaborar em um projeto open source.",
+        "criado_em": {
+            "$date": "2026-10-25T15:40:00Z"
+        }
+    },
+    {
+        "autor_id": {
+            "$oid": "a10000000000000000000026"
+        },
+        "curtidas_count": 3,
+        "_id": {
+            "$oid": "a40000000000000000000026"
+        },
+        "atualizado_em": {
+            "$date": "2026-10-26T15:40:00Z"
+        },
+        "texto": "Compartilhando um novo projeto desenvolvido com a comunidade.",
+        "criado_em": {
+            "$date": "2026-10-26T15:40:00Z"
+        }
+    },
+    {
+        "autor_id": {
+            "$oid": "a10000000000000000000027"
+        },
+        "curtidas_count": 3,
+        "_id": {
+            "$oid": "a40000000000000000000027"
+        },
+        "atualizado_em": {
+            "$date": "2026-10-27T15:40:00Z"
+        },
+        "texto": "Aprendi bastante sobre arquitetura de software neste desafio.",
+        "criado_em": {
+            "$date": "2026-10-27T15:40:00Z"
+        }
+    },
+    {
+        "autor_id": {
+            "$oid": "a10000000000000000000028"
+        },
+        "curtidas_count": 4,
+        "_id": {
+            "$oid": "a40000000000000000000028"
+        },
+        "atualizado_em": {
+            "$date": "2026-10-28T15:40:00Z"
+        },
+        "texto": "Concluí mais uma etapa importante da minha jornada profissional.",
+        "criado_em": {
+            "$date": "2026-10-28T15:40:00Z"
+        }
+    },
+    {
+        "autor_id": {
+            "$oid": "a10000000000000000000029"
+        },
+        "curtidas_count": 4,
+        "_id": {
+            "$oid": "a40000000000000000000029"
+        },
+        "atualizado_em": {
+            "$date": "2026-10-01T15:40:00Z"
+        },
+        "texto": "Explorando novas ferramentas para melhorar a qualidade dos sistemas.",
+        "criado_em": {
+            "$date": "2026-10-01T15:40:00Z"
+        }
+    },
+    {
+        "autor_id": {
+            "$oid": "a10000000000000000000030"
+        },
+        "curtidas_count": 3,
+        "_id": {
+            "$oid": "a40000000000000000000030"
+        },
+        "atualizado_em": {
+            "$date": "2026-10-02T15:40:00Z"
+        },
+        "texto": "Hoje foi dia de colaborar em um projeto open source.",
+        "criado_em": {
+            "$date": "2026-10-02T15:40:00Z"
+        }
+    }
+]

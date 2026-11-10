@@ -1,0 +1,227 @@
+[
+    {
+        "descricao": "Conhecimento em Python aplicado ao desenvolvimento de software.",
+        "criado_em": {
+            "$date": "2026-10-01T10:00:00Z"
+        },
+        "_id": {
+            "$oid": "671a2b3c4d5e6f7890123459"
+        },
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "nome_normalizado": "python",
+        "nome": "Python",
+        "categoria": "Linguagem de Programação"
+    },
+    {
+        "descricao": "Conhecimento em Django aplicado ao desenvolvimento de software.",
+        "criado_em": {
+            "$date": "2026-10-01T10:00:00Z"
+        },
+        "_id": {
+            "$oid": "671a2b3c4d5e6f7890123460"
+        },
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "nome_normalizado": "django",
+        "nome": "Django",
+        "categoria": "Framework"
+    },
+    {
+        "descricao": "Conhecimento em JavaScript aplicado ao desenvolvimento de software.",
+        "criado_em": {
+            "$date": "2026-10-01T10:00:00Z"
+        },
+        "_id": {
+            "$oid": "a20000000000000000000003"
+        },
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "nome_normalizado": "javascript",
+        "nome": "JavaScript",
+        "categoria": "Linguagem de Programação"
+    },
+    {
+        "descricao": "Conhecimento em TypeScript aplicado ao desenvolvimento de software.",
+        "criado_em": {
+            "$date": "2026-10-01T10:00:00Z"
+        },
+        "_id": {
+            "$oid": "a20000000000000000000004"
+        },
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "nome_normalizado": "typescript",
+        "nome": "TypeScript",
+        "categoria": "Linguagem de Programação"
+    },
+    {
+        "descricao": "Conhecimento em React aplicado ao desenvolvimento de software.",
+        "criado_em": {
+            "$date": "2026-10-01T10:00:00Z"
+        },
+        "_id": {
+            "$oid": "a20000000000000000000005"
+        },
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "nome_normalizado": "react",
+        "nome": "React",
+        "categoria": "Framework"
+    },
+    {
+        "descricao": "Conhecimento em Node.js aplicado ao desenvolvimento de software.",
+        "criado_em": {
+            "$date": "2026-10-01T10:00:00Z"
+        },
+        "_id": {
+            "$oid": "a20000000000000000000006"
+        },
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "nome_normalizado": "node.js",
+        "nome": "Node.js",
+        "categoria": "Runtime"
+    },
+    {
+        "descricao": "Conhecimento em MongoDB aplicado ao desenvolvimento de software.",
+        "criado_em": {
+            "$date": "2026-10-01T10:00:00Z"
+        },
+        "_id": {
+            "$oid": "a20000000000000000000007"
+        },
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "nome_normalizado": "mongodb",
+        "nome": "MongoDB",
+        "categoria": "Banco de Dados"
+    },
+    {
+        "descricao": "Conhecimento em PostgreSQL aplicado ao desenvolvimento de software.",
+        "criado_em": {
+            "$date": "2026-10-01T10:00:00Z"
+        },
+        "_id": {
+            "$oid": "a20000000000000000000008"
+        },
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "nome_normalizado": "postgresql",
+        "nome": "PostgreSQL",
+        "categoria": "Banco de Dados"
+    },
+    {
+        "descricao": "Conhecimento em Redis aplicado ao desenvolvimento de software.",
+        "criado_em": {
+            "$date": "2026-10-01T10:00:00Z"
+        },
+        "_id": {
+            "$oid": "a20000000000000000000009"
+        },
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "nome_normalizado": "redis",
+        "nome": "Redis",
+        "categoria": "Banco de Dados"
+    },
+    {
+        "descricao": "Conhecimento em Docker aplicado ao desenvolvimento de software.",
+        "criado_em": {
+            "$date": "2026-10-01T10:00:00Z"
+        },
+        "_id": {
+            "$oid": "a20000000000000000000010"
+        },
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "nome_normalizado": "docker",
+        "nome": "Docker",
+        "categoria": "DevOps"
+    },
+    {
+        "descricao": "Conhecimento em Git aplicado ao desenvolvimento de software.",
+        "criado_em": {
+            "$date": "2026-10-01T10:00:00Z"
+        },
+        "_id": {
+            "$oid": "a20000000000000000000011"
+        },
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "nome_normalizado": "git",
+        "nome": "Git",
+        "categoria": "Ferramenta"
+    },
+    {
+        "descricao": "Conhecimento em Java aplicado ao desenvolvimento de software.",
+        "criado_em": {
+            "$date": "2026-10-01T10:00:00Z"
+        },
+        "_id": {
+            "$oid": "a20000000000000000000012"
+        },
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "nome_normalizado": "java",
+        "nome": "Java",
+        "categoria": "Linguagem de Programação"
+    },
+    {
+        "descricao": "Conhecimento em C# aplicado ao desenvolvimento de software.",
+        "criado_em": {
+            "$date": "2026-10-01T10:00:00Z"
+        },
+        "_id": {
+            "$oid": "a20000000000000000000013"
+        },
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "nome_normalizado": "c#",
+        "nome": "C#",
+        "categoria": "Linguagem de Programação"
+    },
+    {
+        "descricao": "Conhecimento em AWS aplicado ao desenvolvimento de software.",
+        "criado_em": {
+            "$date": "2026-10-01T10:00:00Z"
+        },
+        "_id": {
+            "$oid": "a20000000000000000000014"
+        },
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "nome_normalizado": "aws",
+        "nome": "AWS",
+        "categoria": "Cloud"
+    },
+    {
+        "descricao": "Conhecimento em Neo4j aplicado ao desenvolvimento de software.",
+        "criado_em": {
+            "$date": "2026-10-01T10:00:00Z"
+        },
+        "_id": {
+            "$oid": "a20000000000000000000015"
+        },
+        "atualizado_em": {
+            "$date": "2026-10-20T15:30:00Z"
+        },
+        "nome_normalizado": "neo4j",
+        "nome": "Neo4j",
+        "categoria": "Banco de Dados"
+    }
+]

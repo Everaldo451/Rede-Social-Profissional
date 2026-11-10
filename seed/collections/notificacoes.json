@@ -1,0 +1,1802 @@
+[
+    {
+        "referencia_tipo": "usuario",
+        "destinatario_id": {
+            "$oid": "671a2b3c4d5e6f7890123456"
+        },
+        "tipo": "nova_conexao",
+        "criado_em": {
+            "$date": "2026-10-26T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "671a2b3c4d5e6f7890124601"
+        },
+        "referencia_id": {
+            "$oid": "671a2b3c4d5e6f7890123457"
+        },
+        "titulo": "Nova conexão profissional",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "post",
+        "destinatario_id": {
+            "$oid": "671a2b3c4d5e6f7890123457"
+        },
+        "tipo": "curtida",
+        "criado_em": {
+            "$date": "2026-11-02T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000002"
+        },
+        "referencia_id": {
+            "$oid": "a40000000000000000000002"
+        },
+        "titulo": "Sua publicação recebeu uma curtida",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "post",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000003"
+        },
+        "tipo": "comentario",
+        "criado_em": {
+            "$date": "2026-11-03T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000003"
+        },
+        "referencia_id": {
+            "$oid": "a40000000000000000000003"
+        },
+        "titulo": "Novo comentário na publicação",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "mentoria",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000004"
+        },
+        "tipo": "mentoria",
+        "criado_em": {
+            "$date": "2026-11-04T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000004"
+        },
+        "referencia_id": {
+            "$oid": "a80000000000000000000004"
+        },
+        "titulo": "Nova solicitação de mentoria",
+        "lida": true
+    },
+    {
+        "referencia_tipo": "usuario",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000005"
+        },
+        "tipo": "nova_conexao",
+        "criado_em": {
+            "$date": "2026-11-05T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000005"
+        },
+        "referencia_id": {
+            "$oid": "a10000000000000000000006"
+        },
+        "titulo": "Nova conexão profissional",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "post",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000006"
+        },
+        "tipo": "curtida",
+        "criado_em": {
+            "$date": "2026-11-06T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000006"
+        },
+        "referencia_id": {
+            "$oid": "a40000000000000000000006"
+        },
+        "titulo": "Sua publicação recebeu uma curtida",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "post",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000007"
+        },
+        "tipo": "comentario",
+        "criado_em": {
+            "$date": "2026-11-07T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000007"
+        },
+        "referencia_id": {
+            "$oid": "a40000000000000000000007"
+        },
+        "titulo": "Novo comentário na publicação",
+        "lida": true
+    },
+    {
+        "referencia_tipo": "mentoria",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000008"
+        },
+        "tipo": "mentoria",
+        "criado_em": {
+            "$date": "2026-11-08T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000008"
+        },
+        "referencia_id": {
+            "$oid": "a80000000000000000000008"
+        },
+        "titulo": "Nova solicitação de mentoria",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "usuario",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000009"
+        },
+        "tipo": "nova_conexao",
+        "criado_em": {
+            "$date": "2026-11-09T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000009"
+        },
+        "referencia_id": {
+            "$oid": "a10000000000000000000010"
+        },
+        "titulo": "Nova conexão profissional",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "post",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000010"
+        },
+        "tipo": "curtida",
+        "criado_em": {
+            "$date": "2026-11-01T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000010"
+        },
+        "referencia_id": {
+            "$oid": "a40000000000000000000010"
+        },
+        "titulo": "Sua publicação recebeu uma curtida",
+        "lida": true
+    },
+    {
+        "referencia_tipo": "post",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000011"
+        },
+        "tipo": "comentario",
+        "criado_em": {
+            "$date": "2026-11-02T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000011"
+        },
+        "referencia_id": {
+            "$oid": "a40000000000000000000011"
+        },
+        "titulo": "Novo comentário na publicação",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "mentoria",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000012"
+        },
+        "tipo": "mentoria",
+        "criado_em": {
+            "$date": "2026-11-03T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000012"
+        },
+        "referencia_id": {
+            "$oid": "a80000000000000000000012"
+        },
+        "titulo": "Nova solicitação de mentoria",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "usuario",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000013"
+        },
+        "tipo": "nova_conexao",
+        "criado_em": {
+            "$date": "2026-11-04T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000013"
+        },
+        "referencia_id": {
+            "$oid": "a10000000000000000000014"
+        },
+        "titulo": "Nova conexão profissional",
+        "lida": true
+    },
+    {
+        "referencia_tipo": "post",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000014"
+        },
+        "tipo": "curtida",
+        "criado_em": {
+            "$date": "2026-11-05T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000014"
+        },
+        "referencia_id": {
+            "$oid": "a40000000000000000000014"
+        },
+        "titulo": "Sua publicação recebeu uma curtida",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "post",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000015"
+        },
+        "tipo": "comentario",
+        "criado_em": {
+            "$date": "2026-11-06T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000015"
+        },
+        "referencia_id": {
+            "$oid": "a40000000000000000000015"
+        },
+        "titulo": "Novo comentário na publicação",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "mentoria",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000016"
+        },
+        "tipo": "mentoria",
+        "criado_em": {
+            "$date": "2026-11-07T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000016"
+        },
+        "referencia_id": {
+            "$oid": "a80000000000000000000016"
+        },
+        "titulo": "Nova solicitação de mentoria",
+        "lida": true
+    },
+    {
+        "referencia_tipo": "usuario",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000017"
+        },
+        "tipo": "nova_conexao",
+        "criado_em": {
+            "$date": "2026-11-08T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000017"
+        },
+        "referencia_id": {
+            "$oid": "a10000000000000000000018"
+        },
+        "titulo": "Nova conexão profissional",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "post",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000018"
+        },
+        "tipo": "curtida",
+        "criado_em": {
+            "$date": "2026-11-09T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000018"
+        },
+        "referencia_id": {
+            "$oid": "a40000000000000000000018"
+        },
+        "titulo": "Sua publicação recebeu uma curtida",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "post",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000019"
+        },
+        "tipo": "comentario",
+        "criado_em": {
+            "$date": "2026-11-01T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000019"
+        },
+        "referencia_id": {
+            "$oid": "a40000000000000000000019"
+        },
+        "titulo": "Novo comentário na publicação",
+        "lida": true
+    },
+    {
+        "referencia_tipo": "mentoria",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000020"
+        },
+        "tipo": "mentoria",
+        "criado_em": {
+            "$date": "2026-11-02T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000020"
+        },
+        "referencia_id": {
+            "$oid": "a80000000000000000000020"
+        },
+        "titulo": "Nova solicitação de mentoria",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "usuario",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000021"
+        },
+        "tipo": "nova_conexao",
+        "criado_em": {
+            "$date": "2026-11-03T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000021"
+        },
+        "referencia_id": {
+            "$oid": "a10000000000000000000022"
+        },
+        "titulo": "Nova conexão profissional",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "post",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000022"
+        },
+        "tipo": "curtida",
+        "criado_em": {
+            "$date": "2026-11-04T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000022"
+        },
+        "referencia_id": {
+            "$oid": "a40000000000000000000022"
+        },
+        "titulo": "Sua publicação recebeu uma curtida",
+        "lida": true
+    },
+    {
+        "referencia_tipo": "post",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000023"
+        },
+        "tipo": "comentario",
+        "criado_em": {
+            "$date": "2026-11-05T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000023"
+        },
+        "referencia_id": {
+            "$oid": "a40000000000000000000023"
+        },
+        "titulo": "Novo comentário na publicação",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "mentoria",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000024"
+        },
+        "tipo": "mentoria",
+        "criado_em": {
+            "$date": "2026-11-06T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000024"
+        },
+        "referencia_id": {
+            "$oid": "a80000000000000000000004"
+        },
+        "titulo": "Nova solicitação de mentoria",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "usuario",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000025"
+        },
+        "tipo": "nova_conexao",
+        "criado_em": {
+            "$date": "2026-11-07T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000025"
+        },
+        "referencia_id": {
+            "$oid": "a10000000000000000000026"
+        },
+        "titulo": "Nova conexão profissional",
+        "lida": true
+    },
+    {
+        "referencia_tipo": "post",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000026"
+        },
+        "tipo": "curtida",
+        "criado_em": {
+            "$date": "2026-11-08T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000026"
+        },
+        "referencia_id": {
+            "$oid": "a40000000000000000000026"
+        },
+        "titulo": "Sua publicação recebeu uma curtida",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "post",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000027"
+        },
+        "tipo": "comentario",
+        "criado_em": {
+            "$date": "2026-11-09T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000027"
+        },
+        "referencia_id": {
+            "$oid": "a40000000000000000000027"
+        },
+        "titulo": "Novo comentário na publicação",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "mentoria",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000028"
+        },
+        "tipo": "mentoria",
+        "criado_em": {
+            "$date": "2026-11-01T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000028"
+        },
+        "referencia_id": {
+            "$oid": "a80000000000000000000008"
+        },
+        "titulo": "Nova solicitação de mentoria",
+        "lida": true
+    },
+    {
+        "referencia_tipo": "usuario",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000029"
+        },
+        "tipo": "nova_conexao",
+        "criado_em": {
+            "$date": "2026-11-02T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000029"
+        },
+        "referencia_id": {
+            "$oid": "a10000000000000000000030"
+        },
+        "titulo": "Nova conexão profissional",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "post",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000030"
+        },
+        "tipo": "curtida",
+        "criado_em": {
+            "$date": "2026-11-03T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000030"
+        },
+        "referencia_id": {
+            "$oid": "a40000000000000000000030"
+        },
+        "titulo": "Sua publicação recebeu uma curtida",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "post",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000031"
+        },
+        "tipo": "comentario",
+        "criado_em": {
+            "$date": "2026-11-04T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000031"
+        },
+        "referencia_id": {
+            "$oid": "671a2b3c4d5e6f7890124301"
+        },
+        "titulo": "Novo comentário na publicação",
+        "lida": true
+    },
+    {
+        "referencia_tipo": "mentoria",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000032"
+        },
+        "tipo": "mentoria",
+        "criado_em": {
+            "$date": "2026-11-05T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000032"
+        },
+        "referencia_id": {
+            "$oid": "a80000000000000000000012"
+        },
+        "titulo": "Nova solicitação de mentoria",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "usuario",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000033"
+        },
+        "tipo": "nova_conexao",
+        "criado_em": {
+            "$date": "2026-11-06T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000033"
+        },
+        "referencia_id": {
+            "$oid": "a10000000000000000000034"
+        },
+        "titulo": "Nova conexão profissional",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "post",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000034"
+        },
+        "tipo": "curtida",
+        "criado_em": {
+            "$date": "2026-11-07T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000034"
+        },
+        "referencia_id": {
+            "$oid": "a40000000000000000000004"
+        },
+        "titulo": "Sua publicação recebeu uma curtida",
+        "lida": true
+    },
+    {
+        "referencia_tipo": "post",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000035"
+        },
+        "tipo": "comentario",
+        "criado_em": {
+            "$date": "2026-11-08T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000035"
+        },
+        "referencia_id": {
+            "$oid": "a40000000000000000000005"
+        },
+        "titulo": "Novo comentário na publicação",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "mentoria",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000036"
+        },
+        "tipo": "mentoria",
+        "criado_em": {
+            "$date": "2026-11-09T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000036"
+        },
+        "referencia_id": {
+            "$oid": "a80000000000000000000016"
+        },
+        "titulo": "Nova solicitação de mentoria",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "usuario",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000037"
+        },
+        "tipo": "nova_conexao",
+        "criado_em": {
+            "$date": "2026-11-01T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000037"
+        },
+        "referencia_id": {
+            "$oid": "a10000000000000000000038"
+        },
+        "titulo": "Nova conexão profissional",
+        "lida": true
+    },
+    {
+        "referencia_tipo": "post",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000038"
+        },
+        "tipo": "curtida",
+        "criado_em": {
+            "$date": "2026-11-02T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000038"
+        },
+        "referencia_id": {
+            "$oid": "a40000000000000000000008"
+        },
+        "titulo": "Sua publicação recebeu uma curtida",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "post",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000039"
+        },
+        "tipo": "comentario",
+        "criado_em": {
+            "$date": "2026-11-03T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000039"
+        },
+        "referencia_id": {
+            "$oid": "a40000000000000000000009"
+        },
+        "titulo": "Novo comentário na publicação",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "mentoria",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000040"
+        },
+        "tipo": "mentoria",
+        "criado_em": {
+            "$date": "2026-11-04T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000040"
+        },
+        "referencia_id": {
+            "$oid": "a80000000000000000000020"
+        },
+        "titulo": "Nova solicitação de mentoria",
+        "lida": true
+    },
+    {
+        "referencia_tipo": "usuario",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000041"
+        },
+        "tipo": "nova_conexao",
+        "criado_em": {
+            "$date": "2026-11-05T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000041"
+        },
+        "referencia_id": {
+            "$oid": "a10000000000000000000042"
+        },
+        "titulo": "Nova conexão profissional",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "post",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000042"
+        },
+        "tipo": "curtida",
+        "criado_em": {
+            "$date": "2026-11-06T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000042"
+        },
+        "referencia_id": {
+            "$oid": "a40000000000000000000012"
+        },
+        "titulo": "Sua publicação recebeu uma curtida",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "post",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000043"
+        },
+        "tipo": "comentario",
+        "criado_em": {
+            "$date": "2026-11-07T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000043"
+        },
+        "referencia_id": {
+            "$oid": "a40000000000000000000013"
+        },
+        "titulo": "Novo comentário na publicação",
+        "lida": true
+    },
+    {
+        "referencia_tipo": "mentoria",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000044"
+        },
+        "tipo": "mentoria",
+        "criado_em": {
+            "$date": "2026-11-08T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000044"
+        },
+        "referencia_id": {
+            "$oid": "a80000000000000000000004"
+        },
+        "titulo": "Nova solicitação de mentoria",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "usuario",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000045"
+        },
+        "tipo": "nova_conexao",
+        "criado_em": {
+            "$date": "2026-11-09T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000045"
+        },
+        "referencia_id": {
+            "$oid": "a10000000000000000000046"
+        },
+        "titulo": "Nova conexão profissional",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "post",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000046"
+        },
+        "tipo": "curtida",
+        "criado_em": {
+            "$date": "2026-11-01T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000046"
+        },
+        "referencia_id": {
+            "$oid": "a40000000000000000000016"
+        },
+        "titulo": "Sua publicação recebeu uma curtida",
+        "lida": true
+    },
+    {
+        "referencia_tipo": "post",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000047"
+        },
+        "tipo": "comentario",
+        "criado_em": {
+            "$date": "2026-11-02T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000047"
+        },
+        "referencia_id": {
+            "$oid": "a40000000000000000000017"
+        },
+        "titulo": "Novo comentário na publicação",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "mentoria",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000048"
+        },
+        "tipo": "mentoria",
+        "criado_em": {
+            "$date": "2026-11-03T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000048"
+        },
+        "referencia_id": {
+            "$oid": "a80000000000000000000008"
+        },
+        "titulo": "Nova solicitação de mentoria",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "usuario",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000049"
+        },
+        "tipo": "nova_conexao",
+        "criado_em": {
+            "$date": "2026-11-04T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000049"
+        },
+        "referencia_id": {
+            "$oid": "a10000000000000000000050"
+        },
+        "titulo": "Nova conexão profissional",
+        "lida": true
+    },
+    {
+        "referencia_tipo": "post",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000050"
+        },
+        "tipo": "curtida",
+        "criado_em": {
+            "$date": "2026-11-05T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000050"
+        },
+        "referencia_id": {
+            "$oid": "a40000000000000000000020"
+        },
+        "titulo": "Sua publicação recebeu uma curtida",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "post",
+        "destinatario_id": {
+            "$oid": "671a2b3c4d5e6f7890123456"
+        },
+        "tipo": "comentario",
+        "criado_em": {
+            "$date": "2026-11-06T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000051"
+        },
+        "referencia_id": {
+            "$oid": "a40000000000000000000021"
+        },
+        "titulo": "Novo comentário na publicação",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "mentoria",
+        "destinatario_id": {
+            "$oid": "671a2b3c4d5e6f7890123457"
+        },
+        "tipo": "mentoria",
+        "criado_em": {
+            "$date": "2026-11-07T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000052"
+        },
+        "referencia_id": {
+            "$oid": "a80000000000000000000012"
+        },
+        "titulo": "Nova solicitação de mentoria",
+        "lida": true
+    },
+    {
+        "referencia_tipo": "usuario",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000003"
+        },
+        "tipo": "nova_conexao",
+        "criado_em": {
+            "$date": "2026-11-08T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000053"
+        },
+        "referencia_id": {
+            "$oid": "a10000000000000000000004"
+        },
+        "titulo": "Nova conexão profissional",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "post",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000004"
+        },
+        "tipo": "curtida",
+        "criado_em": {
+            "$date": "2026-11-09T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000054"
+        },
+        "referencia_id": {
+            "$oid": "a40000000000000000000024"
+        },
+        "titulo": "Sua publicação recebeu uma curtida",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "post",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000005"
+        },
+        "tipo": "comentario",
+        "criado_em": {
+            "$date": "2026-11-01T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000055"
+        },
+        "referencia_id": {
+            "$oid": "a40000000000000000000025"
+        },
+        "titulo": "Novo comentário na publicação",
+        "lida": true
+    },
+    {
+        "referencia_tipo": "mentoria",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000006"
+        },
+        "tipo": "mentoria",
+        "criado_em": {
+            "$date": "2026-11-02T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000056"
+        },
+        "referencia_id": {
+            "$oid": "a80000000000000000000016"
+        },
+        "titulo": "Nova solicitação de mentoria",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "usuario",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000007"
+        },
+        "tipo": "nova_conexao",
+        "criado_em": {
+            "$date": "2026-11-03T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000057"
+        },
+        "referencia_id": {
+            "$oid": "a10000000000000000000008"
+        },
+        "titulo": "Nova conexão profissional",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "post",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000008"
+        },
+        "tipo": "curtida",
+        "criado_em": {
+            "$date": "2026-11-04T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000058"
+        },
+        "referencia_id": {
+            "$oid": "a40000000000000000000028"
+        },
+        "titulo": "Sua publicação recebeu uma curtida",
+        "lida": true
+    },
+    {
+        "referencia_tipo": "post",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000009"
+        },
+        "tipo": "comentario",
+        "criado_em": {
+            "$date": "2026-11-05T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000059"
+        },
+        "referencia_id": {
+            "$oid": "a40000000000000000000029"
+        },
+        "titulo": "Novo comentário na publicação",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "mentoria",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000010"
+        },
+        "tipo": "mentoria",
+        "criado_em": {
+            "$date": "2026-11-06T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000060"
+        },
+        "referencia_id": {
+            "$oid": "a80000000000000000000020"
+        },
+        "titulo": "Nova solicitação de mentoria",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "usuario",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000011"
+        },
+        "tipo": "nova_conexao",
+        "criado_em": {
+            "$date": "2026-11-07T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000061"
+        },
+        "referencia_id": {
+            "$oid": "a10000000000000000000012"
+        },
+        "titulo": "Nova conexão profissional",
+        "lida": true
+    },
+    {
+        "referencia_tipo": "post",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000012"
+        },
+        "tipo": "curtida",
+        "criado_em": {
+            "$date": "2026-11-08T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000062"
+        },
+        "referencia_id": {
+            "$oid": "a40000000000000000000002"
+        },
+        "titulo": "Sua publicação recebeu uma curtida",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "post",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000013"
+        },
+        "tipo": "comentario",
+        "criado_em": {
+            "$date": "2026-11-09T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000063"
+        },
+        "referencia_id": {
+            "$oid": "a40000000000000000000003"
+        },
+        "titulo": "Novo comentário na publicação",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "mentoria",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000014"
+        },
+        "tipo": "mentoria",
+        "criado_em": {
+            "$date": "2026-11-01T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000064"
+        },
+        "referencia_id": {
+            "$oid": "a80000000000000000000004"
+        },
+        "titulo": "Nova solicitação de mentoria",
+        "lida": true
+    },
+    {
+        "referencia_tipo": "usuario",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000015"
+        },
+        "tipo": "nova_conexao",
+        "criado_em": {
+            "$date": "2026-11-02T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000065"
+        },
+        "referencia_id": {
+            "$oid": "a10000000000000000000016"
+        },
+        "titulo": "Nova conexão profissional",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "post",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000016"
+        },
+        "tipo": "curtida",
+        "criado_em": {
+            "$date": "2026-11-03T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000066"
+        },
+        "referencia_id": {
+            "$oid": "a40000000000000000000006"
+        },
+        "titulo": "Sua publicação recebeu uma curtida",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "post",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000017"
+        },
+        "tipo": "comentario",
+        "criado_em": {
+            "$date": "2026-11-04T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000067"
+        },
+        "referencia_id": {
+            "$oid": "a40000000000000000000007"
+        },
+        "titulo": "Novo comentário na publicação",
+        "lida": true
+    },
+    {
+        "referencia_tipo": "mentoria",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000018"
+        },
+        "tipo": "mentoria",
+        "criado_em": {
+            "$date": "2026-11-05T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000068"
+        },
+        "referencia_id": {
+            "$oid": "a80000000000000000000008"
+        },
+        "titulo": "Nova solicitação de mentoria",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "usuario",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000019"
+        },
+        "tipo": "nova_conexao",
+        "criado_em": {
+            "$date": "2026-11-06T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000069"
+        },
+        "referencia_id": {
+            "$oid": "a10000000000000000000020"
+        },
+        "titulo": "Nova conexão profissional",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "post",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000020"
+        },
+        "tipo": "curtida",
+        "criado_em": {
+            "$date": "2026-11-07T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000070"
+        },
+        "referencia_id": {
+            "$oid": "a40000000000000000000010"
+        },
+        "titulo": "Sua publicação recebeu uma curtida",
+        "lida": true
+    },
+    {
+        "referencia_tipo": "post",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000021"
+        },
+        "tipo": "comentario",
+        "criado_em": {
+            "$date": "2026-11-08T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000071"
+        },
+        "referencia_id": {
+            "$oid": "a40000000000000000000011"
+        },
+        "titulo": "Novo comentário na publicação",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "mentoria",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000022"
+        },
+        "tipo": "mentoria",
+        "criado_em": {
+            "$date": "2026-11-09T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000072"
+        },
+        "referencia_id": {
+            "$oid": "a80000000000000000000012"
+        },
+        "titulo": "Nova solicitação de mentoria",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "usuario",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000023"
+        },
+        "tipo": "nova_conexao",
+        "criado_em": {
+            "$date": "2026-11-01T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000073"
+        },
+        "referencia_id": {
+            "$oid": "a10000000000000000000024"
+        },
+        "titulo": "Nova conexão profissional",
+        "lida": true
+    },
+    {
+        "referencia_tipo": "post",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000024"
+        },
+        "tipo": "curtida",
+        "criado_em": {
+            "$date": "2026-11-02T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000074"
+        },
+        "referencia_id": {
+            "$oid": "a40000000000000000000014"
+        },
+        "titulo": "Sua publicação recebeu uma curtida",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "post",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000025"
+        },
+        "tipo": "comentario",
+        "criado_em": {
+            "$date": "2026-11-03T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000075"
+        },
+        "referencia_id": {
+            "$oid": "a40000000000000000000015"
+        },
+        "titulo": "Novo comentário na publicação",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "mentoria",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000026"
+        },
+        "tipo": "mentoria",
+        "criado_em": {
+            "$date": "2026-11-04T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000076"
+        },
+        "referencia_id": {
+            "$oid": "a80000000000000000000016"
+        },
+        "titulo": "Nova solicitação de mentoria",
+        "lida": true
+    },
+    {
+        "referencia_tipo": "usuario",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000027"
+        },
+        "tipo": "nova_conexao",
+        "criado_em": {
+            "$date": "2026-11-05T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000077"
+        },
+        "referencia_id": {
+            "$oid": "a10000000000000000000028"
+        },
+        "titulo": "Nova conexão profissional",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "post",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000028"
+        },
+        "tipo": "curtida",
+        "criado_em": {
+            "$date": "2026-11-06T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000078"
+        },
+        "referencia_id": {
+            "$oid": "a40000000000000000000018"
+        },
+        "titulo": "Sua publicação recebeu uma curtida",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "post",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000029"
+        },
+        "tipo": "comentario",
+        "criado_em": {
+            "$date": "2026-11-07T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000079"
+        },
+        "referencia_id": {
+            "$oid": "a40000000000000000000019"
+        },
+        "titulo": "Novo comentário na publicação",
+        "lida": true
+    },
+    {
+        "referencia_tipo": "mentoria",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000030"
+        },
+        "tipo": "mentoria",
+        "criado_em": {
+            "$date": "2026-11-08T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000080"
+        },
+        "referencia_id": {
+            "$oid": "a80000000000000000000020"
+        },
+        "titulo": "Nova solicitação de mentoria",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "usuario",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000031"
+        },
+        "tipo": "nova_conexao",
+        "criado_em": {
+            "$date": "2026-11-09T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000081"
+        },
+        "referencia_id": {
+            "$oid": "a10000000000000000000032"
+        },
+        "titulo": "Nova conexão profissional",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "post",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000032"
+        },
+        "tipo": "curtida",
+        "criado_em": {
+            "$date": "2026-11-01T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000082"
+        },
+        "referencia_id": {
+            "$oid": "a40000000000000000000022"
+        },
+        "titulo": "Sua publicação recebeu uma curtida",
+        "lida": true
+    },
+    {
+        "referencia_tipo": "post",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000033"
+        },
+        "tipo": "comentario",
+        "criado_em": {
+            "$date": "2026-11-02T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000083"
+        },
+        "referencia_id": {
+            "$oid": "a40000000000000000000023"
+        },
+        "titulo": "Novo comentário na publicação",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "mentoria",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000034"
+        },
+        "tipo": "mentoria",
+        "criado_em": {
+            "$date": "2026-11-03T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000084"
+        },
+        "referencia_id": {
+            "$oid": "a80000000000000000000004"
+        },
+        "titulo": "Nova solicitação de mentoria",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "usuario",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000035"
+        },
+        "tipo": "nova_conexao",
+        "criado_em": {
+            "$date": "2026-11-04T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000085"
+        },
+        "referencia_id": {
+            "$oid": "a10000000000000000000036"
+        },
+        "titulo": "Nova conexão profissional",
+        "lida": true
+    },
+    {
+        "referencia_tipo": "post",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000036"
+        },
+        "tipo": "curtida",
+        "criado_em": {
+            "$date": "2026-11-05T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000086"
+        },
+        "referencia_id": {
+            "$oid": "a40000000000000000000026"
+        },
+        "titulo": "Sua publicação recebeu uma curtida",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "post",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000037"
+        },
+        "tipo": "comentario",
+        "criado_em": {
+            "$date": "2026-11-06T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000087"
+        },
+        "referencia_id": {
+            "$oid": "a40000000000000000000027"
+        },
+        "titulo": "Novo comentário na publicação",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "mentoria",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000038"
+        },
+        "tipo": "mentoria",
+        "criado_em": {
+            "$date": "2026-11-07T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000088"
+        },
+        "referencia_id": {
+            "$oid": "a80000000000000000000008"
+        },
+        "titulo": "Nova solicitação de mentoria",
+        "lida": true
+    },
+    {
+        "referencia_tipo": "usuario",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000039"
+        },
+        "tipo": "nova_conexao",
+        "criado_em": {
+            "$date": "2026-11-08T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000089"
+        },
+        "referencia_id": {
+            "$oid": "a10000000000000000000040"
+        },
+        "titulo": "Nova conexão profissional",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "post",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000040"
+        },
+        "tipo": "curtida",
+        "criado_em": {
+            "$date": "2026-11-09T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000090"
+        },
+        "referencia_id": {
+            "$oid": "a40000000000000000000030"
+        },
+        "titulo": "Sua publicação recebeu uma curtida",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "post",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000041"
+        },
+        "tipo": "comentario",
+        "criado_em": {
+            "$date": "2026-11-01T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000091"
+        },
+        "referencia_id": {
+            "$oid": "671a2b3c4d5e6f7890124301"
+        },
+        "titulo": "Novo comentário na publicação",
+        "lida": true
+    },
+    {
+        "referencia_tipo": "mentoria",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000042"
+        },
+        "tipo": "mentoria",
+        "criado_em": {
+            "$date": "2026-11-02T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000092"
+        },
+        "referencia_id": {
+            "$oid": "a80000000000000000000012"
+        },
+        "titulo": "Nova solicitação de mentoria",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "usuario",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000043"
+        },
+        "tipo": "nova_conexao",
+        "criado_em": {
+            "$date": "2026-11-03T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000093"
+        },
+        "referencia_id": {
+            "$oid": "a10000000000000000000044"
+        },
+        "titulo": "Nova conexão profissional",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "post",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000044"
+        },
+        "tipo": "curtida",
+        "criado_em": {
+            "$date": "2026-11-04T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000094"
+        },
+        "referencia_id": {
+            "$oid": "a40000000000000000000004"
+        },
+        "titulo": "Sua publicação recebeu uma curtida",
+        "lida": true
+    },
+    {
+        "referencia_tipo": "post",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000045"
+        },
+        "tipo": "comentario",
+        "criado_em": {
+            "$date": "2026-11-05T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000095"
+        },
+        "referencia_id": {
+            "$oid": "a40000000000000000000005"
+        },
+        "titulo": "Novo comentário na publicação",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "mentoria",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000046"
+        },
+        "tipo": "mentoria",
+        "criado_em": {
+            "$date": "2026-11-06T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000096"
+        },
+        "referencia_id": {
+            "$oid": "a80000000000000000000016"
+        },
+        "titulo": "Nova solicitação de mentoria",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "usuario",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000047"
+        },
+        "tipo": "nova_conexao",
+        "criado_em": {
+            "$date": "2026-11-07T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000097"
+        },
+        "referencia_id": {
+            "$oid": "a10000000000000000000048"
+        },
+        "titulo": "Nova conexão profissional",
+        "lida": true
+    },
+    {
+        "referencia_tipo": "post",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000048"
+        },
+        "tipo": "curtida",
+        "criado_em": {
+            "$date": "2026-11-08T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000098"
+        },
+        "referencia_id": {
+            "$oid": "a40000000000000000000008"
+        },
+        "titulo": "Sua publicação recebeu uma curtida",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "post",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000049"
+        },
+        "tipo": "comentario",
+        "criado_em": {
+            "$date": "2026-11-09T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000099"
+        },
+        "referencia_id": {
+            "$oid": "a40000000000000000000009"
+        },
+        "titulo": "Novo comentário na publicação",
+        "lida": false
+    },
+    {
+        "referencia_tipo": "mentoria",
+        "destinatario_id": {
+            "$oid": "a10000000000000000000050"
+        },
+        "tipo": "mentoria",
+        "criado_em": {
+            "$date": "2026-11-01T20:00:00Z"
+        },
+        "_id": {
+            "$oid": "a70000000000000000000100"
+        },
+        "referencia_id": {
+            "$oid": "a80000000000000000000020"
+        },
+        "titulo": "Nova solicitação de mentoria",
+        "lida": true
+    }
+]

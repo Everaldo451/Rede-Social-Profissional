@@ -1,0 +1,122 @@
+[
+  {
+    "source_id": "671a2b3c4d5e6f7890123457",
+    "target_id": "671a2b3c4d5e6f7890123459",
+    "properties": {
+      "nivel": "avançado",
+      "experiencia_anos": 6
+    }
+  },
+  {
+    "source_id": "671a2b3c4d5e6f7890123456",
+    "target_id": "671a2b3c4d5e6f7890123460",
+    "properties": {
+      "nivel": "avançado",
+      "experiencia_anos": 4
+    }
+  },
+  {
+    "source_id": "a10000000000000000000003",
+    "target_id": "a20000000000000000000003",
+    "properties": {
+      "nivel": "avançado",
+      "experiencia_anos": 5
+    }
+  },
+  {
+    "source_id": "a10000000000000000000004",
+    "target_id": "a20000000000000000000004",
+    "properties": {
+      "nivel": "intermediário",
+      "experiencia_anos": 3
+    }
+  },
+  {
+    "source_id": "a10000000000000000000005",
+    "target_id": "a20000000000000000000005",
+    "properties": {
+      "nivel": "avançado",
+      "experiencia_anos": 7
+    }
+  },
+  {
+    "source_id": "a10000000000000000000006",
+    "target_id": "a20000000000000000000006",
+    "properties": {
+      "nivel": "intermediário",
+      "experiencia_anos": 4
+    }
+  },
+  {
+    "source_id": "a10000000000000000000007",
+    "target_id": "a20000000000000000000007",
+    "properties": {
+      "nivel": "avançado",
+      "experiencia_anos": 8
+    }
+  },
+  {
+    "source_id": "a10000000000000000000008",
+    "target_id": "a20000000000000000000008",
+    "properties": {
+      "nivel": "intermediário",
+      "experiencia_anos": 5
+    }
+  },
+  {
+    "source_id": "a10000000000000000000009",
+    "target_id": "a20000000000000000000009",
+    "properties": {
+      "nivel": "avançado",
+      "experiencia_anos": 6
+    }
+  },
+  {
+    "source_id": "a10000000000000000000010",
+    "target_id": "a20000000000000000000010",
+    "properties": {
+      "nivel": "intermediário",
+      "experiencia_anos": 3
+    }
+  },
+  {
+    "source_id": "a10000000000000000000011",
+    "target_id": "a20000000000000000000011",
+    "properties": {
+      "nivel": "avançado",
+      "experiencia_anos": 9
+    }
+  },
+  {
+    "source_id": "a10000000000000000000012",
+    "target_id": "a20000000000000000000012",
+    "properties": {
+      "nivel": "intermediário",
+      "experiencia_anos": 4
+    }
+  },
+  {
+    "source_id": "a10000000000000000000013",
+    "target_id": "a20000000000000000000013",
+    "properties": {
+      "nivel": "avançado",
+      "experiencia_anos": 7
+    }
+  },
+  {
+    "source_id": "a10000000000000000000014",
+    "target_id": "a20000000000000000000014",
+    "properties": {
+      "nivel": "intermediário",
+      "experiencia_anos": 2
+    }
+  },
+  {
+    "source_id": "a10000000000000000000015",
+    "target_id": "a20000000000000000000015",
+    "properties": {
+      "nivel": "avançado",
+      "experiencia_anos": 5
+    }
+  }
+]
