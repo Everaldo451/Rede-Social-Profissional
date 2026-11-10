@@ -1,0 +1,97 @@
+.stApp:has(.st-key-login_card) {
+    background: radial-gradient(ellipse at 15% 5%, #8332d3, transparent 53%),
+        linear-gradient(145deg, #6216b5, #4a0a91);
+}
+.stApp:has(.st-key-login_card) [data-testid="stHeader"] {
+    background: transparent;
+}
+.stApp:has(.st-key-login_card) [data-testid="stMainBlockContainer"] {
+    max-width: 69rem;
+    padding: clamp(2rem, 8vh, 6rem) 1.25rem;
+}
+.st-key-login_card {
+    overflow: hidden;
+    border-radius: clamp(1.5rem, 4vw, 2.75rem);
+    background: linear-gradient(155deg, #fff 45%, #eeebff 100%);
+    box-shadow: 0 24px 65px #28045066;
+    color: #201647;
+    color-scheme: light;
+}
+.st-key-login_card [data-testid="stHorizontalBlock"] {
+    align-items: center;
+    gap: 0;
+}
+.st-key-login_credentials {
+    box-sizing: border-box;
+    max-width: 27rem;
+    margin: auto;
+    padding: clamp(1.5rem, 4vw, 3rem);
+}
+.st-key-login_card [data-testid="stImage"] img {
+    display: block;
+    width: 100%;
+}
+.login-notice {
+    padding: .65rem .9rem;
+    margin: 0;
+    border: 1px solid #e7dff5;
+    border-radius: .65rem;
+    background: #fff;
+    color: #382763;
+}
+.st-key-login_card [data-testid="stForm"] {
+    padding: 0;
+    border: 0;
+}
+.login-brand {
+    color: #6740b3;
+    font-size: .75rem;
+    font-weight: 750;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+.st-key-login_card .login-heading {
+    margin: .5rem 0;
+    padding: 0;
+    color: #201647;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    line-height: 1.1;
+}
+.login-copy {
+    color: #615778;
+}
+.st-key-login_card [data-testid="stWidgetLabel"] p {
+    color: #322453;
+}
+.st-key-login_card [data-baseweb="input"],
+.st-key-login_card [data-baseweb="input"] > div {
+    background: #fff;
+    color: #201647;
+}
+.st-key-login_card [data-baseweb="input"] input,
+.st-key-login_card [data-baseweb="input"] button {
+    color: #201647;
+}
+.st-key-login_card [data-testid="stFormSubmitButton"] button {
+    background: #5944d6;
+    border-color: #5944d6;
+    color: #fff;
+    font-weight: 700;
+}
+.st-key-login_card [data-testid="stFormSubmitButton"] button:hover {
+    background: #4632b8;
+    border-color: #4632b8;
+}
+@media (max-width: 700px) {
+    .st-key-login_card [data-testid="stHorizontalBlock"] {
+        flex-direction: column;
+    }
+    .st-key-login_card [data-testid="stColumn"] {
+        width: 100%;
+    }
+    .st-key-login_card [data-testid="stImage"] {
+        max-width: 24rem;
+        margin: auto;
+    }
+}

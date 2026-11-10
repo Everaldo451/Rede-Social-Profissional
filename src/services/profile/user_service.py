@@ -1,6 +1,6 @@
 class UserService:
     def __init__(self, user_repository):
-        pass
+        self.repository = user_repository
 
     def create(self, data):
         pass
@@ -9,10 +9,13 @@ class UserService:
         pass
 
     def authenticate(self, email, password):
-        pass
+        return self.repository.authenticate(email, password)
 
     def list_all(self):
         pass
+
+    def list_presence_profiles(self, current_user_id):
+        return self.repository.list_presence_profiles(current_user_id)
 
     def update(self, user_id, data):
         pass
