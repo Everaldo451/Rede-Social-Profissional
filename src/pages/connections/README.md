@@ -9,19 +9,13 @@ Contribuição para o estudo de caso 02. O módulo implementa os requisitos RF01
 
 ## Integração com o aplicativo da equipe
 
-Registre as duas páginas no menu do Streamlit depois de validar a sessão. Use o identificador do usuário da sessão e os conectores configurados no aplicativo.
+O `src/app.py` registra Rede de Conexões e Mentoria no menu do Streamlit. Após validar a sessão, o login da equipe fornece o identificador MongoDB do usuário.
 
 ```python
-from src.database import get_mongo_database, get_neo4j_session
-from src.pages.connections import connection_pages
-
-# Depois da validação da sessão, acrescente ao menu existente.
-paginas_da_equipe.extend(
-    connection_pages(usuario_id, get_mongo_database(), get_neo4j_session)
-)
+st.session_state["authenticated_user_id"] = usuario_id_validado
 ```
 
-Passe `paginas_da_equipe` ao `st.navigation` existente. Para executar pela raiz do projeto, use `uv run python -m streamlit run src/app.py`.
+No logout ou quando a sessão expirar, o fluxo de autenticação remove essa chave. Para executar pela raiz do projeto, use `uv run streamlit run src/app.py`.
 
 ## Contrato de dados
 
