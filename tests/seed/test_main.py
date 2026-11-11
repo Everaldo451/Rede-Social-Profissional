@@ -72,6 +72,7 @@ def test_main(seed_test_environment: Any) -> None:
                 "MATCH (source)-[relationship]->(target) "
                 "WHERE source.id IN $ids OR target.id IN $ids "
                 "RETURN type(relationship) AS type, "
+                "source.id AS source_id, target.id AS target_id, "
                 "properties(relationship) AS properties",
                 ids=graph_node_ids,
             )
@@ -103,8 +104,19 @@ def test_main(seed_test_environment: Any) -> None:
         for relationship_type in expected_relationship_counts
     }
     assert actual_relationship_counts == expected_relationship_counts
+    expected_relationships = {
+        (relationship_type, row["source_id"], row["target_id"]): row["properties"]
+        for relationship_type in seed_script.GRAPH_RELATIONSHIPS
+        for row in graph_data[relationship_type]
+    }
     for relationship in relationships:
-        assert (
-            set(relationship["properties"])
-            == seed_script.RELATIONSHIP_PROPERTIES[relationship["type"]]
-        )
+        expected_properties = expected_relationships[
+            (
+                relationship["type"],
+                relationship["source_id"],
+                relationship["target_id"],
+            )
+        ]
+        assert set(relationship["properties"]) == {
+            key for key, value in expected_properties.items() if value is not None
+        }
