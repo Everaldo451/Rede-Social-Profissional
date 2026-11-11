@@ -1,42 +1,32 @@
 [
     {
-        "filename": "arquitetura.png",
+        "filename": "profile-placeholder.svg",
         "_id": {
             "$oid": "671a2b3c4d5e6f7890124502"
         },
-        "chunkSize": 261120,
         "metadata": {
             "proprietario_tipo": "usuario",
-            "tipo_mime": "image/png",
+            "tipo_mime": "image/svg+xml",
             "tipo": "imagem_perfil",
             "visibilidade": "publica",
             "proprietario_id": {
                 "$oid": "671a2b3c4d5e6f7890123456"
             }
-        },
-        "length": 245760,
-        "uploadDate": {
-            "$date": "2026-10-20T15:40:00Z"
         }
     },
     {
-        "filename": "captura_tela.jpg",
+        "filename": "post-placeholder.svg",
         "_id": {
             "$oid": "671a2b3c4d5e6f7890124503"
         },
-        "chunkSize": 261120,
         "metadata": {
             "proprietario_tipo": "post",
-            "tipo_mime": "image/jpeg",
+            "tipo_mime": "image/svg+xml",
             "tipo": "imagem_publicacao",
             "visibilidade": "publica",
             "proprietario_id": {
                 "$oid": "671a2b3c4d5e6f7890124301"
             }
-        },
-        "length": 1048576,
-        "uploadDate": {
-            "$date": "2026-10-21T11:25:00Z"
         }
     }
 ]

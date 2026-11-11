@@ -1,10 +1,13 @@
 """Load the JSON seed collections into MongoDB and refresh unread counters."""
 
+from hashlib import sha256
+from io import BytesIO
 from pathlib import Path
 from typing import Any
 
 import bcrypt
-from bson import json_util
+from bson import ObjectId, json_util
+from gridfs import GridFSBucket
 from pymongo import ASCENDING, DESCENDING
 from pymongo.database import Database
 from redis import Redis
@@ -13,6 +16,7 @@ from src.database import get_mongo_database, get_neo4j_session, get_redis_client
 
 
 COLLECTIONS_DIR = Path(__file__).parent / "collections"
+ASSETS_DIR = Path(__file__).parent / "assets"
 COLLECTION_ORDER = (
     "habilidades",
     "organizacoes",
@@ -24,6 +28,10 @@ COLLECTION_ORDER = (
     "notificacoes",
     "midias.files",
 )
+MEDIA_ASSETS = {
+    "usuario": "profile-placeholder.svg",
+    "post": "post-placeholder.svg",
+}
 RELATIONSHIPS_DIR = Path(__file__).parent / "rellationships"
 GRAPH_RELATIONSHIPS = {
     "CONECTADO_COM": "Pessoa",
@@ -73,8 +81,48 @@ def load_collections(
         document_ids = [document["_id"] for document in documents]
         if len(set(document_ids)) != len(document_ids):
             raise ValueError(f"{collection_path} contains duplicate _id values")
+        if collection_name == "midias.files":
+            documents = _build_media_documents(collections, documents)
         collections[collection_name] = documents
     return collections
+
+
+def _build_media_documents(
+    collections: dict[str, list[dict[str, Any]]],
+    templates: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    """Create stable GridFS file entries for every seeded user and post."""
+    templates_by_owner = {
+        template["metadata"]["proprietario_tipo"]: template
+        for template in templates
+    }
+    documents = []
+
+    for owner_type, collection_name in (("usuario", "usuarios"), ("post", "posts")):
+        template = templates_by_owner[owner_type]
+        template_owner_id = template["metadata"]["proprietario_id"]
+        for owner in collections[collection_name]:
+            owner_id = owner["_id"]
+            if owner_id == template_owner_id:
+                file_id = template["_id"]
+            else:
+                identity = f"seed-media:{owner_type}:{owner_id}".encode("utf-8")
+                file_id = ObjectId(sha256(identity).digest()[:12])
+
+            documents.append(
+                {
+                    "_id": file_id,
+                    "filename": f"{owner_type}-{owner_id}.svg",
+                    "metadata": {
+                        **template["metadata"],
+                        "proprietario_tipo": owner_type,
+                        "proprietario_id": owner_id,
+                        "tipo_mime": "image/svg+xml",
+                    },
+                }
+            )
+
+    return documents
 
 
 def load_relationships(
@@ -112,10 +160,40 @@ def import_collections(
     """Upsert seed documents without deleting records outside the seed set."""
     for collection_name in COLLECTION_ORDER:
         documents = collections[collection_name]
+        if collection_name == "midias.files":
+            _import_gridfs_files(database, documents)
+            print(f"{collection_name}: {len(documents)} arquivos GridFS carregados")
+            continue
+
         collection = database[collection_name]
         for document in documents:
             collection.replace_one({"_id": document["_id"]}, document, upsert=True)
         print(f"{collection_name}: {len(documents)} documentos carregados")
+
+
+def _import_gridfs_files(
+    database: Database, documents: list[dict[str, Any]]
+) -> None:
+    """Upload seeded assets through GridFS so both files and chunks are written."""
+    bucket = GridFSBucket(database, bucket_name="midias")
+    files = database["midias.files"]
+
+    for document in documents:
+        metadata = document["metadata"]
+        asset_name = MEDIA_ASSETS[metadata["proprietario_tipo"]]
+        asset_content = (ASSETS_DIR / asset_name).read_bytes()
+        if not asset_content:
+            raise ValueError(f"Seed media asset {asset_name} must not be empty")
+
+        if files.find_one({"_id": document["_id"]}) is not None:
+            bucket.delete(document["_id"])
+
+        bucket.upload_from_stream_with_id(
+            document["_id"],
+            document["filename"],
+            BytesIO(asset_content),
+            metadata=metadata,
+        )
 
 
 def hash_seed_passwords(collections: dict[str, list[dict[str, Any]]]) -> None:

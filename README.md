@@ -77,5 +77,7 @@ Os relacionamentos `CONECTADO_COM`, `SOLICITOU_CONEXAO`, `MEMBRO_DE` e `ENSINA`
 são carregados dos arquivos JSON em `seed/rellationships`; `ENSINA` é mantido
 independente de `aceita_mentoria` e das habilidades declaradas nos usuários.
 O seed não apaga documentos MongoDB, chaves Redis, nem nós ou relacionamentos
-existentes fora dos dados de seed. Os metadados em `midias.files.json` não
-incluem os blocos binários `midias.chunks` do GridFS.
+existentes fora dos dados de seed. Os dois documentos de `midias.files.json`
+servem como modelos de metadados: o seed cria arquivos de perfil/publicação para
+cada usuário e post, usando os SVGs locais em `seed/assets`, e os grava pelo
+GridFS para criar tanto `midias.files` quanto `midias.chunks`.

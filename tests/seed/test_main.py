@@ -3,6 +3,7 @@
 from typing import Any
 
 import bcrypt
+from gridfs import GridFSBucket
 
 import seed as seed_script
 
@@ -19,6 +20,17 @@ def test_main(seed_test_environment: Any) -> None:
         assert {document["_id"] for document in imported_documents} == {
             document["_id"] for document in documents
         }
+
+    media_bucket = GridFSBucket(database, bucket_name="midias")
+    for media in collections["midias.files"]:
+        downloaded = media_bucket.open_download_stream(media["_id"]).read()
+        assert downloaded == (
+            seed_script.ASSETS_DIR
+            / seed_script.MEDIA_ASSETS[media["metadata"]["proprietario_tipo"]]
+        ).read_bytes()
+        assert database["midias.chunks"].count_documents(
+            {"files_id": media["_id"]}
+        ) > 0
 
     for user in collections["usuarios"]:
         imported_user = database["usuarios"].find_one({"_id": user["_id"]})
