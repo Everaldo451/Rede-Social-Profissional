@@ -12,3 +12,7 @@ class UserIdRequest(BaseModel):
 
 class SessionIdRequest(BaseModel):
     session_id: str = Field(min_length=1)
+
+
+class RevokeSessionRequest(SessionIdRequest):
+    reference: str = Field(pattern=r"^[0-9a-f]{64}$")
