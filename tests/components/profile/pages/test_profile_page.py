@@ -153,6 +153,7 @@ def test_profile_page_displays_read_only_user_and_relationship_data(
     page.goto(f"{BASE_URL}/profile?user_id={user['_id']}")
 
     page.get_by_role("heading", name="Ana Silva").wait_for()
+    page.get_by_text("Python", exact=True).first.wait_for()
     body = page.locator("body").inner_text()
 
     assert "Desenvolvedora Backend" in body

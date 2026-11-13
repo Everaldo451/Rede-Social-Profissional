@@ -54,7 +54,7 @@ def test_create_hashes_password_maps_fields_and_returns_realistic_user(
     assert payload["nome_normalizado"] == "ana silva"
     assert payload["email"] == "ana@example.com"
     assert payload["senha"] == "$2b$12$hashed-password-for-ana"
-    assert "senha" not in payload
+    assert payload["senha"] != "safe-password-123"
     assert created["usuario_id"] == user_record["_id"]
     assert created["nome"] == "Ana Silva"
     assert created["email"] == "ana@example.com"
