@@ -1,3 +1,4 @@
+# Camada de entrada das operações de habilidades; conecta a interface aos serviços.
 import logging
 
 from pydantic import ValidationError
@@ -19,6 +20,7 @@ class SkillController:
     def __init__(self, skill_service):
         self.skill_service = skill_service
 
+    # Valida o dicionário de entrada com o DTO e devolve o modelo ou uma resposta de erro.
     @staticmethod
     def _validate_request(request_model, data):
         try:
@@ -30,6 +32,7 @@ class SkillController:
         except AppError as error:
             return None, BaseResponse(status=False, message=str(error))
 
+    # Executa a regra de negócio e padroniza o resultado; falhas inesperadas são registradas no log.
     @staticmethod
     def _run_service(action, success_message=None):
         try:
@@ -44,6 +47,7 @@ class SkillController:
                 status=False, message="Ocorreu um erro interno."
             )
 
+    # Encaminha o cadastro ao serviço e apresenta seu resultado em uma resposta padronizada.
     def create(self, data):
         request, error = self._validate_request(SkillRequest, data)
         if error:
@@ -53,6 +57,7 @@ class SkillController:
             "Habilidade cadastrada com sucesso.",
         )
 
+    # Solicita ao serviço o registro identificado e devolve o resultado à interface.
     def get_by_id(self, habilidade_id):
         request, error = self._validate_request(
             SkillIdRequest, {"habilidade_id": habilidade_id}
@@ -63,6 +68,7 @@ class SkillController:
             lambda: self.skill_service.get_by_id(request.habilidade_id)
         )
 
+    # Valida os filtros e consulta um registro correspondente.
     def get_one(self, filters=None):
         request, error = self._validate_request(
             SkillFiltersRequest, {"filters": filters}
@@ -73,6 +79,7 @@ class SkillController:
             lambda: self.skill_service.get_one(request.filters)
         )
 
+    # Encaminha posição inicial, tamanho da página e filtros para a consulta.
     def get_paginated(self, offset, limit, filters=None):
         request, error = self._validate_request(
             SkillPaginationRequest,
@@ -86,6 +93,7 @@ class SkillController:
             )
         )
 
+    # Encaminha a atualização ao serviço após validar os dados de entrada.
     def update(self, habilidade_id, data):
         id_request, error = self._validate_request(
             SkillIdRequest, {"habilidade_id": habilidade_id}
@@ -103,6 +111,7 @@ class SkillController:
             "Habilidade atualizada com sucesso.",
         )
 
+    # Solicita a remoção do registro e devolve uma resposta à interface.
     def delete(self, habilidade_id):
         request, error = self._validate_request(
             SkillIdRequest, {"habilidade_id": habilidade_id}

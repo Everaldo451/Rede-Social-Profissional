@@ -1,8 +1,10 @@
+# Testes de persistência, paginação e atualização de habilidades no MongoDB.
 from bson import ObjectId
 
 from repositories.profile.skill_repository import SkillRepository
 
 
+# Cria e rastreia uma habilidade usada no cenário de teste.
 def _create_test_skill(repository, resources):
     unique = str(ObjectId())
     name = f"Python {unique}"
@@ -21,6 +23,7 @@ def _create_test_skill(repository, resources):
     return skill
 
 
+# Verifica o nome normalizado e as datas gravadas no cadastro.
 def test_create_normalizes_skill_and_persists_dates(repository_resources):
     repository = SkillRepository(repository_resources.mongo)
     skill = _create_test_skill(repository, repository_resources)
@@ -35,6 +38,7 @@ def test_create_normalizes_skill_and_persists_dates(repository_resources):
     assert skill["_id"] == str(stored["_id"])
 
 
+# Confere a aplicação dos filtros na paginação da coleção.
 def test_get_paginated_returns_only_matching_real_skill(repository_resources):
     repository = SkillRepository(repository_resources.mongo)
     skill = _create_test_skill(repository, repository_resources)
@@ -46,6 +50,7 @@ def test_get_paginated_returns_only_matching_real_skill(repository_resources):
     assert [item["_id"] for item in result] == [skill["_id"]]
 
 
+# Exercita atualização, exclusão e tratamento de identificadores inválidos.
 def test_update_delete_and_invalid_id_use_real_collection(repository_resources):
     repository = SkillRepository(repository_resources.mongo)
     skill = _create_test_skill(repository, repository_resources)

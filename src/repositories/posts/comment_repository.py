@@ -1,3 +1,4 @@
+# Armazena comentários no MongoDB e permite consultá-los em lote por publicação.
 from collections import defaultdict
 
 from pymongo import ASCENDING
@@ -11,6 +12,7 @@ class CommentRepository:
         self._comments = database["comentarios"]
         self._comments.create_index([("post_id", ASCENDING), ("criado_em", ASCENDING)])
 
+    # Converte as referências de publicação e autor e insere o comentário.
     def create(self, data):
         post_id = to_object_id(data.get("post_id"))
         author_id = to_object_id(data.get("author_id"))
@@ -27,6 +29,7 @@ class CommentRepository:
         self._comments.insert_one(doc)
         return self._canonical(doc)
 
+    # Adapta os nomes dos campos do documento ao formato esperado pelos serviços.
     @staticmethod
     def _canonical(document):
         comment = serialize(document)
@@ -51,6 +54,7 @@ class CommentRepository:
         object_ids = [post_id for post_id in object_ids if post_id is not None]
         if not object_ids:
             return grouped
+        # O operador $in consulta os comentários de todos os posts recebidos em uma única busca.
         cursor = self._comments.find({"post_id": {"$in": object_ids}}).sort(
             "criado_em", ASCENDING
         )
@@ -59,6 +63,7 @@ class CommentRepository:
             grouped[comment["post_id"]].append(comment)
         return grouped
 
+    # Remove todos os comentários da publicação e retorna a quantidade excluída.
     def delete_by_post(self, post_id):
         object_id = to_object_id(post_id)
         if object_id is None:

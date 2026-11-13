@@ -1,3 +1,4 @@
+# Tela de busca de profissionais, convites, conexões diretas e graus de separação.
 import logging
 from pathlib import Path
 
@@ -18,6 +19,7 @@ logger = logging.getLogger(__name__)
 THEME = Path(__file__).resolve().parents[1] / "assets" / "shared" / "page_theme.css"
 
 
+# Monta os campos de busca por nome e habilidade e devolve os filtros escolhidos.
 def _search_fields(skills, key, label="Nome do profissional"):
     skill_names = {str(skill["_id"]): skill["nome"] for skill in skills}
     name = st.text_input(label, max_chars=100, key=f"{key}_name")
@@ -32,6 +34,7 @@ def _search_fields(skills, key, label="Nome do profissional"):
     return {"nome": name, "habilidade_id": skill_id}
 
 
+# Apresenta profissionais encontrados e permite enviar uma solicitação de conexão.
 def _professionals(controller, user_id, users):
     with st.form("professional_search_form", border=False):
         filters = _search_fields(users.list_skills(), "professionals")
@@ -60,6 +63,7 @@ def _professionals(controller, user_id, users):
                     st.warning(sent.message)
 
 
+# Separa convites recebidos e enviados e apresenta as decisões disponíveis ao destinatário.
 def _requests(controller, user_id):
     response = controller.list_requests(user_id)
     if not response.status:
@@ -84,6 +88,7 @@ def _requests(controller, user_id):
                     f"network_request_{request_key}",
                     f"Status: {row['status'].capitalize()}",
                 )
+                # Somente solicitações recebidas e pendentes oferecem as ações de aceitar ou recusar.
                 if not received or row["status"] != "pendente":
                     continue
                 accept, decline = st.columns(2)
@@ -106,6 +111,7 @@ def _requests(controller, user_id):
                     st.warning(decision.message)
 
 
+# Lista as conexões diretas do usuário com controle de paginação.
 def _connections(controller, user_id):
     total = controller.count_connections(user_id).data
     st.metric("Conexões diretas", total)
@@ -129,6 +135,7 @@ def _connections(controller, user_id):
             )
 
 
+# Permite escolher outro profissional e apresenta o menor caminho entre os dois.
 def _degrees(controller, user_id):
     st.subheader("Menor caminho entre profissionais")
     st.caption("O cálculo considera somente conexões aceitas.")
@@ -166,6 +173,7 @@ def _degrees(controller, user_id):
         else:
             st.metric("Graus de separação", path.data["graus"])
             intermediaries = path.data["pessoas"][1:-1]
+            # Os perfis intermediários mostram por quais pessoas passa o caminho encontrado.
             if intermediaries:
                 st.subheader("Pessoas que conectam vocês")
                 for person in intermediaries:
@@ -181,6 +189,7 @@ def _degrees(controller, user_id):
             st.text(" → ".join(path.data["nomes"]))
 
 
+# Organiza as seções da rede de conexões e as mensagens resultantes das ações.
 def _render_network(controller, user_id, users):
     with st.container(key="network_shell"):
         st.title("Rede de conexões")
@@ -209,6 +218,7 @@ def _render_network(controller, user_id, users):
             _degrees(controller, user_id)
 
 
+# Exige autenticação antes de consultar e alterar a rede de conexões.
 def _current_user_id():
     from pages.Sessoes import get_authenticated_user_id
 
@@ -220,6 +230,7 @@ def _current_user_id():
     return user_id
 
 
+# Prepara a página e suas dependências para apresentar a rede do usuário.
 def main():
     st.set_page_config(page_title="Rede de conexões", layout="wide")
     render_sidebar()

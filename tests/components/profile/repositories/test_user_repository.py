@@ -1,3 +1,4 @@
+# Testes de persistência, autenticação, índices e consultas de presença de usuários.
 from bson import ObjectId
 import pytest
 
@@ -5,6 +6,7 @@ from common.errors import ConflictError, InvalidDataError
 from repositories.profile.user_repository import UserRepository
 
 
+# Monta os dados de um usuário com a referência de habilidade recebida.
 def _new_user_data(email, skill_id):
     return {
         "nome": "Ana Silva",
@@ -24,6 +26,7 @@ def _new_user_data(email, skill_id):
     }
 
 
+# Confere os campos persistidos e a serialização das referências ObjectId.
 def test_create_persists_portuguese_profile_and_serializes_object_ids(
     repository_resources,
 ):
@@ -51,6 +54,7 @@ def test_create_persists_portuguese_profile_and_serializes_object_ids(
     assert index["email_1"]["unique"] is True
 
 
+# Verifica a compatibilidade com o índice de e-mail criado pela carga de exemplo.
 def test_repository_reuses_seed_created_email_index(repository_resources):
     collection = repository_resources.mongo["usuarios"]
     collection.create_index("email", unique=True)
@@ -60,6 +64,7 @@ def test_repository_reuses_seed_created_email_index(repository_resources):
     assert collection.index_information()["email_1"]["unique"] is True
 
 
+# Confere a paginação e a contagem dos perfis usados no painel de presença.
 def test_presence_profiles_are_paged_and_counted(repository_resources):
     repository = UserRepository(repository_resources.mongo)
     email = f"presence+{ObjectId()}@example.com"
@@ -82,6 +87,7 @@ def test_presence_profiles_are_paged_and_counted(repository_resources):
     assert repository.count_presence_profiles(current_user_id) == len(other_profiles)
 
 
+# Verifica a rejeição de senha em texto simples e o tratamento de e-mail duplicado.
 def test_create_rejects_plaintext_password_and_maps_duplicate_email(
     repository_resources,
 ):
@@ -109,6 +115,7 @@ def test_create_rejects_plaintext_password_and_maps_duplicate_email(
         )
 
 
+# Exercita consulta, atualização e exclusão pelos identificadores persistidos.
 def test_lookup_update_and_delete_use_object_id_and_return_real_documents(
     repository_resources,
 ):
@@ -131,6 +138,7 @@ def test_lookup_update_and_delete_use_object_id_and_return_real_documents(
     assert repository.get_by_id("not-an-object-id") is None
 
 
+# Confere a verificação bcrypt e a execução fictícia quando o usuário não existe.
 def test_authenticate_verifies_hash_and_uses_dummy_for_unknown_user(
     repository_resources, monkeypatch
 ):

@@ -1,8 +1,10 @@
+# Testes da validação e das respostas do controller de habilidades.
 from unittest.mock import MagicMock
 
 from controllers.profile.skill_controller import SkillController
 
 
+# Confere os campos validados e a propagação do resultado do serviço.
 def test_create_validates_skill_fields_and_returns_service_result(skill_record):
     service = MagicMock()
     service.create.return_value = skill_record
@@ -27,6 +29,7 @@ def test_create_validates_skill_fields_and_returns_service_result(skill_record):
     )
 
 
+# Verifica se um identificador inválido é recusado antes da consulta.
 def test_invalid_skill_id_is_rejected_before_service_call():
     service = MagicMock()
     controller = SkillController(service)
@@ -38,6 +41,7 @@ def test_invalid_skill_id_is_rejected_before_service_call():
     service.delete.assert_not_called()
 
 
+# Confere o registro da falha e a mensagem genérica devolvida à interface.
 def test_unexpected_service_failure_is_logged_and_returns_generic_error(
     caplog,
 ):

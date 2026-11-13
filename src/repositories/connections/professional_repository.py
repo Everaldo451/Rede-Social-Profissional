@@ -1,3 +1,4 @@
+# Consulta perfis, habilidades e organizações no MongoDB para as telas de rede e mentoria.
 import re
 
 from bson import ObjectId
@@ -25,6 +26,7 @@ class ProfessionalRepository:
         self.skills = database["habilidades"]
         self.organizations = database["organizacoes"]
 
+    # Carrega vários perfis em uma consulta, indexando o resultado pelo identificador textual.
     def get_by_ids(self, user_ids):
         ids = {ObjectId(user_id) for user_id in user_ids if ObjectId.is_valid(user_id)}
         if not ids:
@@ -34,6 +36,7 @@ class ProfessionalRepository:
             for doc in self.users.find({"_id": {"$in": list(ids)}}, _PROFILE_SUMMARY)
         }
 
+    # Busca o perfil e acrescenta os nomes das habilidades e organizações referenciadas.
     def get_by_id(self, user_id):
         if not ObjectId.is_valid(user_id):
             return None
@@ -76,9 +79,11 @@ class ProfessionalRepository:
                 item["organizacao"] = organization_names.get(item.get(field), "")
         return user
 
+    # Lista as habilidades por nome para compor os filtros da interface.
     def list_skills(self):
         return list(self.skills.find({}, {"nome": 1}).sort("nome", 1))
 
+    # Busca outros profissionais por nome e habilidade, com ordenação e limite de resultados.
     def search(self, user_id, nome="", habilidade_id=None):
         filters = {"_id": {"$ne": ObjectId(user_id)}}
         if nome:

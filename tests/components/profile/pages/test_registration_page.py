@@ -1,3 +1,4 @@
+# Testes de navegador do cadastro, dos links de login e das mensagens de validação.
 import os
 
 from bson import ObjectId
@@ -9,6 +10,7 @@ from repositories.profile.user_repository import UserRepository
 BASE_URL = os.getenv("BASE_URL", "http://localhost:8501")
 
 
+# Confere a navegação entre as telas de login e criação de conta.
 def test_login_and_registration_pages_link_to_each_other(page: Page):
     page.goto(f"{BASE_URL}/login")
     page.get_by_role("link", name="Home").wait_for()
@@ -22,6 +24,7 @@ def test_login_and_registration_pages_link_to_each_other(page: Page):
     page.get_by_role("button", name="Entrar").wait_for()
 
 
+# Preenche o formulário de cadastro com os valores fornecidos pelo cenário.
 def _fill_registration_form(page, *, name, email, password, confirmation=None):
     page.get_by_label("Nome completo").fill(name)
     page.get_by_label("E-mail").fill(email)
@@ -31,6 +34,7 @@ def _fill_registration_form(page, *, name, email, password, confirmation=None):
     )
 
 
+# Verifica o cadastro da conta e a persistência da senha como hash.
 def test_registration_page_creates_user_and_hashes_password(
     page: Page, repository_resources
 ):
@@ -56,6 +60,7 @@ def test_registration_page_creates_user_and_hashes_password(
     repository_resources.track_document("usuarios", user["_id"])
 
 
+# Confere a mensagem exibida ao tentar cadastrar um e-mail já existente.
 def test_registration_page_reports_duplicate_email(page: Page, repository_resources):
     email = f"existente+{ObjectId()}@example.com"
     users = UserRepository(repository_resources.mongo)
@@ -80,6 +85,7 @@ def test_registration_page_reports_duplicate_email(page: Page, repository_resour
     page.get_by_text("Este e-mail já está cadastrado.", exact=True).wait_for()
 
 
+# Verifica se a confirmação diferente da senha impede o cadastro.
 def test_registration_page_rejects_mismatched_passwords(page: Page):
     page.goto(f"{BASE_URL}/register")
     _fill_registration_form(

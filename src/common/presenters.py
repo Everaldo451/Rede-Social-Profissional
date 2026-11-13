@@ -1,3 +1,5 @@
+# Monta os dados de autores e comentários usados pela apresentação do feed.
+# Resolve o autor e fornece uma identificação alternativa quando o usuário foi removido.
 def author_view(users: dict, user_id: str) -> dict:
     """Build the public author shape used by posts and comments."""
     user = users.get(str(user_id))
@@ -11,6 +13,7 @@ def author_view(users: dict, user_id: str) -> dict:
     }
 
 
+# Acrescenta a identificação pública do autor aos dados de um comentário.
 def comment_view(users: dict, comment: dict) -> dict:
     return {
         "id": str(comment.get("id") or comment.get("_id")),

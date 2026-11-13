@@ -1,3 +1,4 @@
+# Fixtures compartilhadas dos testes de perfil, com dados de exemplo e rastreamento dos registros criados.
 from datetime import datetime, timezone
 
 import pytest
@@ -12,6 +13,7 @@ CREATED_AT = datetime(2026, 10, 1, 10, 0, tzinfo=timezone.utc)
 UPDATED_AT = datetime(2026, 10, 20, 15, 30, tzinfo=timezone.utc)
 
 
+# Rastreia os documentos e nós criados por cada teste para permitir a limpeza posterior.
 class RepositoryTestResources:
     def __init__(self, mongo_database, neo4j_session_factory):
         self.mongo = mongo_database
@@ -27,21 +29,26 @@ class RepositoryTestResources:
         self._mongo_filters = {}
         self._neo4j_ids = set()
 
+    # Registra o identificador de um documento que precisará ser removido ao fim do teste.
     def track_document(self, collection_name, document_id):
         self._mongo_ids.setdefault(collection_name, set()).add(
             ObjectId(str(document_id))
         )
 
+    # Registra um filtro usado para localizar documentos durante a limpeza.
     def track_filter(self, collection_name, filter_document):
         self._mongo_filters.setdefault(collection_name, []).append(filter_document)
 
+    # Rastreia e insere o documento usado pelo teste.
     def insert_document(self, collection_name, document):
         self.track_document(collection_name, document["_id"])
         return self.mongo[collection_name].insert_one(document)
 
+    # Registra os nós de grafo que pertencem ao cenário de teste.
     def track_graph_nodes(self, *node_ids):
         self._neo4j_ids.update(str(node_id) for node_id in node_ids)
 
+    # Remove os nós e documentos rastreados, executando a limpeza do MongoDB mesmo se a do grafo falhar.
     def cleanup(self):
         try:
             if self._neo4j_ids:
@@ -65,6 +72,7 @@ class RepositoryTestResources:
                     self.mongo[collection_name].delete_many(filter_document)
 
 
+# Fornece identificadores fixos compartilhados pelos registros de exemplo.
 @pytest.fixture
 def ids():
     return {
@@ -76,6 +84,7 @@ def ids():
     }
 
 
+# Fornece um perfil de exemplo com habilidades, experiência, formação e certificação.
 @pytest.fixture
 def user_record(ids):
     return {
@@ -128,6 +137,7 @@ def user_record(ids):
     }
 
 
+# Fornece uma habilidade de exemplo com os campos esperados pelo repositório.
 @pytest.fixture
 def skill_record(ids):
     return {
@@ -144,6 +154,7 @@ def skill_record(ids):
     }
 
 
+# Fornece uma organização de exemplo e sua referência de criador.
 @pytest.fixture
 def organization_record(ids):
     return {
@@ -161,6 +172,7 @@ def organization_record(ids):
     }
 
 
+# Entrega os recursos ao teste e executa a limpeza depois do yield.
 @pytest.fixture
 def repository_resources():
     from src.database.mongo import get_mongo_database

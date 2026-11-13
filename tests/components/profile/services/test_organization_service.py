@@ -1,3 +1,4 @@
+# Testes do mapeamento de dados e das regras do serviço de organizações.
 from unittest.mock import MagicMock
 
 import pytest
@@ -6,6 +7,7 @@ from common.errors import NotFoundError
 from services.profile.organization_service import OrganizationService
 
 
+# Confere a montagem do documento e a interpretação da localização textual.
 def test_create_maps_organization_fields_and_parses_location(ids):
     repository = MagicMock()
     repository.create.return_value = {
@@ -44,6 +46,7 @@ def test_create_maps_organization_fields_and_parses_location(ids):
     assert created["cidade"] == "João Pessoa"
 
 
+# Verifica a prioridade dos campos de localização informados explicitamente.
 def test_create_uses_explicit_city_and_state_over_location():
     repository = MagicMock()
     repository.create.return_value = {"_id": "new-organization"}
@@ -64,6 +67,7 @@ def test_create_uses_explicit_city_and_state_over_location():
     assert payload["estado"] == "PB"
 
 
+# Exercita consultas, alterações e os erros para organizações inexistentes.
 def test_get_update_delete_and_pagination_delegate_or_raise_not_found(
     ids,
 ):

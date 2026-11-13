@@ -1,3 +1,4 @@
+# Fixtures da carga de exemplo com remapeamento de identificadores e limpeza dos dados de teste.
 """Session-scoped setup and cleanup for seed integration tests."""
 
 from copy import deepcopy
@@ -10,6 +11,7 @@ from bson import ObjectId
 import seed as seed_script
 
 
+# Substitui recursivamente ObjectIds por identificadores exclusivos do cenário de teste.
 def _remap_object_ids(value: Any, object_ids: dict[ObjectId, ObjectId]) -> Any:
     if isinstance(value, ObjectId):
         return object_ids.setdefault(value, ObjectId())
@@ -23,6 +25,7 @@ def _remap_object_ids(value: Any, object_ids: dict[ObjectId, ObjectId]) -> Any:
     return value
 
 
+# Adapta as referências dos relacionamentos aos identificadores remapeados.
 def _remap_relationships(
     relationships: dict[str, list[dict[str, Any]]],
     object_ids: dict[ObjectId, ObjectId],
@@ -40,6 +43,7 @@ def _remap_relationships(
     }
 
 
+# Executa a carga em dados de teste e remove o banco, as chaves e os nós criados ao finalizar.
 @pytest.fixture(scope="session")
 def seed_test_environment() -> Any:
     """Run the seed once before tests and remove its data after the session."""

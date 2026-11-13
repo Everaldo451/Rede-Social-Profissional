@@ -1,3 +1,4 @@
+# Mantém os documentos de mentoria no MongoDB e seus relacionamentos no Neo4j.
 from datetime import datetime, timezone
 
 from bson import ObjectId
@@ -15,6 +16,7 @@ class MentorshipRepository:
             database = get_mongo_database()
         self.collection = database[self.COLLECTION]
 
+    # Impede uma mentoria ativa ou pendente equivalente e grava o documento e as relações no grafo.
     def create(self, data):
         mentor_id = self._object_id(data["mentor_id"])
         mentee_id = self._object_id(data["mentorado_id"])
@@ -77,17 +79,20 @@ class MentorshipRepository:
                 raise ValueError(
                     "Mentor, mentorado ou habilidade não encontrado no grafo."
                 )
+        # Se a criação no grafo falhar, remove o documento que acabou de ser inserido no MongoDB.
         except (DriverError, Neo4jError, ValueError):
             self.collection.delete_one({"_id": mentorship_id})
             raise
         return self._serialize(document)
 
+    # Busca o documento da mentoria por ObjectId e serializa seus identificadores.
     def get_by_id(self, mentorship_id):
         object_id = self._object_id(mentorship_id, allow_none=True)
         if object_id is None:
             return None
         return self._serialize(self.collection.find_one({"_id": object_id}))
 
+    # Consulta profissionais que possuem a relação ENSINA, com filtro opcional por habilidade.
     def filter_mentors(self, user_id, habilidade_id):
         with self.session_factory() as session:
             return session.execute_read(
@@ -105,12 +110,15 @@ class MentorshipRepository:
                 ).data()
             )
 
+    # Método reservado: o corpo contém apenas pass e ainda não executa uma operação.
     def get_by_user_id(self, user_id):
         pass
 
+    # Método reservado: o corpo contém apenas pass e ainda não executa uma operação.
     def list_all(self):
         pass
 
+    # Altera uma solicitação ainda pendente no MongoDB e sincroniza o estado da relação MENTORA.
     def update(self, mentorship_id, data):
         object_id = self._object_id(mentorship_id, allow_none=True)
         if object_id is None:
@@ -124,6 +132,7 @@ class MentorshipRepository:
         updated_at = datetime.now(timezone.utc)
         updates = dict(data)
         updates["atualizada_em"] = updated_at
+        # O filtro pelo estado pendente evita aplicar uma nova decisão ao documento já respondido.
         result = self.collection.update_one(
             {"_id": object_id, "status": "solicitado"},
             {"$set": updates},
@@ -173,6 +182,7 @@ class MentorshipRepository:
                 )
             if graph_update is None:
                 raise ValueError("Mentor ou mentorado não encontrado no grafo.")
+        # Se a sincronização no grafo falhar, restaura o estado pendente no documento MongoDB.
         except (DriverError, Neo4jError, ValueError):
             self.collection.update_one(
                 {"_id": object_id},
@@ -188,9 +198,11 @@ class MentorshipRepository:
             raise
         return self.get_by_id(object_id)
 
+    # Método reservado: o corpo contém apenas pass e ainda não executa uma operação.
     def delete(self, mentorship_id):
         pass
 
+    # Lista as mentorias em que o usuário participa como mentor ou mentorado.
     def list_requests(self, user_id):
         object_id = self._object_id(user_id, allow_none=True)
         if object_id is None:
@@ -200,6 +212,7 @@ class MentorshipRepository:
         ).sort("criada_em", -1)
         return [self._serialize(document) for document in cursor]
 
+    # Verifica no grafo se o mentor possui uma relação ENSINA com a habilidade escolhida.
     def mentor_has_skill(self, mentor_id, skill_id):
         with self.session_factory() as session:
             return session.execute_read(
@@ -214,6 +227,7 @@ class MentorshipRepository:
                 ).single(strict=True)["has_skill"]
             )
 
+    # Cruza habilidades desejadas e ensinadas e ordena os mentores pela quantidade de coincidências.
     def recommend(self, user_id):
         with self.session_factory() as session:
             return session.execute_read(
@@ -232,6 +246,7 @@ class MentorshipRepository:
                 ).data()
             )
 
+    # Obtém os identificadores distintos das habilidades que o usuário deseja desenvolver.
     def desired_skills(self, user_id):
         with self.session_factory() as session:
             return session.execute_read(
@@ -244,6 +259,7 @@ class MentorshipRepository:
                 ).value("id")
             )
 
+    # Converte o identificador recebido para o formato ObjectId utilizado pelo MongoDB.
     @staticmethod
     def _object_id(value, allow_none=False):
         if isinstance(value, ObjectId):
@@ -254,6 +270,7 @@ class MentorshipRepository:
             return None
         raise ValueError("Identificador de mentoria inválido.")
 
+    # Prepara os dados retornados pelo banco, convertendo identificadores para texto.
     @staticmethod
     def _serialize(document):
         if document is None:

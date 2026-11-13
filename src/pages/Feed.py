@@ -1,3 +1,4 @@
+# Interface do feed: criação, edição, comentários, curtidas, mídias e conexão com os autores.
 import html
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -43,10 +44,12 @@ UPLOAD_TYPES = ["png", "jpg", "jpeg", "gif", "webp"]
 UPLOAD_HELP = "Imagens PNG, JPG, GIF ou WEBP — até 4 arquivos de 10 MB."
 
 
+# Guarda uma mensagem temporária no estado da sessão para mostrá-la após a próxima execução.
 def set_flash(kind: str, message: str) -> None:
     st.session_state[_FLASH_KEY] = (kind, message)
 
 
+# Recupera a mensagem temporária e a exibe uma única vez.
 def show_flash() -> None:
     flash = st.session_state.pop(_FLASH_KEY, None)
     if flash:
@@ -54,12 +57,14 @@ def show_flash() -> None:
         {"success": st.success, "error": st.error}.get(kind, st.info)(message)
 
 
+# Prepara a data da publicação para exibição, tratando valores sem fuso horário.
 def format_datetime(value: datetime) -> str:
     if value.tzinfo is None:
         value = value.replace(tzinfo=timezone.utc)
     return value.astimezone(BRT).strftime("%d/%m/%Y %H:%M")
 
 
+# Converte os arquivos enviados pelo Streamlit em objetos MediaFile usados pelo serviço.
 def to_media_files(uploaded_files) -> list[MediaFile]:
     return [
         MediaFile(file.name, file.type or "application/octet-stream", file.getvalue())
@@ -67,6 +72,7 @@ def to_media_files(uploaded_files) -> list[MediaFile]:
     ]
 
 
+# Exibe os comentários existentes e o formulário permitido ao usuário atual.
 def render_comments(services, post, user) -> None:
     comments = post["comments"]
     with st.expander(f"Comentários ({len(comments)})", icon=":material/chat_bubble_outline:"):
@@ -80,6 +86,7 @@ def render_comments(services, post, user) -> None:
             if not comments:
                 st.caption("Ainda não há comentários.")
 
+        # O formulário de comentário só aparece para usuários autenticados em publicações de outros autores.
         if user is None:
             return
         if post["author"]["id"] == user["usuario_id"]:
@@ -105,6 +112,7 @@ def render_comments(services, post, user) -> None:
             st.error(result.message)
 
 
+# Carrega conexões e solicitações do usuário para escolher as ações junto aos autores.
 def _connection_state(controller, user_id):
     connected_ids = set()
     pending = {}
@@ -136,6 +144,7 @@ def _connection_state(controller, user_id):
     return connected_ids, pending
 
 
+# Escolhe entre conectar, aceitar convite ou indicar uma conexão já existente.
 def _render_connection_action(controller, post, user, connected_ids, pending):
     if user is None:
         return
@@ -171,6 +180,7 @@ def _render_connection_action(controller, post, user, connected_ids, pending):
         st.error(result.message)
 
 
+# Busca a página de publicações, apresenta os cartões e controla a navegação entre páginas.
 def render_feed(services, user, connection_controller=None) -> None:
     page = st.session_state.get("feed_page", 0)
     result = services.posts.get_paginated(page * PAGE_SIZE, PAGE_SIZE)
@@ -179,6 +189,7 @@ def render_feed(services, user, connection_controller=None) -> None:
         return
 
     items, total = result.data["items"], result.data["total"]
+    # Se a página ficou vazia após uma remoção, retorna à anterior e executa a tela novamente.
     if not items and page > 0:
         st.session_state["feed_page"] = max(0, (total - 1) // PAGE_SIZE)
         st.rerun()
@@ -210,6 +221,7 @@ def render_feed(services, user, connection_controller=None) -> None:
         )
 
     last_page = (total - 1) // PAGE_SIZE
+    # Os botões alteram a página armazenada na sessão e solicitam a atualização da tela.
     col_prev, col_info, col_next = st.columns([1, 2, 1])
     if col_prev.button("← Anterior", disabled=page == 0):
         st.session_state["feed_page"] = page - 1
@@ -223,6 +235,7 @@ def render_feed(services, user, connection_controller=None) -> None:
         st.rerun()
 
 
+# Carrega cada anexo e escolhe a forma de exibição conforme o tipo de conteúdo.
 def render_media(services, post) -> None:
     for item in post["media"]:
         content, error = _load_media(services.media, item["id"])
@@ -230,6 +243,7 @@ def render_media(services, post) -> None:
             st.error(f"Não foi possível carregar {item['filename']}: {error}")
         elif content is None:
             st.caption(f"Arquivo indisponível: {item['filename']}")
+        # O componente de apresentação é escolhido a partir do MIME recebido.
         elif item["content_type"].startswith("image/"):
             if item["content_type"] == "image/svg+xml":
                 st.image(content.decode("utf-8"), caption=item["filename"])
@@ -247,6 +261,7 @@ def render_media(services, post) -> None:
             )
 
 
+# Consulta uma mídia pelo controller e mantém seu resultado em cache.
 @st.cache_data(show_spinner=False, max_entries=32)
 def _load_media(_media_controller, media_id):
     result = _media_controller.get_by_id(media_id)
@@ -257,6 +272,7 @@ def _load_media(_media_controller, media_id):
     return None, result.message or "Erro desconhecido."
 
 
+# Monta o formulário de texto, categoria, tags, código e arquivos para uma nova publicação.
 def render_post_form(services, user) -> None:
     with st.form("new_post_form", clear_on_submit=True):
         text = st.text_area(
@@ -287,6 +303,7 @@ def render_post_form(services, user) -> None:
         st.error(result.message)
 
 
+# Organiza cabeçalho, conteúdo e ações de uma publicação ou seu formulário de edição.
 def render_post_card(
     services,
     post,
@@ -309,6 +326,7 @@ def render_post_card(
         render_comments(services, post, user)
 
 
+# Exibe as curtidas e permite alternar a curtida do usuário autenticado.
 def _render_social_actions(services, post, user, editing_key):
     response = services.likes.get_by_post_id(post["id"])
     likes = response.data if response.status else []
@@ -342,6 +360,7 @@ def _render_social_actions(services, post, user, editing_key):
             _render_owner_actions(services, post, user, editing_key)
 
 
+# Exibe a identificação do autor e a ação de conexão disponível.
 def _render_post_header(post, user, connection_controller, connected_ids, pending) -> None:
     author = post["author"]
     edited = " · editado" if post["updated_at"] else ""
@@ -362,6 +381,7 @@ def _render_post_header(post, user, connection_controller, connected_ids, pendin
     )
 
 
+# Apresenta o texto, o trecho de código, as tags e as mídias da publicação.
 def _render_post_body(services, post) -> None:
     st.markdown(post["text"])
     if post["code"]:
@@ -371,6 +391,7 @@ def _render_post_body(services, post) -> None:
     render_media(services, post)
 
 
+# Apresenta as opções de edição e exclusão da publicação para o seu proprietário.
 def _render_owner_actions(services, post, user, editing_key) -> None:
     with st.popover("Opções", icon=":material/more_horiz:"):
         if st.button("Editar", icon=":material/edit:", key=f"edit_{post['id']}"):
@@ -387,6 +408,7 @@ def _render_owner_actions(services, post, user, editing_key) -> None:
                 st.rerun()
 
 
+# Carrega o conteúdo atual e permite editar o texto e administrar os anexos.
 def _render_edit_form(services, post, user, editing_key) -> None:
     with st.form(f"edit_form_{post['id']}"):
         text = st.text_area("Texto", value=post["text"], max_chars=MAX_TEXT)
@@ -419,6 +441,7 @@ def _render_edit_form(services, post, user, editing_key) -> None:
         save = col_save.form_submit_button("Salvar", type="primary")
         cancel = col_cancel.form_submit_button("Cancelar")
 
+    # Cancelar abandona a edição; salvar encaminha os novos dados ao controller.
     if cancel:
         st.session_state.pop(editing_key, None)
         st.rerun()
@@ -443,6 +466,7 @@ def _render_edit_form(services, post, user, editing_key) -> None:
         st.error(result.message)
 
 
+# Monta e reutiliza os controllers, serviços e repositórios necessários ao feed.
 @st.cache_resource
 def get_feed_services():
     database = get_mongo_database()
@@ -478,6 +502,7 @@ def get_feed_services():
     )
 
 
+# Monta e reutiliza as dependências das operações de conexão.
 @st.cache_resource
 def get_connection_controller():
     database = get_mongo_database()
@@ -490,6 +515,7 @@ def get_connection_controller():
     )
 
 
+# Consulta o cookie de sessão e recupera os dados do usuário autenticado.
 def current_user():
     session_id = get_cookie_controller().get(COOKIE_NAME)
     if not session_id:
@@ -504,6 +530,7 @@ def current_user():
         return None
 
 
+# Monta a página do feed com tema, navegação, identificação da sessão e publicações.
 def render_page():
     render_sidebar()
     assets = Path(__file__).parents[1] / "assets"

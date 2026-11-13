@@ -1,3 +1,4 @@
+# Tela de sessões e funções compartilhadas de autenticação, cookies e presença.
 from datetime import datetime, timezone
 from pathlib import Path
 from types import SimpleNamespace
@@ -26,6 +27,7 @@ THEME = Path(__file__).resolve().parents[1] / "assets" / "shared" / "page_theme.
 COOKIE_NAME = "rede_social_session"
 
 
+# Reutiliza o controller de presença com o prazo de expiração definido para as sessões.
 @st.cache_resource
 def get_presence_controller():
     return OnlinePresenceController(
@@ -36,6 +38,7 @@ def get_presence_controller():
     )
 
 
+# Conecta os repositórios e serviços de usuário, sessão e presença para a tela.
 def build_runtime():
     session_repository = SessionRepository()
     users = UserService(
@@ -45,6 +48,7 @@ def build_runtime():
     )
     presence = get_presence_controller()
 
+    # Adapta a autenticação do perfil para retornar somente o identificador ou None.
     def authenticate_user(email, password):
         try:
             user = users.authenticate(email, password)
@@ -52,6 +56,7 @@ def build_runtime():
             return None
         return user["usuario_id"]
 
+    # O adaptador entrega ao serviço de sessões a interface de autenticação que ele espera.
     session_users = SimpleNamespace(authenticate=authenticate_user)
     sessions = SessionController(
         SessionService(session_repository, session_users, presence.service)
@@ -59,6 +64,7 @@ def build_runtime():
     return sessions, users, presence
 
 
+# Inicializa o cache de cookies a partir do contexto do navegador.
 def get_cookie_controller():
     cookie_cache_key = "session_cookie_cache"
     if cookie_cache_key not in st.session_state:
@@ -66,6 +72,7 @@ def get_cookie_controller():
     return CookieController(key=cookie_cache_key)
 
 
+# Consulta o token do cookie e retorna o usuário somente se a sessão for aceita.
 def get_authenticated_user_id():
     session_id = get_cookie_controller().get(COOKIE_NAME)
     if not session_id:
@@ -76,11 +83,13 @@ def get_authenticated_user_id():
     return response.data if response.status else None
 
 
+# Solicita a revogação e guarda o resultado para exibição na próxima execução.
 def revoke_session(sessions, session, reference):
     result = sessions.revoke_other_session({**session, "reference": reference})
     st.session_state["session_revocation"] = result
 
 
+# Lista os acessos da conta e oferece o encerramento das outras sessões.
 def render_sessions(sessions, session):
     viewer = sessions.get_current_user(session)
     if not viewer.status:
@@ -108,6 +117,7 @@ def render_sessions(sessions, session):
             st.info("Não há sessões ativas para exibir.")
             return
 
+        # Ordena a lista para destacar primeiro a sessão atual.
         for entry in sorted(
             active.data, key=lambda item: (not item["current"], item["reference"])
         ):
@@ -122,6 +132,7 @@ def render_sessions(sessions, session):
                 if created_at is not None:
                     started = datetime.fromtimestamp(created_at, timezone.utc)
                     details.caption(f"Iniciada em {started:%d/%m/%Y às %H:%M} UTC")
+                # A sessão atual não recebe o botão de revogação de outro dispositivo.
                 if not entry["current"]:
                     action.button(
                         "Encerrar sessão",
@@ -131,6 +142,7 @@ def render_sessions(sessions, session):
                     )
 
 
+# Aplica o tema e organiza o painel de gerenciamento de sessões.
 def render_dashboard(sessions, session):
     st.html(THEME)
     st.html(ASSETS / "dashboard.css")
@@ -141,6 +153,7 @@ def render_dashboard(sessions, session):
         render_sessions(sessions, session)
 
 
+# Verifica a sessão antes de apresentar o painel de acessos ativos.
 def render_page():
     st.set_page_config(page_title="Sessões", layout="wide")
     render_sidebar()

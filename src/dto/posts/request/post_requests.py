@@ -1,3 +1,4 @@
+# Valida o conteúdo de publicações e comentários antes de executar as regras de negócio.
 import re
 
 from pydantic import BaseModel, field_validator
@@ -14,6 +15,7 @@ MAX_COMMENT = 1000
 _TAG = re.compile(r"^[a-z0-9][a-z0-9+#._-]{0,29}$")  # aceita c#, c++, node.js...
 
 
+# Aceita texto ou lista, normaliza as tags, remove repetições e verifica formato e quantidade.
 def normalize_tags(value) -> list[str]:
     if value is None:
         return []
@@ -33,6 +35,7 @@ def normalize_tags(value) -> list[str]:
     return tags
 
 
+# Reúne os campos e as validações compartilhados entre criação e edição de uma publicação.
 class PostContent(BaseModel):
     text: str
     category: str = "Dica"
@@ -40,6 +43,7 @@ class PostContent(BaseModel):
     code: str | None = None
     code_language: str = "python"
 
+    # Remove espaços nas extremidades e rejeita texto vazio ou acima do limite permitido.
     @field_validator("text")
     @classmethod
     def _text(cls, value):
@@ -50,6 +54,7 @@ class PostContent(BaseModel):
             raise ValueError(f"O texto deve ter no máximo {MAX_TEXT} caracteres.")
         return value
 
+    # Restringe a categoria às opções definidas para as publicações.
     @field_validator("category")
     @classmethod
     def _category(cls, value):
@@ -57,11 +62,13 @@ class PostContent(BaseModel):
             raise ValueError("Categoria inválida.")
         return value
 
+    # Aplica a mesma normalização de tags às diferentes formas de entrada.
     @field_validator("tags", mode="before")
     @classmethod
     def _tags(cls, value):
         return normalize_tags(value)
 
+    # Preserva a indentação do trecho de código, eliminando apenas quebras externas e conteúdo vazio.
     @field_validator("code")
     @classmethod
     def _code(cls, value):
@@ -72,6 +79,7 @@ class PostContent(BaseModel):
             raise ValueError(f"O código deve ter no máximo {MAX_CODE} caracteres.")
         return value
 
+    # Valida a linguagem utilizada para exibir o trecho de código.
     @field_validator("code_language")
     @classmethod
     def _language(cls, value):
@@ -80,17 +88,21 @@ class PostContent(BaseModel):
         return value
 
 
+# Usa o contrato comum de conteúdo para criar uma publicação.
 class CreatePostRequest(PostContent):
     pass
 
 
+# Acrescenta a lista de mídias que devem ser removidas na edição.
 class UpdatePostRequest(PostContent):
     remove_media_ids: list[str] = []
 
 
+# Exige um texto válido para o comentário.
 class CreateCommentRequest(BaseModel):
     text: str
 
+    # Remove espaços nas extremidades e rejeita texto vazio ou acima do limite permitido.
     @field_validator("text")
     @classmethod
     def _text(cls, value):

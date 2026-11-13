@@ -1,3 +1,4 @@
+# Regras do feed: autoria, conteúdo, comentários, anexos e paginação de publicações.
 from datetime import datetime, timezone
 
 from common.errors import ForbiddenError, NotFoundError, UnauthorizedError
@@ -14,6 +15,7 @@ class PostService:
         self._media = media_service
 
     # RF009 ---------------------------------------------------------------
+    # Verifica o autor, grava a publicação e associa os arquivos recebidos.
     def create(self, author_id, data, files=()):
         if not self._users.get_by_id(author_id):
             raise UnauthorizedError("Você precisa estar autenticado para publicar.")
@@ -36,6 +38,7 @@ class PostService:
             if media and not self._posts.update(post["id"], {"media": media}):
                 raise NotFoundError("A publicação não pôde ser salva.")
             post["media"] = media
+        # Se a associação das mídias falhar, desfaz os arquivos já criados e a nova publicação.
         except Exception:
             self._media.delete_many([m["id"] for m in media])
             self._posts.delete(post["id"])
@@ -43,6 +46,7 @@ class PostService:
         return self._present_many([post])[0]
 
     # RF010 ---------------------------------------------------------------
+    # Verifica a autoria e combina mídias mantidas e novas com o conteúdo editado.
     def update(self, requester_id, post_id, data, new_files=()):
         post = self._get_owned(requester_id, post_id)
         remove_ids = set(getattr(data, "remove_media_ids", None) or [])
@@ -64,12 +68,15 @@ class PostService:
                     "updated_at": datetime.now(timezone.utc),
                 },
             )
+        # Uma falha na atualização remove somente os arquivos adicionados nesta tentativa.
         except Exception:
             self._media.delete_many([m["id"] for m in added])
             raise
+        # As mídias retiradas são excluídas depois que a atualização da publicação foi concluída.
         self._media.delete_many([m["id"] for m in removed])
         return self.get_by_id(post_id)
 
+    # Verifica a autoria e remove os comentários, a publicação e seus arquivos de mídia.
     def delete(self, requester_id, post_id):
         post = self._get_owned(requester_id, post_id)
         self._comments.delete_by_post(post_id)
@@ -77,12 +84,14 @@ class PostService:
         self._media.delete_many([m["id"] for m in post["media"]])
 
     # RF011 ---------------------------------------------------------------
+    # Consulta a publicação e monta seus dados de apresentação.
     def get_by_id(self, post_id):
         post = self._posts.get_by_id(post_id)
         if not post:
             raise NotFoundError("Publicação não encontrada.")
         return self._present_many([post])[0]
 
+    # Limita o tamanho da página e retorna itens, total e parâmetros da paginação.
     def get_paginated(self, offset, limit, filters=None):
         offset = max(0, int(offset))
         limit = max(1, min(int(limit), MAX_PAGE_SIZE))
@@ -94,10 +103,12 @@ class PostService:
             "limit": limit,
         }
 
+    # Monta os dados de apresentação para todas as publicações retornadas pelo repositório.
     def list_all(self):
         return self._present_many(self._posts.list_all())
 
     # internos ------------------------------------------------------------
+    # Exige que a publicação exista e pertença ao usuário que está tentando alterá-la.
     def _get_owned(self, requester_id, post_id):
         post = self._posts.get_by_id(post_id)
         if not post:
@@ -107,9 +118,11 @@ class PostService:
         post["media"] = self._post_media(post)
         return post
 
+    # Carrega comentários e autores em conjunto e monta os registros completos do feed.
     def _present_many(self, posts):
         if not posts:
             return []
+        # A consulta em lote reúne os autores das publicações e dos comentários.
         comments = self._comments.list_by_post_ids([p["id"] for p in posts])
         user_ids = {p["author_id"] for p in posts}
         user_ids |= {c["author_id"] for group in comments.values() for c in group}
@@ -131,6 +144,7 @@ class PostService:
             for p in posts
         ]
 
+    # Usa as mídias gravadas no post ou consulta os arquivos públicos vinculados a ele.
     def _post_media(self, post):
         stored_media = post.get("media") or []
         if stored_media:

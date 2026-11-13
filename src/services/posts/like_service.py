@@ -1,3 +1,4 @@
+# Regras de curtidas e notificação do autor da publicação.
 from common.errors import NotFoundError, UnauthorizedError
 
 
@@ -8,6 +9,7 @@ class LikeService:
         self._users = user_repository
         self._notifications = notification_service
 
+    # Valida usuário e publicação; notifica outro autor somente quando ainda não havia essa curtida.
     def create(self, user_id, post_id):
         author = self._users.get_by_id(user_id)
         if not author:
@@ -38,17 +40,21 @@ class LikeService:
             )
         return like
 
+    # Retorna a curtida ou sinaliza que o registro não foi encontrado.
     def get_by_id(self, like_id):
         item = self._repo.get_by_id(like_id)
         if not item:
             raise NotFoundError("Curtida não encontrada.")
         return item
 
+    # Lista as curtidas associadas à publicação.
     def get_by_post_id(self, post_id):
         return self._repo.get_by_post_id(post_id)
 
+    # Remove a curtida identificada pelo par usuário e publicação.
     def delete_user_like(self, user_id, post_id):
         return self._repo.delete_user_like(user_id, post_id)
 
+    # Delega a exclusão da curtida pelo identificador.
     def delete(self, like_id):
         return self._repo.delete(like_id)

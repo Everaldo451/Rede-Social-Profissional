@@ -1,3 +1,4 @@
+# Tela do perfil profissional com apresentação de histórico, habilidades e edição pelo proprietário.
 import logging
 from datetime import date, datetime
 from pathlib import Path
@@ -61,6 +62,7 @@ SKILL_TYPE_LABELS = {
 PROFILE_IMAGE_TYPES = ["png", "jpg", "jpeg", "gif", "webp"]
 
 
+# Formata datas em diferentes representações e fornece um texto para valores ausentes.
 def _format_date(value, missing="Não informado"):
     if value is None:
         return missing
@@ -76,6 +78,7 @@ def _format_date(value, missing="Não informado"):
     return str(value)
 
 
+# Resolve o nome da organização e reutiliza os resultados no cache local da renderização.
 def _organization_name(organization_repository, organization_id, cache):
     if not organization_id:
         return "Organização não informada"
@@ -86,6 +89,7 @@ def _organization_name(organization_repository, organization_id, cache):
     return organization.get("nome") if organization else "Organização não encontrada"
 
 
+# Apresenta experiências profissionais e, quando permitido, a ação de removê-las.
 def _render_experiences(
     user,
     organization_repository,
@@ -136,6 +140,7 @@ def _render_experiences(
                     )
 
 
+# Apresenta a formação acadêmica e as ações disponíveis ao proprietário.
 def _render_education(
     user,
     organization_repository,
@@ -189,6 +194,7 @@ def _render_education(
                     )
 
 
+# Consulta e exibe as habilidades com nível e detalhes do vínculo profissional.
 def _render_skills(
     user_id,
     user_skill_repository,
@@ -238,6 +244,7 @@ def _render_skills(
                     )
 
 
+# Apresenta os vínculos do grafo e as propriedades de cada relação com organizações.
 def _render_organization_relationships(
     organization_repository,
     organization_cache,
@@ -301,6 +308,7 @@ def _render_organization_relationships(
                 )
 
 
+# Reúne e apresenta as organizações relacionadas ao perfil.
 def _render_organizations(
     user,
     relationships,
@@ -358,6 +366,7 @@ def _render_organizations(
             st.write(organization["site"])
 
 
+# Exibe certificações, emissores e informações complementares disponíveis.
 def _render_certifications(user, organization_repository, organization_cache):
     certifications = user.get("certificacoes") or []
     if not certifications:
@@ -377,6 +386,7 @@ def _render_certifications(user, organization_repository, organization_cache):
             st.write(certification["url"])
 
 
+# Exibe uma falha ou guarda a confirmação antes de atualizar a página.
 def _handle_profile_response(response):
     if not response.status:
         st.error(response.message)
@@ -385,6 +395,7 @@ def _handle_profile_response(response):
     st.rerun()
 
 
+# Apresenta foto e identificação e escolhe a ação disponível conforme o visitante.
 def _render_profile_identity(user, user_id, viewer_id):
     media_controller = MediaController(MediaService(MediaRepository()))
     media_response = media_controller.get_one(
@@ -441,6 +452,7 @@ def _render_profile_identity(user, user_id, viewer_id):
                 st.warning(response.message)
 
 
+# Valida o envio da nova foto, solicita sua gravação e remove a imagem anterior.
 def _render_profile_image_editor(media_controller, user_id, current_media):
     with st.expander("Alterar imagem de perfil"):
         with st.form(f"profile_image_form_{user_id}", clear_on_submit=True):
@@ -469,6 +481,7 @@ def _render_profile_image_editor(media_controller, user_id, current_media):
             return
 
         feedback = result.message or "Foto de perfil atualizada."
+        # A foto anterior só é removida após a criação da nova imagem.
         if current_media.status:
             delete_result = media_controller.delete(
                 current_media.data["media_id"]
@@ -487,6 +500,7 @@ def _render_profile_image_editor(media_controller, user_id, current_media):
         st.rerun()
 
 
+# Consulta o estado de presença e o apresenta junto do perfil.
 def _render_profile_presence(user_id):
     try:
         is_online = OnlinePresenceRepository().get_by_user_id(user_id)
@@ -498,6 +512,7 @@ def _render_profile_presence(user_id):
     st.caption(f"Presença: {status}")
 
 
+# Organiza os formulários de dados pessoais, habilidades, experiência, formação e vínculos.
 def _render_profile_editor(
     user_id,
     user,
@@ -506,6 +521,7 @@ def _render_profile_editor(
     organization_repository,
 ):
     st.subheader("Editar meu perfil")
+    # Os dados básicos do perfil são editados em um formulário próprio.
     with st.expander("Dados profissionais", expanded=True):
         with st.form("profile_edit_form"):
             name = st.text_input("Nome completo", value=user.get("nome") or "")
@@ -532,6 +548,7 @@ def _render_profile_editor(
                 )
             )
 
+    # O cadastro de habilidades reúne tipo de relação, nível e detalhes de experiência ou ensino.
     with st.expander("Adicionar habilidade"):
         skills = skill_repository.get_paginated(0, 100)
         if not skills:
@@ -576,6 +593,7 @@ def _render_profile_editor(
                 )
                 _handle_profile_response(user_controller_response)
 
+    # A experiência profissional associa cargo e período a uma organização.
     with st.expander("Adicionar experiência profissional"):
         with st.form("add_experience_form"):
             role = st.text_input("Cargo")
@@ -602,6 +620,7 @@ def _render_profile_editor(
                 )
             )
 
+    # A formação acadêmica associa instituição, curso, grau e período.
     with st.expander("Adicionar formação"):
         with st.form("add_education_form"):
             course = st.text_input("Curso")
@@ -633,6 +652,7 @@ def _render_profile_editor(
                 )
             )
 
+    # O vínculo organizacional registra o papel e a situação do usuário na organização.
     with st.expander("Adicionar vínculo com organização"):
         organizations = organization_repository.list_all()
         organization_names = {
@@ -667,6 +687,7 @@ def _render_profile_editor(
                 )
 
 
+# Resolve o perfil solicitado, identifica seu proprietário e monta as seções de consulta ou edição.
 def render_profile():
     st.set_page_config(page_title="Perfil profissional", layout="wide")
     render_sidebar()
@@ -705,6 +726,7 @@ def render_profile():
             st.error("Usuário não encontrado.")
             return
 
+        # Retira e-mail, senha e chave de busca antes de apresentar os dados do perfil.
         user.pop("email", None)
         user.pop("senha", None)
         user.pop("nome_normalizado", None)
@@ -718,6 +740,7 @@ def render_profile():
             user_id
         )
         user_controller = None
+        # As ações de edição só são montadas quando o visitante é o proprietário do perfil.
         if is_owner:
             user_controller = UserController(
                 UserService(

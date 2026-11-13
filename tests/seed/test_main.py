@@ -1,3 +1,4 @@
+# Testes integrados da importação de exemplos e das buscas de mentores após a carga.
 """Integration test for the seed entry point."""
 
 from types import SimpleNamespace
@@ -13,6 +14,7 @@ from src.repositories.connections.professional_repository import ProfessionalRep
 from src.services.connections.mentorship_service import MentorshipService
 
 
+# Confere os documentos importados, índices, contadores e dados do grafo produzidos pela carga.
 def test_main(seed_test_environment: Any) -> None:
     """Verify the seed entry point populated each configured database."""
     database = seed_test_environment["database"]
@@ -127,6 +129,7 @@ def test_main(seed_test_environment: Any) -> None:
         }
 
 
+# Verifica o uso das relações de ensino na busca e nas recomendações de mentoria.
 def test_mentorship_search_and_recommendations_use_teaching_relationships(
     seed_test_environment: Any,
 ) -> None:

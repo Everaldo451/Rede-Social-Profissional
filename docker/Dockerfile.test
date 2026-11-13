@@ -1,16 +1,22 @@
+# Imagem de testes com as dependências de desenvolvimento e o navegador usado pelo Playwright.
 FROM python:latest
 
 WORKDIR /app
 
+# Disponibiliza os módulos de src e os executáveis do ambiente virtual.
 ENV PYTHONPATH=/app/src
 ENV PATH="/app/.venv/bin:$PATH"
 
 RUN pip install --no-cache-dir uv==0.13.6
 
+# A separação dos arquivos de dependências permite reutilizar essa etapa da construção.
 COPY pyproject.toml uv.lock ./
+# Inclui o grupo de desenvolvimento necessário para executar os testes.
 RUN uv sync --locked --group dev --no-install-project
+# Instala Chromium e suas dependências para os cenários de teste no navegador.
 RUN uv run playwright install --with-deps chromium
 
 COPY . .
 
+# Mantém a aplicação disponível para os testes de interface.
 CMD ["streamlit", "run", "src/app.py", "--server.address=0.0.0.0"]

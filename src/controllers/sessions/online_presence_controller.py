@@ -1,3 +1,4 @@
+# Camada de entrada das operações de presença dos usuários; conecta a interface aos serviços.
 from pydantic import ValidationError
 
 from dto.sessions.request.session_requests import SessionIdRequest, UserIdRequest
@@ -8,6 +9,7 @@ class OnlinePresenceController:
     def __init__(self, online_presence_service):
         self.service = online_presence_service
 
+    # Valida a sessão antes de consultar quais usuários da lista estão online.
     def get_online_users(self, data, user_ids, *, activity=False):
         try:
             session = SessionIdRequest.model_validate(data)
@@ -18,6 +20,7 @@ class OnlinePresenceController:
             return BaseResponse(status=False, message="Sessão encerrada ou expirada.")
         return BaseResponse(status=True, data=online)
 
+    # Consulta os dados associados ao usuário por meio do serviço.
     def get_by_user_id(self, data, *, activity=True):
         try:
             session = SessionIdRequest.model_validate(data)
@@ -31,6 +34,7 @@ class OnlinePresenceController:
             return BaseResponse(status=False, message="Sessão encerrada ou expirada.")
         return BaseResponse(status=True, data=online)
 
+    # Valida o identificador da sessão e solicita a atualização de presença.
     def update_last_seen(self, data):
         try:
             session = SessionIdRequest.model_validate(data)

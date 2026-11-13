@@ -1,3 +1,5 @@
+/* Estilos específicos da tela de login e sua adaptação a telas menores. */
+/* Aplica o fundo roxo somente quando o cartão de login está presente. */
 .stApp:has(.st-key-login_card) {
     background: radial-gradient(ellipse at 15% 5%, #8332d3, transparent 53%),
         linear-gradient(145deg, #6216b5, #4a0a91);
@@ -5,10 +7,12 @@
 .stApp:has(.st-key-login_card) [data-testid="stHeader"] {
     background: transparent;
 }
+/* Limita a área principal e ajusta o espaçamento conforme a altura da janela. */
 .stApp:has(.st-key-login_card) [data-testid="stMainBlockContainer"] {
     max-width: 69rem;
     padding: clamp(2rem, 8vh, 6rem) 1.25rem;
 }
+/* Define o cartão principal com cantos arredondados, degradê e sombra. */
 .st-key-login_card {
     overflow: hidden;
     border-radius: clamp(1.5rem, 4vw, 2.75rem);
@@ -21,16 +25,19 @@
     align-items: center;
     gap: 0;
 }
+/* Controla a largura e o espaçamento do formulário de credenciais. */
 .st-key-login_credentials {
     box-sizing: border-box;
     max-width: 27rem;
     margin: auto;
     padding: clamp(1.5rem, 4vw, 3rem);
 }
+/* Ajusta a ilustração à largura disponível. */
 .st-key-login_card [data-testid="stImage"] img {
     display: block;
     width: 100%;
 }
+/* Dá destaque ao aviso de encerramento de sessão. */
 .login-notice {
     padding: .65rem .9rem;
     margin: 0;
@@ -39,11 +46,13 @@
     background: #fff;
     color: #382763;
 }
+/* Remove a moldura padrão do formulário dentro do cartão. */
 .stApp .st-key-login_card [data-testid="stForm"] {
     padding: 0;
     border: 0;
     background: transparent;
 }
+/* Padroniza marca, título e texto de boas-vindas. */
 .login-brand {
     color: #6740b3;
     font-size: .75rem;
@@ -62,6 +71,7 @@
 .login-copy {
     color: #615778;
 }
+/* Define as cores dos rótulos e campos de entrada. */
 .st-key-login_card [data-testid="stWidgetLabel"] p {
     color: #322453;
 }
@@ -74,6 +84,7 @@
 .st-key-login_card [data-baseweb="input"] button {
     color: #201647;
 }
+/* Destaca o botão de entrada e seu estado sob o ponteiro. */
 .st-key-login_card [data-testid="stFormSubmitButton"] button {
     background: #5944d6;
     border-color: #5944d6;
@@ -90,6 +101,7 @@
 .stApp:has(.st-key-login_card) [data-testid="stHeader"] button {
     color: #fff;
 }
+/* Em telas estreitas, empilha ilustração e formulário e reduz a imagem. */
 @media (max-width: 700px) {
     .st-key-login_card [data-testid="stHorizontalBlock"] {
         flex-direction: column;

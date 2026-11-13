@@ -1,6 +1,8 @@
+# Ambiente de testes com portas próprias, banco MongoDB de teste e imagem com ferramentas de desenvolvimento.
 name: rede-social-test
 
 services:
+  # MongoDB utilizado pelos testes, acessível no host pela porta 27018.
   mongodb:
     image: mongo:4.4.29
     ports:
@@ -13,6 +15,7 @@ services:
     networks:
       - test-network
 
+  # Instância Redis do ambiente de testes, exposta no host pela porta 6380.
   redis:
     image: redis:latest
     ports:
@@ -25,6 +28,7 @@ services:
     networks:
       - test-network
 
+  # Instância Neo4j dos testes com portas distintas das usadas pelo ambiente principal.
   neo4j:
     image: neo4j:latest
     environment:
@@ -40,10 +44,12 @@ services:
     networks:
       - test-network
 
+  # A imagem de testes inclui pytest e Playwright e expõe o Streamlit na porta 8502 do host.
   app:
     build:
       context: ..
       dockerfile: docker/Dockerfile.test
+    # Configura os endereços internos dos bancos e a URL usada pelos testes de interface.
     environment:
       MONGO_URI: mongodb://mongodb:27017
       MONGO_DATABASE: rede_social_test
@@ -55,6 +61,7 @@ services:
       BASE_URL: http://localhost:8501
     ports:
       - "8502:8501"
+    # Espera a verificação de saúde dos bancos antes de iniciar a aplicação.
     depends_on:
       mongodb:
         condition: service_healthy
@@ -74,6 +81,7 @@ services:
     networks:
       - test-network
 
+# Mantém os serviços de teste em sua própria rede Docker.
 networks:
   test-network:
     driver: bridge

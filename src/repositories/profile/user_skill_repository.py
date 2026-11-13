@@ -1,3 +1,4 @@
+# Mantém as relações de habilidades no Neo4j e as habilidades possuídas no documento do usuário.
 from datetime import datetime, timezone
 
 from bson import ObjectId
@@ -9,6 +10,7 @@ from database import get_mongo_database, get_neo4j_session
 
 
 class UserSkillRepository:
+    # Traduz os tipos usados pelos formulários para os nomes das relações do Neo4j.
     _RELATIONSHIPS = {
         "has": "POSSUI_HABILIDADE",
         "wants": "DESEJA_DESENVOLVER",
@@ -22,6 +24,7 @@ class UserSkillRepository:
         self.skills = database["habilidades"]
         self.session_factory = session_factory or get_neo4j_session
 
+    # Valida o ObjectId e retorna sua representação textual, usada nos nós do grafo.
     @staticmethod
     def _object_id(value):
         try:
@@ -29,6 +32,7 @@ class UserSkillRepository:
         except (InvalidId, TypeError):
             return None
 
+    # Verifica usuário e habilidade e grava o vínculo com as propriedades correspondentes ao tipo.
     def add_skill(
         self,
         user_id,
@@ -51,6 +55,7 @@ class UserSkillRepository:
         if self.skills.find_one({"_id": ObjectId(skill_object_id)}) is None:
             return False
 
+        # Habilidades possuídas também ficam embutidas no documento do usuário.
         if skill_type == "has":
             skill_entry = {
                 "habilidade_id": ObjectId(skill_object_id),
@@ -81,6 +86,7 @@ class UserSkillRepository:
             if update.matched_count == 0:
                 return False
 
+        # O tipo validado escolhe a relação do grafo e as propriedades específicas que serão gravadas.
         relationship = self._RELATIONSHIPS[skill_type]
         now = datetime.now(timezone.utc)
         if skill_type == "has":
@@ -125,6 +131,7 @@ class UserSkillRepository:
             ).single()
         return record is not None
 
+    # Remove o vínculo no grafo e, para habilidades possuídas, a entrada no perfil MongoDB.
     def remove_skill(self, user_id, skill_id, skill_type):
         if skill_type not in SKILL_TYPES:
             raise InvalidDataError("Tipo de competência inválido.")
@@ -159,6 +166,7 @@ class UserSkillRepository:
             return graph_removed or mongo_result.modified_count > 0
         return graph_removed
 
+    # Monta a consulta de relações usando somente os filtros de usuário, habilidade, tipo e nível.
     def get_skills(self, filters=None):
         filters = filters or {}
         supported_filters = {"usuario_id", "habilidade_id", "tipo", "nivel"}
@@ -206,6 +214,7 @@ class UserSkillRepository:
         with self.session_factory() as session:
             records = session.run(query, **parameters).data()
 
+        # Converte os nomes das relações do grafo de volta para os tipos usados na aplicação.
         relationship_types = {value: key for key, value in self._RELATIONSHIPS.items()}
         return [
             {

@@ -1,3 +1,4 @@
+# Testes da consistência dos vínculos de habilidade entre MongoDB e Neo4j.
 from bson import ObjectId
 import pytest
 
@@ -5,6 +6,7 @@ from common.errors import InvalidDataError
 from repositories.profile.user_skill_repository import UserSkillRepository
 
 
+# Cria os registros de usuário e habilidade necessários ao cenário.
 def _seed_user_and_skill(resources):
     user_id = ObjectId(resources.ids["user"])
     skill_id = ObjectId(resources.ids["skill"])
@@ -31,6 +33,7 @@ def _seed_user_and_skill(resources):
     return user_id, skill_id
 
 
+# Confere a habilidade possuída no documento do usuário e no grafo.
 def test_add_has_updates_embedded_skill_and_creates_graph_relation(
     repository_resources,
 ):
@@ -78,6 +81,7 @@ def test_add_has_updates_embedded_skill_and_creates_graph_relation(
     assert updated_user["habilidades"][0]["anos_experiencia"] == 4
 
 
+# Verifica as propriedades dos vínculos de aprendizagem e ensino.
 def test_add_wants_and_teaches_persists_relationship_properties(
     repository_resources,
 ):
@@ -109,6 +113,7 @@ def test_add_wants_and_teaches_persists_relationship_properties(
     assert by_type["wants"]["nivel"] == "intermediario"
 
 
+# Confere a remoção do vínculo no grafo e da habilidade embutida no perfil.
 def test_remove_has_deletes_graph_edge_and_mongo_skill_entry(
     repository_resources,
 ):
@@ -133,6 +138,7 @@ def test_remove_has_deletes_graph_edge_and_mongo_skill_entry(
     assert user["habilidades"] == []
 
 
+# Verifica a rejeição de tipos de relação e filtros não aceitos.
 def test_invalid_type_and_unknown_filters_are_rejected(repository_resources):
     repository = UserSkillRepository(
         session_factory=repository_resources.neo4j_session_factory,

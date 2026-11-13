@@ -1,3 +1,4 @@
+# Integra o histórico persistente no MongoDB ao contador de notificações não lidas no Redis.
 from datetime import datetime, timezone
 
 from bson import ObjectId
@@ -30,6 +31,7 @@ class NotificationRepository:
         except (InvalidId, TypeError):
             return None
 
+    # Prepara os dados retornados pelo banco, convertendo identificadores para texto.
     @staticmethod
     def _serialize(document: dict | None) -> dict | None:
         """Converte os ObjectId do documento para string (padrão entre os bancos)."""
@@ -41,9 +43,11 @@ class NotificationRepository:
                 result[field] = str(result[field])
         return result
 
+    # Monta a chave Redis reservada ao contador do destinatário.
     def _unread_key(self, user_id) -> str:
         return self.UNREAD_KEY.format(user_id=str(user_id))
 
+    # Incrementa o contador somente se a chave já estiver disponível no cache.
     def _increment_unread(self, user_id) -> None:
         # Se a chave não existe, o contador é reconstruído a partir do Mongo
         # na próxima leitura (count_unread_by_user_id), então não criamos aqui.
@@ -51,6 +55,7 @@ class NotificationRepository:
         if self._redis.exists(key):
             self._redis.incr(key)
 
+    # Decrementa o contador existente e impede que seu valor fique negativo.
     def _decrement_unread(self, user_id) -> None:
         key = self._unread_key(user_id)
         if self._redis.exists(key):
@@ -59,6 +64,7 @@ class NotificationRepository:
 
     # ------------------------------------------------------------------ CRUD
 
+    # Grava uma notificação inicialmente não lida e ajusta o contador do destinatário.
     def create(self, data):
         destinatario_id = self._to_object_id(data["destinatario_id"])
         if destinatario_id is None:
@@ -81,12 +87,14 @@ class NotificationRepository:
         self._increment_unread(destinatario_id)
         return self._serialize(document)
 
+    # Busca a notificação pelo ObjectId e retorna seus identificadores em texto.
     def get_by_id(self, notification_id):
         object_id = self._to_object_id(notification_id)
         if object_id is None:
             return None
         return self._serialize(self._collection.find_one({"_id": object_id}))
 
+    # Filtra o histórico por destinatário e leitura, exibindo as notificações mais recentes primeiro.
     def get_paginated(self, offset, limit, filters=None):
         query = {}
         filters = filters or {}
@@ -107,6 +115,7 @@ class NotificationRepository:
         )
         return [self._serialize(document) for document in cursor]
 
+    # Usa o valor em cache ou reconstrói o contador a partir das notificações no MongoDB.
     def count_unread_by_user_id(self, user_id):
         destinatario_id = self._to_object_id(user_id)
         if destinatario_id is None:
@@ -124,6 +133,7 @@ class NotificationRepository:
         self._redis.set(key, total)
         return total
 
+    # Marca as notificações do usuário como lidas e zera seu contador no Redis.
     def mark_all_as_read(self, user_id):
         destinatario_id = self._to_object_id(user_id)
         if destinatario_id is None:
@@ -161,6 +171,7 @@ class NotificationRepository:
 
         return self.get_by_id(notification_id)
 
+    # Exclui a notificação e reduz o contador se o registro removido ainda estava não lido.
     def delete(self, notification_id):
         object_id = self._to_object_id(notification_id)
         if object_id is None:

@@ -1,3 +1,4 @@
+# Testes de integridade dos nós e relacionamentos gerados a partir dos dados de exemplo.
 from collections import deque
 
 from seed import (
@@ -9,6 +10,7 @@ from seed import (
 )
 
 
+# Confere os nós e os tipos de relação produzidos para o grafo.
 def test_seed_graph_contains_nodes_and_supported_relationships() -> None:
     graph_data = build_graph_data(load_collections())
 
@@ -44,6 +46,7 @@ def test_seed_graph_contains_nodes_and_supported_relationships() -> None:
         )
 
 
+# Verifica se as referências dos arquivos de relações apontam para os nós da carga.
 def test_file_relationship_ids_match_seeded_nodes() -> None:
     collections = load_collections()
     file_relationships = load_relationships()
@@ -65,6 +68,7 @@ def test_file_relationship_ids_match_seeded_nodes() -> None:
         assert rows
 
 
+# Confere se convites pendentes não repetem pares já conectados.
 def test_pending_requests_do_not_duplicate_direct_connections() -> None:
     relationships = load_relationships()
     connection_rows = relationships["CONECTADO_COM"]
@@ -86,6 +90,7 @@ def test_pending_requests_do_not_duplicate_direct_connections() -> None:
     )
 
 
+# Verifica a conectividade da rede formada pelas conexões de exemplo.
 def test_seed_connections_link_the_entire_network() -> None:
     people = {
         str(user["_id"])
@@ -108,6 +113,7 @@ def test_seed_connections_link_the_entire_network() -> None:
     assert visited == people
 
 
+# Confere a disponibilidade dos mentores e a habilidade esperada no cenário de exemplo.
 def test_seeded_teachers_accept_mentorship_and_bruno_teaches_python() -> None:
     collections = load_collections()
     graph_data = build_graph_data(collections)

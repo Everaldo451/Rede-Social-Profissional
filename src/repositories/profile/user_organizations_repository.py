@@ -1,3 +1,4 @@
+# Mantém experiências, formações e vínculos organizacionais no perfil e no grafo profissional.
 from datetime import date, datetime, time, timezone
 
 from bson import ObjectId
@@ -16,6 +17,7 @@ class UserOrganizationsRepository:
         self.organizations = database["organizacoes"]
         self.session_factory = session_factory or get_neo4j_session
 
+    # Converte o identificador recebido para o formato ObjectId utilizado pelo MongoDB.
     @staticmethod
     def _object_id(value):
         try:
@@ -23,6 +25,7 @@ class UserOrganizationsRepository:
         except (InvalidId, TypeError):
             return None
 
+    # Converte datas para datetime em UTC e valida campos obrigatórios.
     @staticmethod
     def _as_datetime(value, label, *, required=False):
         if value is None:
@@ -41,6 +44,7 @@ class UserOrganizationsRepository:
             return parsed if parsed.tzinfo else parsed.replace(tzinfo=timezone.utc)
         raise InvalidDataError(f"Data inválida no campo {label}.")
 
+    # Prepara os dados retornados pelo banco, convertendo identificadores para texto.
     @staticmethod
     def _serialize(value):
         if isinstance(value, ObjectId):
@@ -54,6 +58,7 @@ class UserOrganizationsRepository:
             }
         return value
 
+    # Localiza uma organização existente pelo identificador ou pelo nome normalizado.
     def _resolve_organization_id(self, organization_id=None, organization_name=None):
         if organization_id:
             object_id = self._object_id(organization_id)
@@ -70,6 +75,7 @@ class UserOrganizationsRepository:
             raise NotFoundError("Organização ou instituição não encontrada.")
         return organization["_id"]
 
+    # Adiciona a experiência ao documento do usuário e mantém a relação TRABALHOU_EM no grafo.
     def add_experience(self, user_id, data):
         user_object_id = self._object_id(user_id)
         if user_object_id is None:
@@ -116,6 +122,7 @@ class UserOrganizationsRepository:
             ).consume()
         return self._serialize(experience)
 
+    # Remove a experiência do documento e sua relação específica no grafo.
     def remove_experience(self, user_id, organization_id, cargo, data_inicio):
         user_object_id = self._object_id(user_id)
         organization_object_id = self._object_id(organization_id)
@@ -152,6 +159,7 @@ class UserOrganizationsRepository:
             ).consume()
         return result.modified_count > 0
 
+    # Adiciona a formação ao documento do usuário e mantém a relação ESTUDOU_EM no grafo.
     def add_education(self, user_id, data):
         user_object_id = self._object_id(user_id)
         if user_object_id is None:
@@ -199,6 +207,7 @@ class UserOrganizationsRepository:
             ).consume()
         return self._serialize(education)
 
+    # Remove a formação acadêmica do documento e do grafo.
     def remove_education(self, user_id, institution_id, course, degree):
         user_object_id = self._object_id(user_id)
         institution_object_id = self._object_id(institution_id)
@@ -232,6 +241,7 @@ class UserOrganizationsRepository:
             ).consume()
         return result.modified_count > 0
 
+    # Verifica usuário e organização antes de criar ou atualizar a relação MEMBRO_DE.
     def add_membership(self, user_id, organization_id, papel, status, desde=None):
         user_object_id = self._object_id(user_id)
         organization_object_id = self._object_id(organization_id)
@@ -260,6 +270,7 @@ class UserOrganizationsRepository:
             ).single()
         return record is not None
 
+    # Remove a relação MEMBRO_DE identificada pelo usuário, organização e papel.
     def remove_membership(self, user_id, organization_id, papel):
         user_object_id = self._object_id(user_id)
         organization_object_id = self._object_id(organization_id)
@@ -280,6 +291,7 @@ class UserOrganizationsRepository:
             ).single()
         return record is not None and record["removidas"] > 0
 
+    # Consulta os vínculos organizacionais do usuário e acrescenta os detalhes de cada tipo.
     def get_by_user_id(self, user_id):
         user_object_id = self._object_id(user_id)
         if user_object_id is None:
@@ -316,6 +328,7 @@ class UserOrganizationsRepository:
             relationships.append(relationship)
         return relationships
 
+    # Remove o nó da pessoa e seus relacionamentos por meio de DETACH DELETE.
     def delete_by_user_id(self, user_id):
         user_object_id = self._object_id(user_id)
         if user_object_id is None:

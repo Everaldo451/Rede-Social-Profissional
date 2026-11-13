@@ -1,3 +1,4 @@
+# Carga dos dados de exemplo: documentos no MongoDB, mídias no GridFS, contadores no Redis e relações no Neo4j.
 """Load the JSON seed collections into MongoDB and refresh unread counters."""
 
 from hashlib import sha256
@@ -17,6 +18,7 @@ from database import get_mongo_database, get_neo4j_session, get_redis_client
 
 COLLECTIONS_DIR = Path(__file__).parent / "collections"
 ASSETS_DIR = Path(__file__).parent / "assets"
+# A ordem garante que usuários e publicações já estejam disponíveis ao montar as mídias.
 COLLECTION_ORDER = (
     "habilidades",
     "organizacoes",
@@ -33,6 +35,7 @@ MEDIA_ASSETS = {
     "post": "post-placeholder.svg",
 }
 RELATIONSHIPS_DIR = Path(__file__).parent / "rellationships"
+# Cada tipo de relação aponta para um rótulo específico de nó de destino.
 GRAPH_RELATIONSHIPS = {
     "CONECTADO_COM": "Pessoa",
     "POSSUI_HABILIDADE": "Habilidade",
@@ -44,6 +47,7 @@ GRAPH_RELATIONSHIPS = {
     "SOLICITOU_CONEXAO": "Pessoa",
     "MENTORA": "Pessoa",
 }
+# Define o conjunto exato de propriedades aceito para cada tipo de relação da carga.
 RELATIONSHIP_PROPERTIES = {
     "CONECTADO_COM": {"desde", "origem"},
     "POSSUI_HABILIDADE": {"nivel"},
@@ -69,6 +73,7 @@ FILE_RELATIONSHIPS = (
 )
 
 
+# Lê os arquivos Extended JSON na ordem prevista e verifica a estrutura e a unicidade dos identificadores.
 def load_collections(
     collections_dir: Path = COLLECTIONS_DIR,
 ) -> dict[str, list[dict[str, Any]]]:
@@ -93,6 +98,7 @@ def load_collections(
     return collections
 
 
+# Cria metadados de imagens de exemplo para todos os usuários e publicações com identificadores estáveis.
 def _build_media_documents(
     collections: dict[str, list[dict[str, Any]]],
     templates: list[dict[str, Any]],
@@ -112,6 +118,7 @@ def _build_media_documents(
             if owner_id == template_owner_id:
                 file_id = template["_id"]
             else:
+                # O hash do tipo e do proprietário produz o mesmo identificador de mídia em cargas repetidas.
                 identity = f"seed-media:{owner_type}:{owner_id}".encode("utf-8")
                 file_id = ObjectId(sha256(identity).digest()[:12])
 
@@ -131,6 +138,7 @@ def _build_media_documents(
     return documents
 
 
+# Lê os arquivos de relações e confere os campos e propriedades de cada tipo.
 def load_relationships(
     relationships_dir: Path = RELATIONSHIPS_DIR,
 ) -> dict[str, list[dict[str, Any]]]:
@@ -160,6 +168,7 @@ def load_relationships(
     return relationships
 
 
+# Insere ou substitui os documentos da carga por identificador sem excluir os demais registros.
 def import_collections(
     database: Database, collections: dict[str, list[dict[str, Any]]]
 ) -> None:
@@ -171,12 +180,14 @@ def import_collections(
             print(f"{collection_name}: {len(documents)} arquivos GridFS carregados")
             continue
 
+        # O upsert reaplica os dados por _id, permitindo repetir a carga de exemplos.
         collection = database[collection_name]
         for document in documents:
             collection.replace_one({"_id": document["_id"]}, document, upsert=True)
         print(f"{collection_name}: {len(documents)} documentos carregados")
 
 
+# Envia os SVGs locais pelo GridFS para gerar tanto os metadados quanto os blocos do arquivo.
 def _import_gridfs_files(
     database: Database, documents: list[dict[str, Any]]
 ) -> None:
@@ -191,6 +202,7 @@ def _import_gridfs_files(
         if not asset_content:
             raise ValueError(f"Seed media asset {asset_name} must not be empty")
 
+        # Substitui um arquivo da carga pelo GridFS para manter metadados e blocos de conteúdo coerentes.
         if files.find_one({"_id": document["_id"]}) is not None:
             bucket.delete(document["_id"])
 
@@ -202,6 +214,7 @@ def _import_gridfs_files(
         )
 
 
+# Transforma as senhas de exemplo em hashes bcrypt, preservando as que já estão nesse formato.
 def hash_seed_passwords(collections: dict[str, list[dict[str, Any]]]) -> None:
     """Hash plaintext fixture passwords with bcrypt before importing them."""
     for user in collections["usuarios"]:
@@ -219,6 +232,7 @@ def hash_seed_passwords(collections: dict[str, list[dict[str, Any]]]) -> None:
         ).decode("ascii")
 
 
+# Cria os índices usados nas consultas e nas restrições de unicidade dos dados.
 def create_indexes(database: Database) -> None:
     """Create the indexes specified for the seed collections."""
     database["usuarios"].create_index("email", unique=True)
@@ -237,6 +251,7 @@ def create_indexes(database: Database) -> None:
     )
 
 
+# Recalcula no MongoDB os totais não lidos dos usuários da carga e grava suas chaves no Redis.
 def sync_unread_notification_counts(
     database: Database,
     redis_client: Redis,
@@ -252,6 +267,7 @@ def sync_unread_notification_counts(
     if not recipient_ids:
         return
 
+    # Inicializa contadores com zero para incluir usuários sem notificações não lidas.
     unread_counts = {recipient_id: 0 for recipient_id in recipient_ids}
     pipeline = [
         {
@@ -276,6 +292,7 @@ def sync_unread_notification_counts(
     print(f"Redis: {len(redis_values)} contadores notifications:unread atualizados")
 
 
+# Deriva nós e vínculos dos documentos e incorpora as relações descritas em arquivos próprios.
 def build_graph_data(
     collections: dict[str, list[dict[str, Any]]],
     file_relationships: dict[str, list[dict[str, Any]]] | None = None,
@@ -309,6 +326,7 @@ def build_graph_data(
         for skill in user.get("habilidades", [])
     }
 
+    # Transforma habilidades, experiências e formação do perfil em relações do grafo.
     for user in collections["usuarios"]:
         person_id = str(user["_id"])
         for skill in user.get("habilidades", []):
@@ -348,6 +366,7 @@ def build_graph_data(
                 }
             )
 
+    # As mentorias também identificam habilidades desejadas pelo mentorado.
     for mentorship in collections["mentorias"]:
         mentorado_id = str(mentorship["mentorado_id"])
         mentor_id = str(mentorship["mentor_id"])
@@ -384,6 +403,7 @@ def build_graph_data(
             }
         )
 
+    # Conexões, convites, vínculos de membro e relações de ensino vêm dos arquivos próprios.
     for relationship_type, documents in file_relationships.items():
         if relationship_type not in FILE_RELATIONSHIPS:
             raise ValueError(
@@ -408,6 +428,7 @@ def build_graph_data(
         "SOLICITOU_CONEXAO": people_ids,
         "MENTORA": people_ids,
     }
+    # Verifica se cada ponta das relações corresponde a um nó existente na carga.
     for relationship_type, _ in GRAPH_RELATIONSHIPS.items():
         for relationship in graph_data[relationship_type]:
             if relationship["source_id"] not in people_ids:
@@ -426,10 +447,12 @@ def build_graph_data(
     return graph_data
 
 
+# Usa MERGE para inserir ou atualizar os nós e as relações em uma transação Neo4j.
 def _write_graph(
     transaction: Any, graph_data: dict[str, list[dict[str, Any]]]
 ) -> None:
     """Upsert graph nodes and edges in one Neo4j transaction."""
+    # Cria primeiro os nós, para que as relações possam localizar suas duas pontas.
     for node_name, label in (
         ("people", "Pessoa"),
         ("organizations", "Organizacao"),
@@ -440,6 +463,7 @@ def _write_graph(
             rows=graph_data[node_name],
         ).consume()
 
+    # Depois dos nós, grava as relações com as propriedades esperadas de cada tipo.
     for relationship_type, target_label in GRAPH_RELATIONSHIPS.items():
         rows = graph_data[relationship_type]
         if not rows:
@@ -461,6 +485,7 @@ def _write_graph(
         ).consume()
 
 
+# Prepara os dados do grafo e executa sua gravação na sessão configurada.
 def sync_neo4j(collections: dict[str, list[dict[str, Any]]]) -> None:
     """Upsert seed nodes and relationships in Neo4j."""
     graph_data = build_graph_data(collections, load_relationships())
@@ -474,6 +499,7 @@ def sync_neo4j(collections: dict[str, list[dict[str, Any]]]) -> None:
     )
 
 
+# Executa a leitura, a proteção das senhas, a importação e a sincronização dos três bancos.
 def main() -> None:
     """Import the seed data and synchronize unread notification counters."""
     collections = load_collections()

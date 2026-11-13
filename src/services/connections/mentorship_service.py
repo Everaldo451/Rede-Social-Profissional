@@ -1,3 +1,4 @@
+# Coordena busca, recomendação, solicitação e resposta de mentorias.
 from datetime import datetime, timezone
 
 MAX_PAGE_SIZE = 100
@@ -11,6 +12,7 @@ class MentorshipService:
         self.professionals = professional_repository
         self.notifications = notification_repository
 
+    # Valida mentorado, disponibilidade do mentor e habilidade antes de registrar e notificar a solicitação.
     def create(self, mentee_id, data):
         if mentee_id == data["mentor_id"]:
             raise ValueError("Não é possível solicitar mentoria para si mesmo.")
@@ -44,9 +46,11 @@ class MentorshipService:
         )
         return mentorship
 
+    # Busca a mentoria pelo identificador.
     def get_by_id(self, mentorship_id):
         return self.mentors.get_by_id(mentorship_id)
 
+    # Combina busca por habilidade e nome, filtra perfis disponíveis e aplica a paginação.
     def filter_mentors(self, user_id, filters, offset=0, limit=20):
         offset = max(int(offset or 0), 0)
         limit = min(max(int(limit or 20), 1), MAX_PAGE_SIZE)
@@ -62,15 +66,18 @@ class MentorshipService:
         )
         return profiles[offset : offset + limit]
 
+    # Obtém um perfil de mentor e exige que ele esteja disponível para aceitar mentorias.
     def get_by_user_id(self, user_id):
         user = self.professionals.get_by_id(user_id)
         if not user or not user.get("aceita_mentoria"):
             raise ValueError("Perfil de mentor indisponível.")
         return user
 
+    # Método reservado: o corpo contém apenas pass e ainda não executa uma operação.
     def list_all(self):
         pass
 
+    # Acrescenta nomes de profissionais e habilidades às solicitações do usuário.
     def list_requests(self, user_id):
         requests = self.mentors.list_requests(user_id)
         other_ids = {
@@ -97,16 +104,19 @@ class MentorshipService:
             )
         return requests
 
+    # Permite que somente o mentor responda a uma solicitação pendente e notifica o mentorado.
     def update(self, user_id, mentorship_id, data):
         mentorship = self.mentors.get_by_id(mentorship_id)
         if mentorship is None:
             raise ValueError("Solicitação de mentoria não encontrada.")
+        # A decisão pertence ao mentor indicado no registro, não ao mentorado solicitante.
         if mentorship["mentor_id"] != user_id:
             raise ValueError("Somente o mentor pode responder à solicitação.")
         if mentorship["status"] != "solicitado":
             raise ValueError("A solicitação de mentoria não está pendente.")
 
         now = datetime.now(timezone.utc)
+        # O aceite ativa a mentoria; a recusa registra o cancelamento e a data de encerramento.
         if data.acao == "aceitar":
             updates = {"status": "ativa", "iniciada_em": now, "encerrada_em": None}
             title = "Sua solicitação de mentoria foi aceita"
@@ -127,9 +137,11 @@ class MentorshipService:
         )
         return updated
 
+    # Método reservado: o corpo contém apenas pass e ainda não executa uma operação.
     def delete(self, mentorship_id):
         pass
 
+    # Relaciona os resultados do grafo aos perfis disponíveis e aos nomes das habilidades.
     def _available_profiles(self, rows, name=""):
         profiles = self.professionals.get_by_ids(row["id"] for row in rows)
         name = name.casefold()
@@ -140,6 +152,7 @@ class MentorshipService:
         available = []
         for row in rows:
             profile = profiles.get(row["id"])
+            # Uma relação ENSINA no grafo só é exibida se o perfil ainda aceitar mentorias.
             if not profile or not profile.get("aceita_mentoria"):
                 continue
             if name and name not in profile.get("nome", "").casefold():
@@ -162,12 +175,14 @@ class MentorshipService:
             )
         return available
 
+    # Pagina os mentores recomendados pelo encontro entre habilidades desejadas e ensinadas.
     def recommend(self, user_id, offset=0, limit=20):
         offset = max(int(offset or 0), 0)
         limit = min(max(int(limit or 20), 1), MAX_PAGE_SIZE)
         profiles = self._available_profiles(self.mentors.recommend(user_id))
         return profiles[offset : offset + limit]
 
+    # Converte os identificadores das habilidades desejadas em nomes para a interface.
     def desired_skills(self, user_id):
         desired_ids = set(self.mentors.desired_skills(user_id))
         return [

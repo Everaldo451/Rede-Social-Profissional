@@ -1,8 +1,10 @@
+# Teste da conversão de SVG para exibição como foto de perfil.
 from unittest.mock import Mock
 
 from components.shared.profile_identity import render_profile_image
 
 
+# Confere se o SVG em bytes é decodificado antes de ser exibido.
 def test_svg_profile_image_is_rendered_by_streamlit_as_an_svg_string():
     container = Mock()
 

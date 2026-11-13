@@ -1,3 +1,4 @@
+# Reúne a foto e o nome clicável que identificam um profissional nas telas.
 from pathlib import Path
 
 import streamlit as st
@@ -14,11 +15,13 @@ DEFAULT_PROFILE_IMAGE = (
 )
 
 
+# Reutiliza a cadeia de controller, serviço e repositório de mídias.
 @st.cache_resource
 def _media_controller():
     return MediaController(MediaService(MediaRepository()))
 
 
+# Consulta a foto pública e mantém o resultado em cache por cinco minutos.
 @st.cache_data(ttl=300, show_spinner=False)
 def _profile_media(user_id):
     response = _media_controller().get_one(
@@ -40,20 +43,24 @@ def _profile_media(user_id):
     return None, None, response.message
 
 
+# Invalida o cache das fotos para que a próxima leitura busque os dados atuais.
 def clear_profile_media_cache():
     _profile_media.clear()
 
 
+# Decodifica SVG como texto e entrega a imagem ao componente do Streamlit.
 def render_profile_image(container, content, mime_type, size=150):
     if mime_type == "image/svg+xml":
         content = content.decode("utf-8")
     container.image(content, width=size)
 
 
+# Exibe foto, nome e legenda, permitindo abrir o perfil pelo botão do nome.
 def render_profile_identity(user_id, name, key, caption=None):
     user_id = str(user_id)
     photo, details = st.columns([1, 5], vertical_alignment="center")
     content, mime_type, media_error = _profile_media(user_id)
+    # Usa o avatar padrão quando não há foto disponível para esse usuário.
     if content is None:
         render_profile_image(
             photo,

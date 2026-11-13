@@ -1,3 +1,4 @@
+# Central de notificações com paginação, controle de leitura e respostas a convites.
 import logging
 from pathlib import Path
 
@@ -27,6 +28,7 @@ st.html(Path(__file__).resolve().parents[1] / "assets" / "shared" / "page_theme.
 from pages.Sessoes import get_authenticated_user_id
 
 user_id = get_authenticated_user_id()
+# O histórico é restrito à sessão autenticada.
 if not user_id:
     st.info("Entre na sua conta para acessar suas notificações.")
     st.page_link("pages/Login.py", label="Ir para o login")
@@ -35,6 +37,7 @@ if not user_id:
 PAGE_SIZE = 6
 
 
+# Monta e reutiliza o controller que acessa o histórico e os contadores de notificações.
 @st.cache_resource
 def get_controller() -> NotificationController:
     repository = NotificationRepository()
@@ -42,6 +45,7 @@ def get_controller() -> NotificationController:
     return NotificationController(service)
 
 
+# Monta as dependências necessárias para responder aos convites de conexão.
 @st.cache_resource
 def get_connection_controller() -> ConnectionController:
     from database import get_mongo_database, get_neo4j_session
@@ -57,6 +61,7 @@ def get_connection_controller() -> ConnectionController:
     )
 
 
+# Monta as dependências necessárias para responder às solicitações de mentoria.
 @st.cache_resource
 def get_mentorship_controller() -> MentorshipController:
     from database import get_mongo_database, get_neo4j_session
@@ -75,6 +80,7 @@ def get_mentorship_controller() -> MentorshipController:
 controller = get_controller()
 
 
+# Solicita a marcação de leitura e trata o resultado dessa atualização.
 def _mark_notification_as_read(notification_id):
     try:
         response = controller.update(
@@ -100,6 +106,7 @@ if not unread_response.status:
     st.stop()
 unread = unread_response.data
 
+# Reúne o contador de não lidas e as ações gerais do painel.
 col_unread, col_read_all, col_test = st.columns(3)
 col_unread.metric("Não lidas", unread)
 
@@ -135,6 +142,7 @@ if mostrar == "Não lidas":
     filters["lida"] = False
 
 # ----------------------------------------------------------------------- lista
+# A troca de filtro retorna a listagem à página inicial.
 if st.session_state.get("notifications_last_filter") != mostrar:
     st.session_state.notifications_page = 1
     st.session_state.notifications_last_filter = mostrar
@@ -159,6 +167,7 @@ notifications = notifications[:PAGE_SIZE]
 connection_requests = []
 mentorship_requests = []
 try:
+    # Carrega os convites de conexão necessários para relacioná-los às notificações exibidas.
     if any(
         item["tipo"] in {"nova_conexao", "conexao_aceita"}
         and item.get("referencia_tipo") == "usuario"
@@ -169,6 +178,7 @@ try:
             connection_requests = requests_response.data
         else:
             st.warning(requests_response.message)
+    # Carrega as solicitações de mentoria referenciadas na página atual.
     if any(
         item["tipo"] == "mentoria"
         and item.get("referencia_tipo") == "mentoria"
@@ -186,6 +196,7 @@ except (DriverError, Neo4jError, PyMongoError, RedisError):
 if not notifications:
     st.info("Você não tem notificações.")
 
+# Cada cartão oferece as ações de leitura, exclusão e, quando aplicável, resposta ao convite.
 for notification in notifications:
     notification_id = notification["_id"]
     lida = notification["lida"]
@@ -242,6 +253,7 @@ for notification in notifications:
                     f"notification_mentorship_{notification_id}",
                 )
 
+        # Convites de conexão pendentes podem ser respondidos diretamente pela notificação.
         if (
             notification["tipo"] == "nova_conexao"
             and reference_type == "usuario"
@@ -290,6 +302,7 @@ for notification in notifications:
                             else:
                                 st.error(response.message)
 
+        # Solicitações de mentoria recebidas podem ser aceitas ou recusadas neste cartão.
         if (
             notification["tipo"] == "mentoria"
             and reference_type == "mentoria"
@@ -349,6 +362,7 @@ for notification in notifications:
                 st.rerun()
             st.error(response.message)
 
+# Os controles de paginação atualizam a posição da lista no estado da sessão.
 previous, page_label, next_page = st.columns([1, 2, 1])
 if previous.button("Página anterior", disabled=page <= 1):
     st.session_state.notifications_page = page - 1

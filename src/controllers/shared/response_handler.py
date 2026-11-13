@@ -1,3 +1,4 @@
+# Padroniza o resultado e as falhas esperadas das operações de publicações.
 from pydantic import ValidationError
 
 from common.errors import AppError
@@ -11,5 +12,6 @@ def run(action) -> BaseResponse:
     except AppError as exc:
         return BaseResponse(status=False, message=str(exc))
     except ValidationError as exc:
+        # Extrai a primeira mensagem de validação para exibi-la sem o prefixo técnico do Pydantic.
         message = exc.errors()[0]["msg"].removeprefix("Value error, ")
         return BaseResponse(status=False, message=message)

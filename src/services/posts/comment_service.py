@@ -1,3 +1,4 @@
+# Regras para publicar comentários e apresentar seus autores no feed.
 from datetime import datetime, timezone
 
 from common.errors import ForbiddenError, NotFoundError, UnauthorizedError
@@ -13,6 +14,7 @@ class CommentService:
         self._allow_self_comment = allow_self_comment
         self._notifications = notification_service
 
+    # Exige autor e publicação válidos, aplica a regra de comentário próprio e gera a notificação.
     def create(self, author_id, post_id, data):
         author = self._users.get_by_id(author_id)
         if not author:
@@ -43,6 +45,7 @@ class CommentService:
             })
         return comment_view({author_id: author}, comment)
 
+    # Busca os comentários e carrega os autores em conjunto para montar a apresentação.
     def list_by_post(self, post_id):
         comments = self._comments.list_by_post_ids([post_id]).get(post_id, [])
         users = self._users.get_many_by_ids({c["author_id"] for c in comments})

@@ -1,3 +1,4 @@
+# Tela de busca e recomendação de mentores, consulta de perfis e resposta de solicitações.
 import logging
 from pathlib import Path
 
@@ -19,6 +20,7 @@ THEME = Path(__file__).resolve().parents[1] / "assets" / "shared" / "page_theme.
 PAGE_SIZE = 6
 
 
+# Apresenta os filtros de nome e habilidade para a busca de mentores.
 def _search_fields(skills, key, label="Nome do mentor"):
     skill_names = {str(skill["_id"]): skill["nome"] for skill in skills}
     name = st.text_input(label, max_chars=100, key=f"{key}_name")
@@ -33,8 +35,10 @@ def _search_fields(skills, key, label="Nome do mentor"):
     return {"nome": name, "habilidade_id": skill_id}
 
 
+# Inicializa ou recupera a listagem e busca a primeira página quando necessário.
 def _load_mentor_page(controller, user_id, key, filters=None, *, reset=False):
     listing_key = f"mentor_listing_{key}"
+    # Mantém no estado da sessão os resultados, a paginação e os erros de cada listagem.
     if reset or listing_key not in st.session_state:
         st.session_state[listing_key] = {
             "filters": filters or {"nome": "", "habilidade_id": None},
@@ -60,6 +64,7 @@ def _load_mentor_page(controller, user_id, key, filters=None, *, reset=False):
     return listing
 
 
+# Busca a próxima página e acrescenta seus resultados ao estado da listagem.
 def _load_more_mentors(controller, user_id, key):
     listing = st.session_state[f"mentor_listing_{key}"]
     offset = len(listing["results"])
@@ -77,6 +82,7 @@ def _load_more_mentors(controller, user_id, key):
     st.rerun()
 
 
+# Apresenta os dados profissionais, as habilidades e o histórico do mentor selecionado.
 def _render_profile(profile, user_id):
     st.subheader("Perfil profissional")
     render_profile_identity(
@@ -128,6 +134,7 @@ def _render_profile(profile, user_id):
                     st.caption(entry[detail_field])
 
 
+# Organiza busca, recomendações, pedidos recebidos e criação de novas solicitações.
 def _render_mentors(controller, user_id, users):
     section = st.radio(
         "Seção de mentoria",
@@ -135,6 +142,7 @@ def _render_mentors(controller, user_id, users):
         horizontal=True,
         key="mentorship_section",
     )
+    # A seção de solicitações reúne os pedidos que o mentor pode responder.
     if section == "Solicitações":
         response = controller.list_requests(user_id)
         if not response.status:
@@ -186,6 +194,7 @@ def _render_mentors(controller, user_id, users):
         listing_key = "search"
     else:
         desired = controller.desired_skills(user_id).data
+        # As recomendações dependem das habilidades que o usuário indicou que deseja desenvolver.
         if not desired:
             st.info(
                 "O perfil ainda não tem habilidades desejadas para gerar recomendações."
@@ -243,6 +252,7 @@ def _render_mentors(controller, user_id, users):
             for skill_id in mentors[mentor_id].get("habilidade_ids", [])
             if skill_id in skill_names
         }
+        # A solicitação precisa indicar uma das habilidades ensinadas pelo mentor selecionado.
         if mentor_skills:
             skill_id = st.selectbox(
                 "Habilidade para a mentoria",
@@ -267,6 +277,7 @@ def _render_mentors(controller, user_id, users):
             st.info("Este mentor não tem habilidades disponíveis para solicitação.")
 
 
+# Exige autenticação para utilizar as funcionalidades de mentoria.
 def _current_user_id():
     from pages.Sessoes import get_authenticated_user_id
 
@@ -278,6 +289,7 @@ def _current_user_id():
     return user_id
 
 
+# Prepara o tema, a sessão e as dependências da página de mentoria.
 def main():
     st.set_page_config(page_title="Mentoria", layout="wide")
     render_sidebar()

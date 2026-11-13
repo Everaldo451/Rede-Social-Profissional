@@ -1,3 +1,4 @@
+# Testes de navegador para consulta, foto e permissões de edição do perfil profissional.
 import os
 from datetime import datetime, timezone
 from pathlib import Path
@@ -21,6 +22,7 @@ from repositories.sessions.session_repository import SessionRepository
 BASE_URL = os.getenv("BASE_URL", "http://localhost:8501")
 
 
+# Prepara os dados de perfil e suas referências para os cenários de navegador.
 def _create_profile_records(repository_resources):
     database = repository_resources.mongo
     user_repository = UserRepository(database)
@@ -152,6 +154,7 @@ def _create_profile_records(repository_resources):
     return user
 
 
+# Confere a apresentação dos dados do usuário e de seus vínculos na visualização do perfil.
 def test_profile_page_displays_read_only_user_and_relationship_data(
     page: Page, repository_resources
 ):
@@ -178,6 +181,7 @@ def test_profile_page_displays_read_only_user_and_relationship_data(
     assert page.locator(".profile-photo-svg svg").count() == 1
 
 
+# Exercita o cenário de consulta da presença por um visitante anônimo.
 def test_profile_page_shows_presence_to_anonymous_visitors(
     page: Page, repository_resources
 ):
@@ -196,6 +200,7 @@ def test_profile_page_shows_presence_to_anonymous_visitors(
         presence.client.delete(key)
 
 
+# Verifica a apresentação da foto pública do perfil.
 def test_profile_page_displays_public_profile_photo(page: Page, repository_resources):
     user = _create_profile_records(repository_resources)
     media_repository = MediaRepository(repository_resources.mongo)
@@ -224,6 +229,7 @@ def test_profile_page_displays_public_profile_photo(page: Page, repository_resou
         ).delete(ObjectId(media["media_id"]))
 
 
+# Confere o tratamento de um usuário inexistente na tela.
 def test_profile_page_reports_missing_user(page: Page, repository_resources):
     missing_user_id = repository_resources.ids["user"]
     page.goto(f"{BASE_URL}/profile?user_id={missing_user_id}")
@@ -231,6 +237,7 @@ def test_profile_page_reports_missing_user(page: Page, repository_resources):
     page.get_by_text("Usuário não encontrado.", exact=True).wait_for()
 
 
+# Exercita a edição do perfil pelo próprio proprietário.
 def test_profile_page_allows_owner_to_edit_their_profile(
     page: Page, repository_resources
 ):
@@ -265,6 +272,7 @@ def test_profile_page_allows_owner_to_edit_their_profile(
         sessions.delete(session_id)
 
 
+# Verifica a ausência de permissão para editar o perfil de outra pessoa.
 def test_profile_page_does_not_allow_editing_another_user_profile(
     page: Page, repository_resources
 ):
@@ -313,6 +321,7 @@ def test_profile_page_does_not_allow_editing_another_user_profile(
         sessions.delete(session_id)
 
 
+# Confere o tratamento de um identificador de usuário inválido.
 def test_profile_page_rejects_invalid_user_id(page: Page):
     page.goto(f"{BASE_URL}/profile?user_id=invalid")
 

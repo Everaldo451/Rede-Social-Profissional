@@ -1,3 +1,4 @@
+# Camada de entrada das operações de mídias; conecta a interface aos serviços.
 import logging
 from collections.abc import Callable
 from typing import Any
@@ -25,6 +26,7 @@ class MediaController:
     def __init__(self, media_service):
         self.media_service = media_service
 
+    # Encaminha o cadastro ao serviço e apresenta seu resultado em uma resposta padronizada.
     def create(self, data):
         try:
             request = MediaCreateRequest.model_validate(data)
@@ -35,12 +37,14 @@ class MediaController:
             success_message="Mídia criada com sucesso.",
         )
 
+    # Encaminha o arquivo para validação e gravação como foto do perfil.
     def create_profile_image(self, file: MediaFile, owner_id: str):
         return self._execute(
             lambda: self.media_service.create_profile_image(file, owner_id),
             success_message="Foto de perfil atualizada.",
         )
 
+    # Solicita ao serviço o registro identificado e devolve o resultado à interface.
     def get_by_id(self, media_id):
         try:
             request = MediaIdRequest(media_id=media_id)
@@ -51,6 +55,7 @@ class MediaController:
             not_found_message="Mídia não encontrada.",
         )
 
+    # Valida os filtros e consulta um registro correspondente.
     def get_one(self, filters=None):
         try:
             request = MediaFiltersRequest(filters=filters)
@@ -61,6 +66,7 @@ class MediaController:
             not_found_message="Mídia não encontrada.",
         )
 
+    # Valida os filtros e solicita a lista de mídias correspondente.
     def list(self, filters=None):
         try:
             request = MediaFiltersRequest(filters=filters)
@@ -70,6 +76,7 @@ class MediaController:
             lambda: self.media_service.list(request.filters),
         )
 
+    # Encaminha a atualização ao serviço após validar os dados de entrada.
     def update(self, media_id, data):
         try:
             id_request = MediaIdRequest(media_id=media_id)
@@ -85,6 +92,7 @@ class MediaController:
             not_found_message="Mídia não encontrada.",
         )
 
+    # Solicita a remoção do registro e devolve uma resposta à interface.
     def delete(self, media_id):
         try:
             request = MediaIdRequest(media_id=media_id)
@@ -97,6 +105,7 @@ class MediaController:
             false_is_not_found=True,
         )
 
+    # Padroniza sucesso, ausência de mídia e erros de validação ou persistência.
     @staticmethod
     def _execute(
         operation: Callable[[], Any],
@@ -119,6 +128,7 @@ class MediaController:
             return BaseResponse(status=False, message=not_found_message)
         return BaseResponse(status=True, data=result, message=success_message)
 
+    # Transforma os erros de validação em uma resposta que a interface pode apresentar.
     @staticmethod
     def _validation_error(error: ValidationError) -> BaseResponse:
         return BaseResponse(status=False, message=f"Dados inválidos: {error}")

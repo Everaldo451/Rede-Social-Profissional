@@ -1,3 +1,4 @@
+# Persiste solicitações e conexões no Neo4j e consulta caminhos na rede profissional.
 from uuid import uuid4
 
 
@@ -5,6 +6,7 @@ class ConnectionRepository:
     def __init__(self, session_factory):
         self.session_factory = session_factory
 
+    # Ordena o par de usuários e força um bloqueio de escrita para coordenar solicitações concorrentes.
     @staticmethod
     def _lock_pair(tx, user_id, other_id):
         first_id, second_id = sorted((user_id, other_id))
@@ -20,15 +22,19 @@ class ConnectionRepository:
             second_id=second_id,
         ).consume()
 
+    # Método reservado: o corpo contém apenas pass e ainda não executa uma operação.
     def create(self, user_id, connected_user_id, data):
         pass
 
+    # Método reservado: o corpo contém apenas pass e ainda não executa uma operação.
     def connection_exists(self, user_id, connected_user_id):
         pass
 
+    # Executa uma transação que verifica duplicidade e cria o convite de conexão.
     def request_connection(self, user_id, connected_user_id):
         request_id = str(uuid4())
 
+        # Revalida o par dentro da transação e registra apenas uma solicitação pendente.
         def register(tx):
             self._lock_pair(tx, user_id, connected_user_id)
             existing = tx.run(
@@ -68,9 +74,11 @@ class ConnectionRepository:
         with self.session_factory() as session:
             return session.execute_write(register)
 
+    # Método reservado: o corpo contém apenas pass e ainda não executa uma operação.
     def list_all(self):
         pass
 
+    # Lista os identificadores das conexões diretas com ordenação e paginação no grafo.
     def get_paginated_for_user(self, user_id, offset, limit):
         with self.session_factory() as session:
             rows = session.execute_read(
@@ -86,7 +94,9 @@ class ConnectionRepository:
             )
         return [row["id"] for row in rows]
 
+    # Atualiza a resposta do destinatário e cria a conexão quando o convite é aceito.
     def update_connection_request(self, user_id, connected_user_id, request_id, status):
+        # Confere destinatário e estado do convite antes de gravar a decisão na mesma transação.
         def respond(tx):
             self._lock_pair(tx, user_id, connected_user_id)
             params = {
@@ -125,9 +135,11 @@ class ConnectionRepository:
         with self.session_factory() as session:
             return session.execute_write(respond)
 
+    # Método reservado: o corpo contém apenas pass e ainda não executa uma operação.
     def get_mutual_connections(self, user_id, connected_user_id):
         pass
 
+    # Usa shortestPath para obter o caminho mínimo e seu número de conexões.
     def get_shortest_path(self, user_id, target_user_id):
         with self.session_factory() as session:
             return session.execute_read(
@@ -143,6 +155,7 @@ class ConnectionRepository:
                 ).single()
             )
 
+    # Conta os profissionais distintos conectados diretamente ao usuário.
     def count_connections(self, user_id):
         with self.session_factory() as session:
             return session.execute_read(
@@ -155,12 +168,15 @@ class ConnectionRepository:
                 ).single(strict=True)["total"]
             )
 
+    # Método reservado: o corpo contém apenas pass e ainda não executa uma operação.
     def update(self, user_id, connected_user_id, data):
         pass
 
+    # Método reservado: o corpo contém apenas pass e ainda não executa uma operação.
     def delete(self, user_id, connected_user_id):
         pass
 
+    # Lista convites pendentes enviados ou recebidos, excluindo pares que já estão conectados.
     def list_requests(self, user_id):
         with self.session_factory() as session:
             return session.execute_read(

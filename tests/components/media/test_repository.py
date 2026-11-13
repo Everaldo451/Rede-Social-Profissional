@@ -1,3 +1,4 @@
+# Testes de persistência de mídias no GridFS e de tradução das falhas do MongoDB.
 from collections.abc import Iterator
 from pathlib import Path
 from unittest.mock import MagicMock, Mock, patch
@@ -19,6 +20,7 @@ IMAGE_CASES = (
 GRIDFS_COLLECTIONS = ("midias.files", "midias.chunks")
 
 
+# Prepara a limpeza das coleções de mídia usadas pelos testes.
 @pytest.fixture(autouse=True)
 def clear_gridfs_collections() -> Iterator[None]:
     database = get_mongo_database()
@@ -31,11 +33,13 @@ def clear_gridfs_collections() -> Iterator[None]:
             database.drop_collection(collection_name)
 
 
+# Disponibiliza a instância do repositório de mídia para os cenários de teste.
 @pytest.fixture
 def media_repository() -> MediaRepository:
     return MediaRepository(get_mongo_database())
 
 
+# Verifica se erros do driver são convertidos em erros de persistência de mídia.
 def test_repository_wraps_mongodb_errors() -> None:
     database = MagicMock()
     with patch("repositories.shared.media_repository.GridFSBucket") as bucket:
@@ -56,6 +60,7 @@ def test_repository_wraps_mongodb_errors() -> None:
     assert isinstance(exc_info.value.__cause__, ServerSelectionTimeoutError)
 
 
+# Exercita criação, consulta, atualização e exclusão com imagens reais de teste.
 @pytest.mark.parametrize(
     ("asset_name", "owner_type", "media_type"),
     IMAGE_CASES,

@@ -1,3 +1,5 @@
+/* Estilos do painel que apresenta e permite encerrar as sessões da conta. */
+/* Restringe o fundo personalizado à tela de sessões. */
 .stApp:has(.st-key-sessions_shell) {
     background: radial-gradient(ellipse at 90% 0%, #f2e2fa, transparent 42%),
         linear-gradient(150deg, #f8f5ff, #edf0ff);
@@ -5,6 +7,7 @@
 .stApp:has(.st-key-sessions_shell) [data-testid="stHeader"] {
     background: transparent;
 }
+/* Ajusta a largura e o espaçamento do painel. */
 .stApp:has(.st-key-sessions_shell) [data-testid="stMainBlockContainer"] {
     max-width: 66rem;
     padding: clamp(2rem, 6vh, 4.5rem) 1.25rem;
@@ -13,6 +16,7 @@
     color: #302353;
     color-scheme: light;
 }
+/* Aplica o mesmo acabamento ao cabeçalho e à área de sessões. */
 .st-key-dashboard_header,
 .st-key-sessions_panel {
     padding: clamp(1rem, 3vw, 1.65rem);
@@ -28,6 +32,7 @@
     display: flex;
     align-items: flex-end;
 }
+/* Estiliza a legenda curta acima do título. */
 .dashboard-eyebrow {
     color: #6c43ae;
     font-size: .73rem;
@@ -35,6 +40,7 @@
     letter-spacing: .09em;
     text-transform: uppercase;
 }
+/* Padroniza títulos e indicadores numéricos do painel. */
 .st-key-sessions_shell h1,
 .st-key-sessions_shell h3 {
     color: #302353;
@@ -50,6 +56,7 @@
 .st-key-sessions_shell [data-testid="stMetricValue"] {
     font-size: 1.55rem;
 }
+/* Define a aparência compacta dos botões de encerramento de sessão. */
 .st-key-sessions_shell [data-testid="stButton"] button {
     min-height: 0;
     padding: .25rem .65rem;
@@ -66,6 +73,7 @@
     background: #eae0fb;
     border-color: #bca5eb;
 }
+/* Separa os acessos ativos em cartões com fundo e borda. */
 .st-key-sessions_panel [data-testid="stVerticalBlockBorderWrapper"] {
     padding: .75rem .9rem;
     border-color: #e8e0f6;

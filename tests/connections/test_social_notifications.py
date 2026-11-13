@@ -1,3 +1,4 @@
+# Testes das notificações de conexões e mentorias com repositórios simulados.
 from types import SimpleNamespace
 from unittest.mock import Mock
 
@@ -8,10 +9,12 @@ from src.services.connections.connection_service import ConnectionService
 from src.services.connections.mentorship_service import MentorshipService
 
 
+# Simula a consulta de profissionais e habilidades para os testes dos serviços.
 class FakeProfessionals:
     def __init__(self, profiles):
         self.profiles = profiles
 
+    # Retorna apenas os perfis simulados solicitados pelo cenário.
     def get_by_ids(self, user_ids):
         return {
             user_id: self.profiles[user_id]
@@ -19,13 +22,16 @@ class FakeProfessionals:
             if user_id in self.profiles
         }
 
+    # Consulta um perfil no conjunto de dados simulado.
     def get_by_id(self, user_id):
         return self.profiles.get(user_id)
 
+    # Fornece as habilidades usadas na simulação.
     def list_skills(self):
         return []
 
 
+# Verifica o envio da notificação ao destinatário do convite de conexão.
 def test_connection_request_notifies_the_recipient():
     sender_id, recipient_id = str(ObjectId()), str(ObjectId())
     connections = Mock()
@@ -53,6 +59,7 @@ def test_connection_request_notifies_the_recipient():
     )
 
 
+# Confere se repetir a decisão não gera uma nova notificação de aceite.
 def test_accepting_connection_notifies_only_after_a_new_transition():
     accepter_id, requester_id = str(ObjectId()), str(ObjectId())
     connections = Mock()
@@ -90,6 +97,7 @@ def test_accepting_connection_notifies_only_after_a_new_transition():
     notifications.create.assert_called_once()
 
 
+# Monta as dependências simuladas do serviço de mentoria.
 def _mentorship_service():
     mentee_id, mentor_id, skill_id = (str(ObjectId()) for _ in range(3))
     mentorship_id = str(ObjectId())
@@ -123,6 +131,7 @@ def _mentorship_service():
     )
 
 
+# Confere o destinatário e a referência da notificação de solicitação de mentoria.
 def test_mentorship_request_notifies_the_mentor_with_the_request_id():
     service, mentors, notifications, mentee_id, mentor_id, skill_id, mentorship_id = (
         _mentorship_service()
@@ -151,6 +160,7 @@ def test_mentorship_request_notifies_the_mentor_with_the_request_id():
     )
 
 
+# Verifica a autorização do mentor e a exigência de uma solicitação pendente.
 def test_only_the_mentor_can_accept_a_pending_mentorship():
     service, mentors, notifications, mentee_id, mentor_id, _, mentorship_id = (
         _mentorship_service()
@@ -179,6 +189,7 @@ def test_only_the_mentor_can_accept_a_pending_mentorship():
     assert notification["referencia_id"] == mentorship_id
 
 
+# Confere os limites usados na paginação dos resultados de mentoria.
 def test_mentor_search_paginates_with_bounded_offsets():
     (
         service,
@@ -205,6 +216,7 @@ def test_mentor_search_paginates_with_bounded_offsets():
     assert result[0]["habilidade_ids"] == [skill_id]
 
 
+# Verifica os filtros de nome e disponibilidade para mentoria.
 def test_mentor_search_filters_by_profile_name_and_mentorship_availability():
     service, mentors, _, mentee_id, mentor_id, skill_id, _ = _mentorship_service()
     mentors.filter_mentors.return_value = [

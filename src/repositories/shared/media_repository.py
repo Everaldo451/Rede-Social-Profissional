@@ -1,3 +1,4 @@
+# Armazena conteúdo binário e metadados de mídia no GridFS do MongoDB.
 from io import BytesIO
 from typing import Any
 
@@ -22,6 +23,7 @@ class MediaRepository:
         self.bucket = GridFSBucket(self.database, bucket_name="midias")
         self.files = self.database["midias.files"]
 
+    # Envia o conteúdo ao GridFS e retorna os metadados do arquivo criado.
     def create(self, data):
         try:
             media_id = ObjectId()
@@ -37,11 +39,13 @@ class MediaRepository:
                     "GridFS upload completed without a files document"
                 )
             return self._file_data(file_data)
+        # Traduz as falhas dos drivers para a exceção de persistência usada pela aplicação.
         except (GridFSError, PyMongoError) as error:
             raise MediaPersistenceError(
                 "Could not create the media file in GridFS"
             ) from error
 
+    # Lê os metadados e o conteúdo binário do arquivo pelo identificador.
     def get_by_id(self, media_id):
         try:
             object_id = self._object_id(media_id)
@@ -56,6 +60,7 @@ class MediaRepository:
                 "Could not read the media file from GridFS"
             ) from error
 
+    # Localiza um arquivo pelos filtros e carrega seu conteúdo completo.
     def get_one(self, filters=None):
         try:
             file_data = self.files.find_one(self._build_filter(filters))
@@ -67,6 +72,7 @@ class MediaRepository:
                 "Could not find the media file in GridFS"
             ) from error
 
+    # Lista os metadados dos arquivos mais recentes primeiro, sem carregar seus conteúdos.
     def list(self, filters=None):
         try:
             return [
@@ -80,6 +86,7 @@ class MediaRepository:
                 "Could not list media files from GridFS"
             ) from error
 
+    # Atualiza nome ou metadados do arquivo e retorna a mídia resultante.
     def update(self, media_id, data):
         try:
             object_id = self._object_id(media_id)
@@ -100,6 +107,7 @@ class MediaRepository:
                 "Could not update the media file in GridFS"
             ) from error
 
+    # Exclui o arquivo e seus blocos de conteúdo por meio do GridFS.
     def delete(self, media_id):
         try:
             object_id = self._object_id(media_id)
@@ -112,6 +120,7 @@ class MediaRepository:
                 "Could not delete the media file from GridFS"
             ) from error
 
+    # Converte o identificador recebido para o formato ObjectId utilizado pelo MongoDB.
     @staticmethod
     def _object_id(media_id: str | ObjectId) -> ObjectId:
         if isinstance(media_id, ObjectId):
@@ -122,6 +131,7 @@ class MediaRepository:
             )
         return ObjectId(media_id)
 
+    # Traduz filtros conhecidos para filename ou campos internos de metadata.
     @staticmethod
     def _build_filter(filters: dict[str, Any] | None) -> dict[str, Any]:
         if not filters:
@@ -152,6 +162,7 @@ class MediaRepository:
             query["filename" if field == "filename" else f"metadata.{field}"] = value
         return query
 
+    # Monta os metadados públicos do arquivo e inclui o conteúdo quando ele foi carregado.
     @staticmethod
     def _file_data(
         file_data: dict[str, Any], content: bytes | None = None

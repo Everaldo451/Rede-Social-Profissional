@@ -1,3 +1,4 @@
+# Agrupa as exceções de negócio que permitem apresentar mensagens específicas ao usuário.
 """Erros de negócio da aplicação, com mensagens adequadas à camada superior."""
 
 

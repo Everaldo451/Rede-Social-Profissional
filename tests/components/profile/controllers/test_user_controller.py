@@ -1,9 +1,11 @@
+# Testes dos DTOs de usuário e da comunicação entre controller e serviço de perfil.
 from unittest.mock import MagicMock
 
 from common.errors import NotFoundError
 from controllers.profile.user_controller import UserController
 
 
+# Confere a normalização dos dados de cadastro antes da chamada ao serviço.
 def test_create_validates_and_normalizes_request_before_calling_service(
     user_record,
 ):
@@ -31,6 +33,7 @@ def test_create_validates_and_normalizes_request_before_calling_service(
     )
 
 
+# Verifica se a entrada inválida gera erro sem executar o serviço.
 def test_invalid_user_request_returns_error_response_without_service_call():
     service = MagicMock()
     controller = UserController(service)
@@ -48,6 +51,7 @@ def test_invalid_user_request_returns_error_response_without_service_call():
     service.create.assert_not_called()
 
 
+# Confere o repasse dos detalhes da habilidade validados pelo DTO.
 def test_add_skill_uses_dto_fields_and_calls_user_service(ids):
     service = MagicMock()
     service.add_skill.return_value = {
@@ -81,6 +85,7 @@ def test_add_skill_uses_dto_fields_and_calls_user_service(ids):
     )
 
 
+# Verifica as respostas para erros de negócio e falhas inesperadas.
 def test_service_domain_and_unexpected_errors_return_failure_response(
     caplog,
 ):

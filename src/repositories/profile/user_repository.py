@@ -1,3 +1,4 @@
+# Persiste contas no MongoDB e oferece consultas de perfil, autenticação e presença.
 from datetime import datetime, timezone
 
 from bson import ObjectId
@@ -18,6 +19,7 @@ class UserRepository:
         self.collection = database["usuarios"]
         self.collection.create_index("email", unique=True)
 
+    # Converte o identificador recebido para o formato ObjectId utilizado pelo MongoDB.
     @staticmethod
     def _object_id(user_id):
         try:
@@ -25,6 +27,7 @@ class UserRepository:
         except (InvalidId, TypeError):
             return None
 
+    # Prepara os dados retornados pelo banco, convertendo identificadores para texto.
     @staticmethod
     def _serialize(user):
         if user is None:
@@ -35,6 +38,7 @@ class UserRepository:
             for key, value in user.items()
         }
 
+    # Converte identificadores também dentro de listas e dicionários aninhados.
     @staticmethod
     def _serialize_value(value):
         if isinstance(value, ObjectId):
@@ -48,6 +52,7 @@ class UserRepository:
             }
         return value
 
+    # Adapta valores e referências aninhadas aos tipos usados nos documentos do MongoDB.
     @staticmethod
     def _mongo_value(value, key=None):
         if key and key.endswith("_id") and value is not None and not isinstance(value, ObjectId):
@@ -61,6 +66,7 @@ class UserRepository:
             }
         return value
 
+    # Monta os campos persistidos e normaliza os valores usados nas buscas.
     @classmethod
     def _to_document(cls, data):
         document = {}
@@ -75,6 +81,7 @@ class UserRepository:
             document["nome_normalizado"] = normalize_key(document["nome"])
         return document
 
+    # Grava o usuário e traduz conflito no índice de e-mail para um erro de negócio.
     def create(self, data):
         now = datetime.now(timezone.utc)
         user = self._to_document(data)
@@ -93,12 +100,14 @@ class UserRepository:
         user["_id"] = result.inserted_id
         return self._serialize(user)
 
+    # Busca o usuário por ObjectId e converte suas referências para texto.
     def get_by_id(self, user_id):
         object_id = self._object_id(user_id)
         if object_id is None:
             return None
         return self._serialize(self.collection.find_one({"_id": object_id}))
 
+    # Consulta vários usuários em lote e indexa o resultado pelos identificadores.
     def get_many_by_ids(self, user_ids):
         object_ids = {
             object_id
@@ -112,9 +121,11 @@ class UserRepository:
             for user in self.collection.find({"_id": {"$in": list(object_ids)}})
         }
 
+    # Busca o documento do usuário pelo e-mail.
     def get_by_email(self, email):
         return self._serialize(self.collection.find_one({"email": email}))
 
+    # Verifica a senha bcrypt ou executa a verificação fictícia quando o usuário não existe.
     def authenticate(self, email, password):
         if not isinstance(email, str) or not isinstance(password, str):
             return None
@@ -131,9 +142,11 @@ class UserRepository:
             return None
         return self._serialize(user)
 
+    # Retorna os documentos de todos os usuários serializados.
     def list_all(self):
         return [self._serialize(user) for user in self.collection.find({})]
 
+    # Aplica filtros e paginação à consulta de usuários.
     def get_paginated(self, offset, limit, filters=None):
         cursor = self.collection.find(filters or {})
         return [
@@ -141,6 +154,7 @@ class UserRepository:
             for user in cursor.skip(max(int(offset), 0)).limit(max(int(limit), 0))
         ]
 
+    # Retorna os identificadores e nomes para a lista de presença, com paginação opcional.
     def list_presence_profiles(
         self, current_user_id=None, offset=0, limit=None
     ):
@@ -162,6 +176,7 @@ class UserRepository:
             for user in users
         ]
 
+    # Conta os perfis da lista de presença, excluindo o usuário atual quando informado.
     def count_presence_profiles(self, current_user_id=None):
         filters = {}
         if current_user_id is not None:
@@ -171,6 +186,7 @@ class UserRepository:
             filters["_id"] = {"$ne": object_id}
         return self.collection.count_documents(filters)
 
+    # Atualiza os campos do usuário e sua data de alteração, tratando e-mail duplicado.
     def update(self, user_id, data):
         object_id = self._object_id(user_id)
         if object_id is None:
@@ -190,6 +206,7 @@ class UserRepository:
             raise ConflictError("Este e-mail já está cadastrado.") from None
         return self._serialize(user)
 
+    # Exclui o documento do usuário pelo identificador.
     def delete(self, user_id):
         object_id = self._object_id(user_id)
         if object_id is None:

@@ -1,3 +1,4 @@
+# Testes de normalização, duplicidade e limites nas operações com habilidades.
 from unittest.mock import MagicMock
 
 import pytest
@@ -6,6 +7,7 @@ from common.errors import ConflictError, NotFoundError
 from services.profile.skill_service import SkillService
 
 
+# Confere o nome normalizado e os campos enviados ao repositório.
 def test_create_normalizes_name_and_maps_portuguese_repository_fields():
     repository = MagicMock()
     repository.get_one.return_value = None
@@ -37,6 +39,7 @@ def test_create_normalizes_name_and_maps_portuguese_repository_fields():
     assert created["nome"] == "Python"
 
 
+# Verifica a rejeição de uma habilidade cujo nome já existe.
 def test_create_rejects_duplicate_skill_name():
     repository = MagicMock()
     repository.get_one.return_value = {"_id": "existing-skill"}
@@ -47,6 +50,7 @@ def test_create_rejects_duplicate_skill_name():
     repository.create.assert_not_called()
 
 
+# Confere os erros de consulta e remoção de uma habilidade inexistente.
 def test_get_by_id_and_delete_raise_not_found_for_missing_skill():
     repository = MagicMock()
     repository.get_by_id.return_value = None
@@ -59,6 +63,7 @@ def test_get_by_id_and_delete_raise_not_found_for_missing_skill():
         service.delete("671a2b3c4d5e6f7890124601")
 
 
+# Verifica a normalização após a edição e a aplicação dos limites de página.
 def test_update_renormalizes_name_and_clamps_pagination():
     repository = MagicMock()
     repository.get_one.return_value = None

@@ -1,3 +1,4 @@
+# Monta a navegação lateral e acompanha a presença da sessão autenticada.
 import logging
 
 import streamlit as st
@@ -6,6 +7,7 @@ from redis.exceptions import RedisError
 logger = logging.getLogger(__name__)
 
 
+# Envia a atualização de presença a cada dez segundos pelo fragmento do Streamlit.
 @st.fragment(run_every="10s")
 def _update_presence(session_id):
     from pages.Sessoes import get_presence_controller
@@ -22,6 +24,7 @@ def _update_presence(session_id):
         st.warning(response.message)
 
 
+# Solicita o encerramento da sessão, remove o cookie e redireciona para o login.
 def _logout():
     from pages.Sessoes import COOKIE_NAME, build_runtime, get_cookie_controller
 
@@ -38,6 +41,7 @@ def _logout():
             st.session_state["logout_error"] = (
                 "Não foi possível confirmar o encerramento da sessão."
             )
+        # A remoção do cookie ocorre mesmo se a confirmação no Redis falhar.
         finally:
             cookies.remove(
                 COOKIE_NAME,
@@ -48,6 +52,7 @@ def _logout():
     st.switch_page("pages/Login.py")
 
 
+# Exibe os links de navegação de acordo com a existência de uma sessão autenticada.
 def render_sidebar():
     sidebar = st.sidebar
     sidebar.markdown("### Rede Social")
@@ -62,6 +67,7 @@ def render_sidebar():
         return
 
     sidebar.page_link("app.py", label="Feed", icon=":material/dynamic_feed:")
+    # Visitantes recebem as opções de entrar ou criar conta.
     if not user_id:
         sidebar.page_link("pages/Login.py", label="Entrar", icon=":material/login:")
         sidebar.page_link("pages/Register.py", label="Criar conta", icon=":material/person_add:")

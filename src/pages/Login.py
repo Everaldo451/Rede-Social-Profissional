@@ -1,3 +1,4 @@
+# Tela de autenticação com integração ao cookie da sessão.
 from pathlib import Path
 
 import streamlit as st
@@ -8,6 +9,7 @@ ASSETS = Path(__file__).resolve().parents[1] / "assets" / "login"
 THEME = Path(__file__).resolve().parents[1] / "assets" / "shared" / "page_theme.css"
 
 
+# Exibe as credenciais, trata o retorno do login e devolve o token quando a autenticação é aceita.
 def render_login(sessions, *, logout_requested, logout_error=None):
     login_area = st.empty()
     with login_area.container():
@@ -47,6 +49,7 @@ def render_login(sessions, *, logout_requested, logout_error=None):
     return None
 
 
+# Verifica a sessão existente ou apresenta o login e grava o novo token no cookie.
 def render_page():
     st.set_page_config(page_title="Entrar", layout="wide")
     render_sidebar()
@@ -66,6 +69,7 @@ def render_page():
         logout_requested=logout_requested,
         logout_error=logout_error,
     )
+    # Após o login aceito, persiste o token no navegador e abre a página de sessões.
     if session_id is not None:
         cookies.set(
             COOKIE_NAME,

@@ -1,3 +1,4 @@
+# Painel paginado que combina os perfis do MongoDB com o estado de presença no Redis.
 import logging
 from pathlib import Path
 
@@ -14,6 +15,7 @@ THEME = Path(__file__).resolve().parents[1] / "assets" / "shared" / "page_theme.
 PAGE_SIZE = 10
 
 
+# Exige uma sessão autenticada antes de permitir o acesso à lista de presença.
 def _current_user_id():
     from pages.Sessoes import get_authenticated_user_id
 
@@ -25,6 +27,7 @@ def _current_user_id():
     return user_id
 
 
+# Carrega uma página de perfis, consulta quem está online e apresenta os cartões de identificação.
 def main():
     st.set_page_config(page_title="Presenças", layout="wide")
     render_sidebar()
@@ -47,6 +50,7 @@ def main():
             st.info("Ainda não há usuários para exibir.")
             return
 
+        # Calcula a quantidade de páginas arredondando para cima.
         pages = (total + PAGE_SIZE - 1) // PAGE_SIZE
         page = (
             st.number_input("Página", 1, pages, 1, key="presence_page")
@@ -58,6 +62,7 @@ def main():
             limit=PAGE_SIZE,
         )
         session_id = get_cookie_controller().get(COOKIE_NAME)
+        # Consulta de uma vez a presença dos usuários incluídos na página atual.
         response = get_presence_controller().get_online_users(
             {"session_id": session_id},
             [profile["user_id"] for profile in profiles],

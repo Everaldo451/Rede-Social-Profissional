@@ -1,3 +1,4 @@
+# Compartilha a conversão de ObjectId e a adaptação do campo _id para os serviços.
 from bson import ObjectId
 from bson.errors import InvalidId
 

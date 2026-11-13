@@ -1,3 +1,4 @@
+# Camada de entrada das operações de organizações; conecta a interface aos serviços.
 import logging
 
 from pydantic import ValidationError
@@ -19,6 +20,7 @@ class OrganizationController:
     def __init__(self, organization_service):
         self.organization_service = organization_service
 
+    # Valida o dicionário de entrada com o DTO e devolve o modelo ou uma resposta de erro.
     @staticmethod
     def _validate_request(request_model, data):
         try:
@@ -30,6 +32,7 @@ class OrganizationController:
         except AppError as error:
             return None, BaseResponse(status=False, message=str(error))
 
+    # Executa a regra de negócio e padroniza o resultado; falhas inesperadas são registradas no log.
     @staticmethod
     def _run_service(action, success_message=None):
         try:
@@ -46,6 +49,7 @@ class OrganizationController:
                 status=False, message="Ocorreu um erro interno."
             )
 
+    # Encaminha o cadastro ao serviço e apresenta seu resultado em uma resposta padronizada.
     def create(self, data, criado_por_usuario_id=None):
         request, error = self._validate_request(OrganizationRequest, data)
         if error:
@@ -66,6 +70,7 @@ class OrganizationController:
             "Organização cadastrada com sucesso.",
         )
 
+    # Solicita ao serviço o registro identificado e devolve o resultado à interface.
     def get_by_id(self, organizacao_id):
         request, error = self._validate_request(
             OrganizationIdRequest, {"organizacao_id": organizacao_id}
@@ -76,6 +81,7 @@ class OrganizationController:
             lambda: self.organization_service.get_by_id(request.organizacao_id)
         )
 
+    # Encaminha posição inicial, tamanho da página e filtros para a consulta.
     def get_paginated(self, offset, limit, filters=None):
         request, error = self._validate_request(
             OrganizationPaginationRequest,
@@ -89,9 +95,11 @@ class OrganizationController:
             )
         )
 
+    # Encaminha a consulta da lista completa ao serviço.
     def list_all(self):
         return self._run_service(self.organization_service.list_all)
 
+    # Encaminha a atualização ao serviço após validar os dados de entrada.
     def update(self, organizacao_id, data):
         id_request, error = self._validate_request(
             OrganizationIdRequest, {"organizacao_id": organizacao_id}
@@ -109,6 +117,7 @@ class OrganizationController:
             "Organização atualizada com sucesso.",
         )
 
+    # Solicita a remoção do registro e devolve uma resposta à interface.
     def delete(self, organizacao_id):
         request, error = self._validate_request(
             OrganizationIdRequest, {"organizacao_id": organizacao_id}

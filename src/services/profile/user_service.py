@@ -1,3 +1,4 @@
+# Regras de contas e perfis: autenticação, privacidade, habilidades e histórico profissional.
 import logging
 
 from common.choices import SKILL_LEVELS, SKILL_TYPES
@@ -55,6 +56,7 @@ class UserService:
         self.notification_service = notification_service
 
     # ---- cadastro ---------------------------------------------------------
+    # Impede e-mail duplicado, gera o hash da senha e cadastra o perfil inicial.
     def create(self, data):
         name = data["nome"]
         email = data["email"]
@@ -77,6 +79,7 @@ class UserService:
         self._send_welcome(user["_id"])
         return present_user(user, include_private=True)
 
+    # Tenta enviar uma mensagem de boas-vindas, registrando falhas sem interromper o cadastro.
     def _send_welcome(self, usuario_id) -> None:
         if not self.notification_service:
             return
@@ -86,6 +89,7 @@ class UserService:
             logger.warning("Não foi possível criar a notificação de boas-vindas.", exc_info=True)
 
     # ---- autenticação -----------------------------------------------------
+    # Normaliza o e-mail, verifica as credenciais e retorna os dados do próprio usuário.
     def authenticate(self, email, senha):
         if not isinstance(email, str) or not isinstance(senha, str) or not email.strip() or not senha:
             raise UnauthorizedError("E-mail ou senha inválidos.")
@@ -115,9 +119,11 @@ class UserService:
         )
         return present_user(user, include_private=(visualizador_id == usuario_id))
 
+    # Retorna os usuários apenas com os dados permitidos na apresentação pública.
     def list_all(self):
         return [present_user(user) for user in self.user_repository.list_all()]
 
+    # Ajusta a paginação, traduz filtros para o repositório e apresenta os dados públicos.
     def get_paginated(self, offset, limit, filters=None):
         offset = max(int(offset or 0), 0)
         limit = min(max(int(limit or 20), 1), MAX_PAGE_SIZE)
@@ -132,6 +138,7 @@ class UserService:
         return [present_user(user) for user in users]
 
     # ---- edição -----------------------------------------------------------
+    # Seleciona os campos editáveis e atualiza o perfil com seu nome normalizado.
     def update(self, usuario_id, data):
         changes = {}
         if "nome" in data:
@@ -151,6 +158,7 @@ class UserService:
             raise NotFoundError("Usuário não encontrado.")
         return present_user(user, include_private=True)
 
+    # Valida tipo, nível e detalhes exigidos antes de vincular a habilidade ao usuário.
     def add_skill(
         self,
         usuario_id,
@@ -203,15 +211,18 @@ class UserService:
             "disponibilidade": disponibilidade,
         }
 
+    # Valida o tipo de vínculo e exige que a relação removida exista.
     def remove_skill(self, usuario_id, habilidade_id, tipo):
         require_choice(tipo, SKILL_TYPES, "tipo de competência")
         if not self.user_skill_repository.remove_skill(usuario_id, habilidade_id, tipo):
             raise NotFoundError("Relacionamento de habilidade não encontrado.")
         return True
 
+    # Consulta as habilidades e os vínculos que atendem aos filtros recebidos.
     def get_skills(self, filters=None):
         return self.user_skill_repository.get_skills(filters)
 
+    # Monta os dados da experiência profissional para o repositório de organizações.
     def add_experience(self, usuario_id, data):
         experience = {
             "organizacao_id": data.get("organizacao_id"),
@@ -224,6 +235,7 @@ class UserService:
         }
         return self.user_organization_repository.add_experience(usuario_id, experience)
 
+    # Remove a experiência identificada e sinaliza quando o vínculo não existe.
     def remove_experience(
         self, usuario_id, organizacao_id, cargo, data_inicio
     ):
@@ -233,6 +245,7 @@ class UserService:
             raise NotFoundError("Experiência não encontrada.")
         return True
 
+    # Monta os dados da formação acadêmica para persistência.
     def add_education(self, usuario_id, data):
         education = {
             "instituicao_id": data.get("instituicao_id"),
@@ -244,6 +257,7 @@ class UserService:
         }
         return self.user_organization_repository.add_education(usuario_id, education)
 
+    # Remove a formação identificada por instituição, curso e grau.
     def remove_education(
         self, usuario_id, instituicao_id, curso, grau
     ):
@@ -253,6 +267,7 @@ class UserService:
             raise NotFoundError("Formação não encontrada.")
         return True
 
+    # Encaminha a inclusão do vínculo com a organização e verifica seu resultado.
     def add_membership(self, usuario_id, data):
         added = self.user_organization_repository.add_membership(
             usuario_id,
@@ -265,6 +280,7 @@ class UserService:
             raise NotFoundError("Não foi possível adicionar o vínculo.")
         return True
 
+    # Remove o vínculo com a organização identificado pelo papel do usuário.
     def remove_membership(self, usuario_id, organizacao_id, papel):
         if not self.user_organization_repository.remove_membership(
             usuario_id, organizacao_id, papel
@@ -272,6 +288,7 @@ class UserService:
             raise NotFoundError("Vínculo com a organização não encontrado.")
         return True
 
+    # Verifica a existência da conta e remove seus relacionamentos antes do documento do usuário.
     def delete(self, usuario_id):
         if self.user_repository.get_by_id(usuario_id) is None:
             raise NotFoundError("Usuário não encontrado.")

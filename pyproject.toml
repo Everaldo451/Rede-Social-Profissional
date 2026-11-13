@@ -1,7 +1,9 @@
+# Metadados do projeto e listas de dependências administradas pelo uv.
 [project]
 name = "rede-social-profissional"
 version = "0.1.0"
 requires-python = ">=3.10"
+# Bibliotecas utilizadas durante a execução da aplicação.
 dependencies = [
     "bcrypt",
     "email-validator",
@@ -15,6 +17,7 @@ dependencies = [
     "email-validator>=2.3.0",
 ]
 
+# Ferramentas adicionais usadas no desenvolvimento e nos testes.
 [dependency-groups]
 dev = [
     "pytest",

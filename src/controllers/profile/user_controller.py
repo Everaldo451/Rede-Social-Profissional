@@ -1,3 +1,4 @@
+# Camada de entrada das operações de usuários e seus perfis profissionais; conecta a interface aos serviços.
 import logging
 
 from pydantic import ValidationError
@@ -31,6 +32,7 @@ class UserController:
     def __init__(self, user_service):
         self.user_service = user_service
 
+    # Valida o dicionário de entrada com o DTO e devolve o modelo ou uma resposta de erro.
     @staticmethod
     def _validate_request(request_model, data):
         try:
@@ -42,6 +44,7 @@ class UserController:
         except AppError as error:
             return None, BaseResponse(status=False, message=str(error))
 
+    # Executa a regra de negócio e padroniza o resultado; falhas inesperadas são registradas no log.
     @staticmethod
     def _run_service(action, success_message=None):
         try:
@@ -56,6 +59,7 @@ class UserController:
                 status=False, message="Ocorreu um erro interno."
             )
 
+    # Encaminha o cadastro ao serviço e apresenta seu resultado em uma resposta padronizada.
     def create(self, data):
         request, error = self._validate_request(RegisterRequest, data)
         if error:
@@ -65,6 +69,7 @@ class UserController:
             "Conta criada com sucesso!",
         )
 
+    # Solicita ao serviço o registro identificado e devolve o resultado à interface.
     def get_by_id(self, usuario_id, visualizador_id=None):
         """``visualizador_id`` é o usuário logado; define o que pode ver do perfil."""
         request, error = self._validate_request(
@@ -79,6 +84,7 @@ class UserController:
             )
         )
 
+    # Valida as credenciais recebidas e solicita a autenticação ao serviço de usuários.
     def authenticate(self, data):
         request, error = self._validate_request(LoginRequest, data)
         if error:
@@ -89,9 +95,11 @@ class UserController:
             )
         )
 
+    # Encaminha a consulta da lista completa ao serviço.
     def list_all(self):
         return self._run_service(self.user_service.list_all)
 
+    # Encaminha posição inicial, tamanho da página e filtros para a consulta.
     def get_paginated(self, offset, limit, filters=None):
         request, error = self._validate_request(
             UserPaginationRequest,
@@ -105,6 +113,7 @@ class UserController:
             )
         )
 
+    # Encaminha a atualização ao serviço após validar os dados de entrada.
     def update(self, usuario_id, data):
         user_request, error = self._validate_request(
             UserIdRequest, {"usuario_id": usuario_id}
@@ -122,6 +131,7 @@ class UserController:
             "Perfil atualizado com sucesso.",
         )
 
+    # Solicita a remoção do registro e devolve uma resposta à interface.
     def delete(self, usuario_id):
         request, error = self._validate_request(
             UserIdRequest, {"usuario_id": usuario_id}
@@ -133,6 +143,7 @@ class UserController:
             "Conta removida com sucesso.",
         )
 
+    # Valida a experiência profissional e o usuário antes de encaminhar o cadastro.
     def add_experience(self, usuario_id, data):
         user_request, error = self._validate_request(
             UserIdRequest, {"usuario_id": usuario_id}
@@ -149,6 +160,7 @@ class UserController:
             "Experiência adicionada com sucesso.",
         )
 
+    # Valida os campos que identificam a experiência a remover.
     def remove_experience(
         self, usuario_id, organizacao_id, cargo, data_inicio
     ):
@@ -173,6 +185,7 @@ class UserController:
             "Experiência removida com sucesso.",
         )
 
+    # Valida os dados de formação antes de associá-los ao usuário.
     def add_education(self, usuario_id, data):
         user_request, error = self._validate_request(
             UserIdRequest, {"usuario_id": usuario_id}
@@ -189,6 +202,7 @@ class UserController:
             "Formação adicionada com sucesso.",
         )
 
+    # Valida os campos que identificam a formação a remover.
     def remove_education(
         self, usuario_id, instituicao_id, curso, grau
     ):
@@ -213,6 +227,7 @@ class UserController:
             "Formação removida com sucesso.",
         )
 
+    # Valida o vínculo com a organização e encaminha sua inclusão.
     def add_membership(self, usuario_id, data):
         user_request, error = self._validate_request(
             UserIdRequest, {"usuario_id": usuario_id}
@@ -229,6 +244,7 @@ class UserController:
             "Vínculo com a organização adicionado com sucesso.",
         )
 
+    # Valida o usuário, a organização e o papel que identificam o vínculo a remover.
     def remove_membership(self, usuario_id, organizacao_id, papel):
         request, error = self._validate_request(
             MembershipRemovalRequest,
@@ -247,6 +263,7 @@ class UserController:
             "Vínculo com a organização removido com sucesso.",
         )
 
+    # Valida a habilidade e seus detalhes antes de associá-la ao perfil.
     def add_skill(
         self,
         usuario_id,
@@ -284,6 +301,7 @@ class UserController:
             "Habilidade vinculada com sucesso.",
         )
 
+    # Valida o tipo de relação e os identificadores antes de remover a habilidade do perfil.
     def remove_skill(self, usuario_id, habilidade_id, tipo):
         request, error = self._validate_request(
             UserSkillRemovalRequest,
@@ -302,6 +320,7 @@ class UserController:
             "Habilidade removida com sucesso.",
         )
 
+    # Valida os filtros e solicita as habilidades associadas aos usuários.
     def get_skills(self, filters=None):
         request, error = self._validate_request(
             UserSkillFiltersRequest, filters or {}

@@ -1,3 +1,4 @@
+# Persiste publicações no MongoDB e traduz os campos entre o banco e os serviços.
 from pymongo import DESCENDING
 
 from common.errors import InvalidDataError
@@ -7,10 +8,12 @@ from repositories.shared.mongo_utils import serialize, to_object_id
 class PostRepository:
     def __init__(self, database):
         self._posts = database["posts"]
+        # Cria índices para as consultas por data, tags e categoria do feed.
         self._posts.create_index([("criado_em", DESCENDING)])
         self._posts.create_index("tags")
         self._posts.create_index("categoria")
 
+    # Traduz filtros de categoria, autor e tag para os campos da coleção de publicações.
     @staticmethod
     def _query(filters):
         query = {}
@@ -25,6 +28,7 @@ class PostRepository:
             query["tags"] = filters["tag"]
         return query
 
+    # Adapta os nomes dos campos do documento ao formato esperado pelos serviços.
     @staticmethod
     def _canonical(document):
         post = serialize(document)
@@ -45,6 +49,7 @@ class PostRepository:
         )
         return post
 
+    # Converte a referência do autor e grava o conteúdo com os nomes de campo usados no MongoDB.
     def create(self, data):
         author_id = to_object_id(data.get("author_id"))
         if author_id is None:
@@ -63,12 +68,14 @@ class PostRepository:
         self._posts.insert_one(doc)
         return self._canonical(doc)
 
+    # Consulta a publicação pelo identificador e adapta o documento para o serviço.
     def get_by_id(self, post_id):
         oid = to_object_id(post_id)
         if oid is None:
             return None
         return self._canonical(self._posts.find_one({"_id": oid}))
 
+    # Consulta uma página das publicações, ordenada da mais recente para a mais antiga.
     def get_paginated(self, offset, limit, filters=None):
         cursor = (
             self._posts.find(self._query(filters))
@@ -78,15 +85,18 @@ class PostRepository:
         )
         return [self._canonical(d) for d in cursor]
 
+    # Conta os documentos que atendem aos mesmos filtros usados no feed.
     def count(self, filters=None):
         return self._posts.count_documents(self._query(filters))
 
+    # Retorna todas as publicações em ordem decrescente de criação.
     def list_all(self):
         return [
             self._canonical(d)
             for d in self._posts.find().sort("criado_em", DESCENDING)
         ]
 
+    # Traduz apenas os campos conhecidos e aplica uma atualização parcial com $set.
     def update(self, post_id, data):
         oid = to_object_id(post_id)
         if oid is None:
@@ -103,6 +113,7 @@ class PostRepository:
         updates = {fields[key]: value for key, value in data.items() if key in fields}
         return self._posts.update_one({"_id": oid}, {"$set": updates}).matched_count > 0
 
+    # Remove a publicação identificada e informa se um documento foi excluído.
     def delete(self, post_id):
         oid = to_object_id(post_id)
         if oid is None:

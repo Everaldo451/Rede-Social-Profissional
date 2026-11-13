@@ -1,12 +1,15 @@
+# Sobe a aplicação e os três bancos na mesma rede Docker, preservando MongoDB e Neo4j em volumes.
 name: rede-social
 
 services:
+  # Banco de documentos usado pelos cadastros, publicações, notificações e arquivos GridFS.
   mongodb:
     image: mongo:latest
     ports:
       - "27017:27017"
     volumes:
       - mongodb_data:/data/db
+    # A verificação de saúde confirma que o MongoDB aceita comandos.
     healthcheck:
       test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
       interval: 5s
@@ -15,6 +18,7 @@ services:
     networks:
       - app-network
 
+  # Redis mantém sessões, presença e contadores de notificações.
   redis:
     image: redis:latest
     ports:
@@ -27,6 +31,7 @@ services:
     networks:
       - app-network
 
+  # Neo4j armazena a rede de conexões e os demais relacionamentos profissionais.
   neo4j:
     image: neo4j:latest
     environment:
@@ -44,10 +49,12 @@ services:
     networks:
       - app-network
 
+  # Constrói a aplicação a partir da raiz do projeto e a publica na porta 8501.
   app:
     build:
       context: ..
       dockerfile: docker/Dockerfile
+    # As variáveis podem ser fornecidas pelo ambiente; os valores após :- são os padrões.
     environment:
       MONGO_URI: ${MONGO_URI:-mongodb://mongodb:27017}
       MONGO_DATABASE: ${MONGO_DATABASE:-rede_social}
@@ -66,6 +73,7 @@ services:
       interval: 5s
       timeout: 3s
       retries: 20
+    # A aplicação aguarda os três bancos serem considerados saudáveis.
     depends_on:
       mongodb:
         condition: service_healthy
@@ -76,10 +84,12 @@ services:
     networks:
       - app-network
 
+# Rede interna pela qual os serviços se encontram usando seus respectivos nomes.
 networks:
   app-network:
     driver: bridge
 
+# Volumes nomeados preservam os dados desses bancos entre recriações dos containers.
 volumes:
   mongodb_data:
   neo4j_data:

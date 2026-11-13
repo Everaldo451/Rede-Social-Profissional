@@ -1,3 +1,4 @@
+# Reúne as funções de acesso aos bancos para os demais módulos importarem.
 from .mongo import get_mongo_database
 from .neo4j import get_neo4j_session
 from .redis import get_redis_client

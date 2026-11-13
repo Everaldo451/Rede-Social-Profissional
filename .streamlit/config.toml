@@ -1,6 +1,9 @@
+# Configura a navegação e o tema visual padrão da aplicação Streamlit.
 [client]
+# Desativa a navegação automática porque a aplicação monta sua própria barra lateral.
 showSidebarNavigation = false
 
+# Define a paleta de cores e a fonte compartilhadas pelos componentes.
 [theme]
 base = "light"
 primaryColor = "#6446ba"

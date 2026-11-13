@@ -1,11 +1,14 @@
+# Valida arquivos de imagem e coordena sua persistência para perfis e publicações.
 from dataclasses import dataclass
 
 from bson import ObjectId
 
 from services.shared.media_errors import MediaValidationError
 
+# Cada publicação aceita até quatro imagens, com limite de dez mebibytes por arquivo.
 MAX_FILES = 4
 MAX_FILE_SIZE = 10 * 1024 * 1024
+# Confere os bytes iniciais da imagem para não depender apenas do MIME declarado.
 _IMAGE_SIGNATURES = {
     "image/png": lambda data: data.startswith(b"\x89PNG\r\n\x1a\n"),
     "image/jpeg": lambda data: data.startswith(b"\xff\xd8\xff"),
@@ -16,6 +19,7 @@ _IMAGE_SIGNATURES = {
 }
 
 
+# Agrupa nome, tipo MIME e conteúdo binário de um arquivo recebido.
 @dataclass(frozen=True)
 class MediaFile:
     filename: str
@@ -27,6 +31,7 @@ class MediaService:
     def __init__(self, media_repository):
         self.media_repository = media_repository
 
+    # Converte a referência do proprietário e encaminha o arquivo ao repositório.
     def create(self, data):
         metadata = dict(data["metadata"])
         metadata["proprietario_id"] = self._owner_object_id(
@@ -34,6 +39,7 @@ class MediaService:
         )
         return self.media_repository.create({**data, "metadata": metadata})
 
+    # Valida a imagem e monta os metadados de uma foto pública de perfil.
     def create_profile_image(self, file: MediaFile, owner_id: str):
         self._validate_upload(file)
         return self.create(
@@ -50,15 +56,19 @@ class MediaService:
             }
         )
 
+    # Consulta a mídia pelo identificador.
     def get_by_id(self, media_id):
         return self.media_repository.get_by_id(media_id)
 
+    # Valida os filtros e consulta uma mídia correspondente.
     def get_one(self, filters=None):
         return self.media_repository.get_one(self._validate_filters(filters))
 
+    # Valida os filtros e lista os arquivos correspondentes.
     def list(self, filters=None):
         return self.media_repository.list(self._validate_filters(filters))
 
+    # Prepara a referência do proprietário quando os metadados são atualizados.
     def update(self, media_id, data):
         updates = dict(data)
         if "metadata" in updates:
@@ -69,9 +79,11 @@ class MediaService:
             updates["metadata"] = metadata
         return self.media_repository.update(media_id, updates)
 
+    # Delega ao repositório a remoção do arquivo de mídia.
     def delete(self, media_id):
         return self.media_repository.delete(media_id)
 
+    # Valida o limite de imagens e armazena os arquivos associados a uma publicação.
     def store_many(self, files, owner_id, already_attached=0):
         files = list(files or ())
         if already_attached + len(files) > MAX_FILES:
@@ -103,14 +115,17 @@ class MediaService:
                         "content_type": file.content_type,
                     }
                 )
+        # Se um arquivo do lote falhar, remove os arquivos que este lote já havia gravado.
         except Exception:
             self.delete_many([item["id"] for item in stored])
             raise
         return stored
 
+    # Remove cada mídia da lista de identificadores recebida.
     def delete_many(self, media_ids):
         return [self.delete(media_id) for media_id in media_ids]
 
+    # Verifica tipo do objeto, conteúdo não vazio, tamanho e assinatura binária da imagem.
     @staticmethod
     def _validate_upload(file):
         if not isinstance(file, MediaFile):
@@ -125,6 +140,7 @@ class MediaService:
                 "O conteúdo do arquivo não corresponde a uma imagem permitida."
             )
 
+    # Aceita apenas os filtros conhecidos e converte o identificador do proprietário.
     @staticmethod
     def _validate_filters(filters):
         if filters is None:
@@ -150,6 +166,7 @@ class MediaService:
             )
         return validated_filters
 
+    # Aceita ObjectId ou texto hexadecimal válido para identificar o proprietário.
     @staticmethod
     def _owner_object_id(owner_id):
         if isinstance(owner_id, ObjectId):

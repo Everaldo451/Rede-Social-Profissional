@@ -1,3 +1,4 @@
+# Testes da apresentação de imagens e da identificação clicável dos autores no feed.
 from types import SimpleNamespace
 from unittest.mock import Mock, patch
 from uuid import uuid4
@@ -8,6 +9,7 @@ from pages.Feed import _render_post_header, render_media
 SVG_CONTENT = b'<svg xmlns="http://www.w3.org/2000/svg"></svg>'
 
 
+# Verifica se o SVG de exemplo é enviado ao componente de imagem do Streamlit.
 def test_feed_renders_seed_svg_with_streamlit_image() -> None:
     media_controller = Mock()
     media_controller.get_by_id.return_value = SimpleNamespace(
@@ -36,6 +38,7 @@ def test_feed_renders_seed_svg_with_streamlit_image() -> None:
     )
 
 
+# Confere o uso do componente que permite abrir o perfil do autor.
 def test_feed_author_uses_clickable_profile_identity() -> None:
     post = {
         "id": "post-1",

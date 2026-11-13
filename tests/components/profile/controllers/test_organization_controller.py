@@ -1,8 +1,10 @@
+# Testes da entrada de dados e do tratamento de erros no controller de organizações.
 from unittest.mock import MagicMock
 
 from controllers.profile.organization_controller import OrganizationController
 
 
+# Confere a validação dos dados da organização e do identificador de seu criador.
 def test_create_validates_payload_and_creator_id(
     organization_record, ids
 ):
@@ -35,6 +37,7 @@ def test_create_validates_payload_and_creator_id(
     )
 
 
+# Verifica se o criador inválido impede a chamada ao serviço.
 def test_invalid_creator_id_does_not_call_service(organization_record):
     service = MagicMock()
     service.create.return_value = organization_record
@@ -50,6 +53,7 @@ def test_invalid_creator_id_does_not_call_service(organization_record):
     service.create.assert_not_called()
 
 
+# Confere a resposta de erro quando o serviço lança uma falha inesperada.
 def test_unexpected_service_failure_returns_error_response(caplog):
     service = MagicMock()
     service.delete.side_effect = RuntimeError("mongo unavailable")

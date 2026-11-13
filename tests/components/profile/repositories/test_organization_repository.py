@@ -1,8 +1,10 @@
+# Testes das operações de organização com documentos reais no MongoDB.
 from bson import ObjectId
 
 from repositories.profile.organization_repository import OrganizationRepository
 
 
+# Cria e registra uma organização para o teste e para sua limpeza posterior.
 def _create_test_organization(repository, resources):
     unique = str(ObjectId())
     name = f"Tech Solutions {unique}"
@@ -25,6 +27,7 @@ def _create_test_organization(repository, resources):
     return organization
 
 
+# Confere a normalização e a conversão da referência ao usuário criador.
 def test_create_normalizes_and_converts_creator_reference(repository_resources):
     repository = OrganizationRepository(repository_resources.mongo)
     organization = _create_test_organization(repository, repository_resources)
@@ -41,6 +44,7 @@ def test_create_normalizes_and_converts_creator_reference(repository_resources):
     assert stored["criado_em"]
 
 
+# Exercita a paginação e a atualização dos documentos persistidos.
 def test_get_paginated_and_update_use_real_documents(repository_resources):
     repository = OrganizationRepository(repository_resources.mongo)
     organization = _create_test_organization(repository, repository_resources)
@@ -55,6 +59,7 @@ def test_get_paginated_and_update_use_real_documents(repository_resources):
     assert updated["nome_normalizado"] == "tech jp"
 
 
+# Confere exclusão e identificadores inválidos sem atingir outras organizações.
 def test_delete_and_invalid_id_affect_only_target_organization(repository_resources):
     repository = OrganizationRepository(repository_resources.mongo)
     organization = _create_test_organization(repository, repository_resources)

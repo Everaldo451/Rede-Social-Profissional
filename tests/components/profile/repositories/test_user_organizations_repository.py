@@ -1,3 +1,4 @@
+# Teste integrado dos vínculos do usuário com empresas e instituições de ensino.
 from datetime import date
 from bson import ObjectId
 
@@ -6,6 +7,7 @@ from repositories.profile.user_organizations_repository import (
 )
 
 
+# Prepara o usuário e as organizações referenciadas pelos vínculos do teste.
 def _seed_user_and_organizations(resources):
     user_id = ObjectId(resources.ids["user"])
     organization_id = ObjectId(resources.ids["organization"])
@@ -50,6 +52,7 @@ def _seed_user_and_organizations(resources):
     return user_id, organization_id, institution_id
 
 
+# Exercita inclusão e remoção de experiência, formação e vínculo organizacional.
 def test_experience_education_and_membership_are_persisted_and_removed(
     repository_resources,
 ):

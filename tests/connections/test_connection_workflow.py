@@ -1,3 +1,4 @@
+# Teste do fluxo de conexões com solicitações simultâneas e decisão restrita ao destinatário.
 from concurrent.futures import ThreadPoolExecutor
 from threading import Barrier
 from unittest.mock import Mock
@@ -11,6 +12,7 @@ from src.repositories.connections.professional_repository import ProfessionalRep
 from src.services.connections.connection_service import ConnectionService
 
 
+# Exercita a concorrência dos convites e a autorização para aceitar ou recusar.
 def test_concurrent_requests_and_recipient_only_decision():
     db = get_mongo_database()
     ids = [ObjectId() for _ in range(3)]
@@ -42,6 +44,7 @@ def test_concurrent_requests_and_recipient_only_decision():
         )
         start = Barrier(2)
 
+        # Executa uma tentativa de convite usada pelas tarefas concorrentes do teste.
         def send(sender, receiver):
             start.wait(timeout=10)
             return controller.request_connection(sender, receiver)

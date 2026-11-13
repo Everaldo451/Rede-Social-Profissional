@@ -1,3 +1,4 @@
+# Tela de criação de conta com confirmação da senha e retorno das validações.
 import logging
 from pathlib import Path
 
@@ -17,6 +18,7 @@ logger = logging.getLogger(__name__)
 THEME = Path(__file__).resolve().parents[1] / "assets" / "shared" / "page_theme.css"
 
 
+# Monta o controller de usuários com os serviços e repositórios de perfil.
 def _create_user_controller():
     user_service = UserService(
         UserRepository(),
@@ -26,6 +28,7 @@ def _create_user_controller():
     return UserController(user_service)
 
 
+# Coleta os dados de cadastro, verifica a confirmação da senha e apresenta o resultado.
 def render_registration():
     st.set_page_config(page_title="Criar conta", layout="centered")
     render_sidebar()
@@ -46,6 +49,7 @@ def render_registration():
 
     if not submitted:
         return
+    # As verificações do formulário precedem a validação detalhada do controller e do DTO.
     if not name.strip() or not email.strip() or not password:
         st.error("Preencha todos os campos obrigatórios.")
         return
@@ -60,6 +64,7 @@ def render_registration():
         st.error("Não foi possível criar a conta no momento.")
         return
 
+    # Envia somente os campos da conta; a confirmação da senha serve apenas ao formulário.
     response = controller.create(
         {"nome": name, "email": email, "senha": password}
     )

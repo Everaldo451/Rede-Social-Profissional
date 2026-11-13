@@ -1,6 +1,8 @@
+# Teste da geração de mídias de exemplo vinculadas aos usuários e às publicações.
 from seed import ASSETS_DIR, MEDIA_ASSETS, load_collections
 
 
+# Confere se cada usuário e publicação recebe o documento de mídia correspondente.
 def test_seed_builds_media_for_every_user_and_post() -> None:
     collections = load_collections()
     media_documents = collections["midias.files"]

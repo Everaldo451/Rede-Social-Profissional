@@ -1,3 +1,4 @@
+# Testes das regras de validação de imagens e dos dados encaminhados ao repositório.
 from pathlib import Path
 from unittest.mock import Mock
 
@@ -16,6 +17,7 @@ IMAGE_CASES = (
 PNG_CONTENT = b"\x89PNG\r\n\x1a\n" + b"test-image"
 
 
+# Confere o conteúdo e os metadados enviados para persistência.
 @pytest.mark.parametrize(
     ("asset_name", "owner_type", "media_type"),
     IMAGE_CASES,
@@ -61,6 +63,7 @@ def test_service_passes_real_image_data_to_repository(
     assert result["metadata"]["proprietario_id"] == str(owner_id)
 
 
+# Verifica a exceção gerada por filtros desconhecidos.
 def test_service_reports_invalid_filter_as_media_validation_error() -> None:
     repository = Mock()
     service = MediaService(repository)
@@ -71,6 +74,7 @@ def test_service_reports_invalid_filter_as_media_validation_error() -> None:
     repository.list.assert_not_called()
 
 
+# Confere os metadados específicos usados para uma foto de perfil.
 def test_service_creates_profile_image_with_profile_metadata() -> None:
     repository = Mock()
     owner_id = ObjectId()
@@ -94,6 +98,7 @@ def test_service_creates_profile_image_with_profile_metadata() -> None:
     }
 
 
+# Verifica se uma imagem inválida é recusada antes da gravação.
 def test_service_rejects_invalid_profile_image_before_saving() -> None:
     repository = Mock()
     service = MediaService(repository)

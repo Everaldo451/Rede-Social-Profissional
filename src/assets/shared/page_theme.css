@@ -1,3 +1,5 @@
+/* Tema visual compartilhado entre as páginas e componentes do Streamlit. */
+/* Define o fundo em degradê e mantém o esquema de cores claro. */
 .stApp {
     background:
         radial-gradient(ellipse at 90% 0%, #f2e2fa, transparent 42%),
@@ -7,10 +9,12 @@
 .stApp [data-testid="stHeader"] {
     background: transparent;
 }
+/* Controla a largura e o espaçamento da área principal. */
 .stApp [data-testid="stMainBlockContainer"] {
     max-width: 76rem;
     padding: clamp(2rem, 6vh, 4.5rem) 1.25rem;
 }
+/* Padroniza as cores dos títulos e textos auxiliares. */
 .stApp h1,
 .stApp h2,
 .stApp h3 {
@@ -20,17 +24,20 @@
 .stApp [data-testid="stWidgetLabel"] p {
     color: #51416f;
 }
+/* Aplica bordas, fundo e espaçamento aos formulários. */
 .stApp [data-testid="stForm"] {
     padding: clamp(1.25rem, 3vw, 2rem);
     border: 1px solid #e8e0f6;
     border-radius: 1.25rem;
     background: #fff;
 }
+/* Harmoniza os campos de entrada e seleção com o tema. */
 .stApp [data-baseweb="input"],
 .stApp [data-baseweb="select"] > div {
     border-color: #dfd4f5;
     background: #fff;
 }
+/* Padroniza a aparência e a interação dos botões. */
 .stApp button[data-testid^="stBaseButton-"]:not([data-testid*="tertiary"]) {
     border-radius: .65rem;
 }
@@ -44,6 +51,7 @@
     background: #f2ebfb;
     border-color: #c4afdf;
 }
+/* Estiliza a navegação lateral e destaca a página atual. */
 .stApp [data-testid="stSidebar"] {
     background: #fcfaff;
     border-right: 1px solid #e8e0f6;
@@ -61,21 +69,25 @@
     font-size: .75rem;
     font-weight: 650;
 }
+/* Uniformiza os cartões com borda. */
 .stApp [data-testid="stVerticalBlockBorderWrapper"] {
     border-color: #e8e0f6;
     border-radius: 1rem;
     background: #fff;
 }
+/* Mantém um indicador visível de foco para a navegação pelo teclado. */
 .stApp :focus-visible {
     outline: 2px solid #7655be;
     outline-offset: 2px;
 }
+/* Apresenta os indicadores numéricos como cartões. */
 .stApp [data-testid="stMetric"] {
     border: 1px solid #e8e0f6;
     border-radius: .9rem;
     background: #fff;
     padding: .8rem 1rem;
 }
+/* Faz o botão do nome do profissional se comportar visualmente como um link de perfil. */
 .stApp [class*="st-key-profile_link_"] button {
     min-height: 0;
     padding: 0 .15rem;
@@ -97,6 +109,7 @@
 .stApp [class*="st-key-profile_link_"] button:hover p {
     color: #3f2a9e;
 }
+/* Define o painel principal das páginas de mentoria e conexões. */
 .stApp:has(.st-key-mentorship_shell) .st-key-mentorship_shell,
 .stApp:has(.st-key-network_shell) .st-key-network_shell {
     padding: clamp(1.25rem, 3vw, 2rem);
@@ -115,6 +128,7 @@
     border-radius: .9rem;
     background: #fff;
 }
+/* Ajusta os cartões internos e as legendas das notificações. */
 .stApp [class*="st-key-notification_card_"] [data-testid="stVerticalBlockBorderWrapper"] {
     padding: .55rem .8rem;
     border-color: #e8e0f6;

@@ -1,3 +1,4 @@
+# Testes de autenticação, privacidade e composição das operações do perfil profissional.
 from copy import deepcopy
 from unittest.mock import MagicMock
 
@@ -13,6 +14,7 @@ from common.errors import (
 from services.profile.user_service import UserService
 
 
+# Monta o serviço com dependências simuladas para testar as regras de negócio.
 def _service():
     user_repository = MagicMock()
     user_skill_repository = MagicMock()
@@ -30,6 +32,7 @@ def _service():
     )
 
 
+# Confere o hash da senha, os campos enviados e o perfil devolvido no cadastro.
 def test_create_hashes_password_maps_fields_and_returns_realistic_user(
     user_record, monkeypatch
 ):
@@ -60,6 +63,7 @@ def test_create_hashes_password_maps_fields_and_returns_realistic_user(
     assert created["email"] == "ana@example.com"
 
 
+# Verifica se a duplicidade de e-mail impede a inserção do usuário.
 def test_create_rejects_duplicate_email_before_repository_insert():
     service, users, _, _ = _service()
     users.get_by_email.return_value = {"_id": "existing-user"}
@@ -75,6 +79,7 @@ def test_create_rejects_duplicate_email_before_repository_insert():
     users.create.assert_not_called()
 
 
+# Confere a normalização do e-mail e a apresentação dos dados do próprio usuário.
 def test_authenticate_normalizes_email_and_returns_private_profile(user_record):
     service, users, _, _ = _service()
     users.authenticate.return_value = user_record
@@ -87,6 +92,7 @@ def test_authenticate_normalizes_email_and_returns_private_profile(user_record):
     assert result["email"] == "ana@example.com"
 
 
+# Verifica os tipos de erro para credenciais e acesso ao perfil inválidos.
 def test_authenticate_and_profile_access_raise_typed_errors():
     service, users, _, _ = _service()
 
@@ -101,6 +107,7 @@ def test_authenticate_and_profile_access_raise_typed_errors():
     users.get_by_id.assert_not_called()
 
 
+# Confere os vínculos do perfil e a ocultação do e-mail para outros usuários.
 def test_get_by_id_includes_relations_and_hides_email_from_other_viewers(
     user_record, ids
 ):
@@ -132,6 +139,7 @@ def test_get_by_id_includes_relations_and_hides_email_from_other_viewers(
     organizations.get_by_user_id.assert_called_once_with(ids["user"])
 
 
+# Verifica a exigência dos detalhes de ensino antes de persistir a habilidade.
 def test_add_skill_validates_teaching_fields_and_delegates_to_repository(ids):
     service, _, skills, _ = _service()
     skills.add_skill.return_value = True
@@ -164,6 +172,7 @@ def test_add_skill_validates_teaching_fields_and_delegates_to_repository(ids):
         )
 
 
+# Confere o mapeamento de experiência e formação para o repositório.
 def test_add_experience_and_education_map_input_to_organization_repository(
     ids,
 ):
@@ -220,6 +229,7 @@ def test_add_experience_and_education_map_input_to_organization_repository(
     )
 
 
+# Verifica a ordem de remoção dos vínculos e do documento do usuário.
 def test_delete_removes_graph_relations_before_deleting_user(ids):
     service, users, _, organizations = _service()
     users.get_by_id.return_value = {"_id": ids["user"]}
@@ -232,6 +242,7 @@ def test_delete_removes_graph_relations_before_deleting_user(ids):
     assert organizations.delete_by_user_id.call_count == 1
 
 
+# Confere o erro gerado ao atualizar um perfil inexistente.
 def test_update_missing_user_raises_not_found(ids):
     service, users, _, _ = _service()
     users.update.return_value = None

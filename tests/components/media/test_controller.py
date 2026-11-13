@@ -1,3 +1,4 @@
+# Testes do controller de mídias com validação de entrada e padronização das respostas.
 from datetime import datetime, timezone
 from pathlib import Path
 from unittest.mock import Mock
@@ -17,6 +18,7 @@ IMAGE_CASES = (
 )
 
 
+# Monta uma requisição de mídia a partir de uma imagem local usada nos testes.
 def _media_payload(
     asset_name: str = "profile-test.svg",
     owner_type: str = "usuario",
@@ -35,6 +37,7 @@ def _media_payload(
     }
 
 
+# Monta o retorno de uma mídia persistida para simular a resposta do serviço.
 def _saved_media(payload: dict) -> dict:
     return {
         "media_id": str(ObjectId()),
@@ -46,6 +49,7 @@ def _saved_media(payload: dict) -> dict:
     }
 
 
+# Verifica se dados inválidos são rejeitados antes de chamar o serviço.
 def test_controller_validates_before_calling_service() -> None:
     service = Mock()
     controller = MediaController(service)
@@ -57,6 +61,7 @@ def test_controller_validates_before_calling_service() -> None:
     service.create.assert_not_called()
 
 
+# Verifica a rejeição de um filtro de mídia não permitido.
 def test_controller_rejects_unsupported_filter() -> None:
     service = Mock()
     controller = MediaController(service)
@@ -68,6 +73,7 @@ def test_controller_rejects_unsupported_filter() -> None:
     service.list.assert_not_called()
 
 
+# Confere a resposta padronizada quando a mídia consultada não existe.
 def test_controller_returns_standard_response_for_missing_media() -> None:
     service = Mock()
     service.get_by_id.return_value = None
@@ -80,6 +86,7 @@ def test_controller_returns_standard_response_for_missing_media() -> None:
     assert response.message == "Mídia não encontrada."
 
 
+# Confere a resposta produzida após criar uma foto de perfil.
 def test_controller_returns_standard_response_for_profile_image() -> None:
     service = Mock()
     media = {"media_id": str(ObjectId()), "filename": "profile.png"}
@@ -95,6 +102,7 @@ def test_controller_returns_standard_response_for_profile_image() -> None:
     service.create_profile_image.assert_called_once_with(upload, owner_id)
 
 
+# Verifica o retorno de criação usando conteúdo real dos arquivos de teste.
 @pytest.mark.parametrize(
     ("asset_name", "owner_type", "media_type"),
     IMAGE_CASES,
@@ -119,6 +127,7 @@ def test_controller_returns_realistic_created_media(
     assert service.create.call_args.args[0]["content"] == payload["content"]
 
 
+# Verifica a resposta de falha e o registro no log quando o armazenamento falha.
 def test_controller_returns_failure_when_gridfs_create_fails(
     caplog: pytest.LogCaptureFixture,
 ) -> None:
