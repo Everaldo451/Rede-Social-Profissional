@@ -26,6 +26,16 @@ THEME = Path(__file__).resolve().parents[1] / "assets" / "shared" / "page_theme.
 COOKIE_NAME = "rede_social_session"
 
 
+@st.cache_resource
+def get_presence_controller():
+    return OnlinePresenceController(
+        OnlinePresenceService(
+            OnlinePresenceRepository(),
+            SessionRepository.ttl,
+        )
+    )
+
+
 def build_runtime():
     session_repository = SessionRepository()
     users = UserService(
@@ -33,9 +43,7 @@ def build_runtime():
         UserSkillRepository(),
         UserOrganizationsRepository(),
     )
-    presence_service = OnlinePresenceService(
-        OnlinePresenceRepository(), session_repository.ttl
-    )
+    presence = get_presence_controller()
 
     def authenticate_user(email, password):
         try:
@@ -46,9 +54,8 @@ def build_runtime():
 
     session_users = SimpleNamespace(authenticate=authenticate_user)
     sessions = SessionController(
-        SessionService(session_repository, session_users, presence_service)
+        SessionService(session_repository, session_users, presence.service)
     )
-    presence = OnlinePresenceController(presence_service)
     return sessions, users, presence
 
 

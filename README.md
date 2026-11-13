@@ -84,3 +84,9 @@ existentes fora dos dados de seed. Os dois documentos de `midias.files.json`
 servem como modelos de metadados: o seed cria arquivos de perfil/publicação para
 cada usuário e post, usando os SVGs locais em `seed/assets`, e os grava pelo
 GridFS para criar tanto `midias.files` quanto `midias.chunks`.
+
+## Presença
+
+Sessões autenticadas atualizam a presença do usuário a cada 10 segundos. A
+página **Presenças** é restrita a usuários autenticados e mostra os estados
+online/offline em uma lista paginada.

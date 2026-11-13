@@ -60,6 +60,28 @@ def test_repository_reuses_seed_created_email_index(repository_resources):
     assert collection.index_information()["email_1"]["unique"] is True
 
 
+def test_presence_profiles_are_paged_and_counted(repository_resources):
+    repository = UserRepository(repository_resources.mongo)
+    email = f"presence+{ObjectId()}@example.com"
+    repository_resources.track_filter("usuarios", {"email": email})
+    created = repository.create(
+        _new_user_data(email, repository_resources.ids["skill"])
+    )
+    repository_resources.track_document("usuarios", created["_id"])
+    all_profiles = repository.list_presence_profiles(limit=None)
+    current_user_id = created["_id"]
+    other_profiles = repository.list_presence_profiles(
+        current_user_id=current_user_id,
+        limit=None,
+    )
+
+    assert repository.count_presence_profiles() == len(all_profiles)
+    assert repository.list_presence_profiles(offset=0, limit=1) == all_profiles[:1]
+    assert repository.list_presence_profiles(offset=1, limit=2) == all_profiles[1:3]
+    assert current_user_id not in {profile["user_id"] for profile in other_profiles}
+    assert repository.count_presence_profiles(current_user_id) == len(other_profiles)
+
+
 def test_create_rejects_plaintext_password_and_maps_duplicate_email(
     repository_resources,
 ):

@@ -88,25 +88,20 @@ class MentorshipRepository:
             return None
         return self._serialize(self.collection.find_one({"_id": object_id}))
 
-    def filter_mentors(self, user_id, nome, habilidade_id, offset=0, limit=20):
+    def filter_mentors(self, user_id, habilidade_id):
         with self.session_factory() as session:
             return session.execute_read(
                 lambda tx: tx.run(
                     """
-                    MATCH (mentor:Pessoa)-[:POSSUI_HABILIDADE]->(skill:Habilidade)
-                    WHERE mentor.id <> $user_id AND mentor.aceita_mentoria = true
+                    MATCH (mentor:Pessoa)-[:ENSINA]->(skill:Habilidade)
+                    WHERE mentor.id <> $user_id
                       AND ($skill_id IS NULL OR skill.id = $skill_id)
-                      AND ($name = '' OR toLower(mentor.nome) CONTAINS toLower($name))
-                    RETURN mentor.id AS id, mentor.nome AS nome,
+                    RETURN mentor.id AS id,
                            collect(DISTINCT skill.id) AS habilidade_ids
-                    ORDER BY nome, id
-                    SKIP $offset LIMIT $limit
+                    ORDER BY id
                     """,
                     user_id=user_id,
-                    name=nome,
                     skill_id=habilidade_id,
-                    offset=offset,
-                    limit=limit,
                 ).data()
             )
 
@@ -210,7 +205,7 @@ class MentorshipRepository:
             return session.execute_read(
                 lambda tx: tx.run(
                     """
-                    MATCH (mentor:Pessoa {id: $mentor_id})-[:POSSUI_HABILIDADE|ENSINA]->
+                    MATCH (mentor:Pessoa {id: $mentor_id})-[:ENSINA]->
                           (skill:Habilidade {id: $skill_id})
                     RETURN count(skill) > 0 AS has_skill
                     """,
@@ -219,25 +214,21 @@ class MentorshipRepository:
                 ).single(strict=True)["has_skill"]
             )
 
-    def recommend(self, user_id, offset=0, limit=20):
+    def recommend(self, user_id):
         with self.session_factory() as session:
             return session.execute_read(
                 lambda tx: tx.run(
                     """
                     MATCH (user:Pessoa {id: $user_id})-[:DESEJA_DESENVOLVER]->(skill:Habilidade)
-                          <-[:POSSUI_HABILIDADE]-(mentor:Pessoa)
-                    WHERE mentor <> user AND mentor.aceita_mentoria = true
-                    WITH DISTINCT mentor, skill ORDER BY skill.nome
-                    RETURN mentor.id AS id, mentor.nome AS nome,
-                           collect(skill.nome) AS habilidades,
-                           collect(skill.id) AS habilidade_ids,
-                           count(skill) AS afinidade
-                    ORDER BY afinidade DESC, nome, id
-                    SKIP $offset LIMIT $limit
+                          <-[:ENSINA]-(mentor:Pessoa)
+                    WHERE mentor <> user
+                    WITH mentor, collect(DISTINCT skill) AS skills
+                    RETURN mentor.id AS id,
+                           [skill IN skills | skill.id] AS habilidade_ids,
+                           size(skills) AS afinidade
+                    ORDER BY afinidade DESC, id
                     """,
                     user_id=user_id,
-                    offset=offset,
-                    limit=limit,
                 ).data()
             )
 
@@ -247,10 +238,10 @@ class MentorshipRepository:
                 lambda tx: tx.run(
                     """
                     MATCH (:Pessoa {id: $user_id})-[:DESEJA_DESENVOLVER]->(skill:Habilidade)
-                    RETURN DISTINCT skill.nome AS nome ORDER BY nome
+                    RETURN DISTINCT skill.id AS id ORDER BY id
                     """,
                     user_id=user_id,
-                ).value("nome")
+                ).value("id")
             )
 
     @staticmethod

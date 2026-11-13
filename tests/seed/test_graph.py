@@ -1,3 +1,5 @@
+from collections import deque
+
 from seed import (
     GRAPH_RELATIONSHIPS,
     RELATIONSHIP_PROPERTIES,
@@ -20,10 +22,10 @@ def test_seed_graph_contains_nodes_and_supported_relationships() -> None:
     assert graph_data["TRABALHOU_EM"]
     assert graph_data["ESTUDOU_EM"]
     assert graph_data["ENSINA"]
-    assert len(graph_data["ENSINA"]) == 15
+    assert len(graph_data["ENSINA"]) == 27
     assert len(graph_data["DESEJA_DESENVOLVER"]) == 20
     assert len(graph_data["MENTORA"]) == 20
-    assert len(graph_data["CONECTADO_COM"]) == 8
+    assert len(graph_data["CONECTADO_COM"]) == 59
     assert len(graph_data["SOLICITOU_CONEXAO"]) == 8
     assert len(graph_data["MEMBRO_DE"]) == 10
     assert set(
@@ -63,17 +65,76 @@ def test_file_relationship_ids_match_seeded_nodes() -> None:
         assert rows
 
 
-def test_ensina_is_independent_of_user_skills_and_mentorship_flag() -> None:
+def test_pending_requests_do_not_duplicate_direct_connections() -> None:
+    relationships = load_relationships()
+    connection_rows = relationships["CONECTADO_COM"]
+    connected_pairs = [
+        frozenset((row["source_id"], row["target_id"]))
+        for row in connection_rows
+    ]
+    request_ids = [
+        row["properties"]["id"]
+        for row in relationships["SOLICITOU_CONEXAO"]
+    ]
+
+    assert len(connected_pairs) == len(set(connected_pairs))
+    assert len(request_ids) == len(set(request_ids))
+    assert all(
+        frozenset((row["source_id"], row["target_id"])) not in connected_pairs
+        for row in relationships["SOLICITOU_CONEXAO"]
+        if row["properties"]["status"] == "pendente"
+    )
+
+
+def test_seed_connections_link_the_entire_network() -> None:
+    people = {
+        str(user["_id"])
+        for user in load_collections()["usuarios"]
+    }
+    adjacency = {person_id: set() for person_id in people}
+    for row in load_relationships()["CONECTADO_COM"]:
+        adjacency[row["source_id"]].add(row["target_id"])
+        adjacency[row["target_id"]].add(row["source_id"])
+
+    visited = set()
+    queue = deque([next(iter(people))])
+    while queue:
+        person_id = queue.popleft()
+        if person_id in visited:
+            continue
+        visited.add(person_id)
+        queue.extend(adjacency[person_id] - visited)
+
+    assert visited == people
+
+
+def test_seeded_teachers_accept_mentorship_and_bruno_teaches_python() -> None:
     collections = load_collections()
     graph_data = build_graph_data(collections)
+    users_by_id = {
+        str(user["_id"]): user
+        for user in collections["usuarios"]
+    }
     bruno = next(
         user
         for user in collections["usuarios"]
         if user["email"] == "bruno@example.com"
     )
-    assert bruno["aceita_mentoria"] is False
+    assert all(
+        users_by_id[relationship["source_id"]]["aceita_mentoria"]
+        for relationship in graph_data["ENSINA"]
+    )
+    python_id = str(
+        next(
+            skill["_id"]
+            for skill in collections["habilidades"]
+            if skill["nome"] == "Python"
+        )
+    )
+    assert bruno["aceita_mentoria"] is True
     assert bruno["habilidades"] == []
     assert any(
         relationship["source_id"] == str(bruno["_id"])
+        and relationship["target_id"] == python_id
         for relationship in graph_data["ENSINA"]
     )

@@ -167,7 +167,9 @@ class ConnectionRepository:
                 lambda tx: tx.run(
                     """
                     MATCH (sender:Pessoa)-[r:SOLICITOU_CONEXAO]->(receiver:Pessoa)
-                    WHERE sender.id = $user_id OR receiver.id = $user_id
+                    WHERE (sender.id = $user_id OR receiver.id = $user_id)
+                      AND r.status = 'pendente'
+                      AND NOT exists((sender)-[:CONECTADO_COM]-(receiver))
                     RETURN r.id AS id, r.status AS status, r.criado_em AS criado_em,
                            sender.id AS remetente_id, receiver.id AS destinatario_id
                     ORDER BY r.criado_em DESC, r.id

@@ -70,12 +70,20 @@ class ConnectionService:
         if result is None:
             return None
         profiles = self.professionals.get_by_ids(result["ids"])
+        people = [
+            {
+                "id": person_id,
+                "nome": profiles.get(person_id, {}).get(
+                    "nome", "Profissional indisponível"
+                ),
+                "headline": profiles.get(person_id, {}).get("headline"),
+            }
+            for person_id in result["ids"]
+        ]
         return {
             "graus": result["graus"],
-            "nomes": [
-                profiles.get(person_id, {}).get("nome", "Profissional indisponível")
-                for person_id in result["ids"]
-            ],
+            "nomes": [person["nome"] for person in people],
+            "pessoas": people,
         }
 
     def count_connections(self, user_id):

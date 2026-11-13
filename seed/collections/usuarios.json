@@ -82,7 +82,7 @@
             "$date": "2026-10-20T15:30:00Z"
         },
         "experiencias": [],
-        "aceita_mentoria": false,
+        "aceita_mentoria": true,
         "nivel_carreira": "Júnior",
         "senha": "RedeSocial@2026",
         "nome": "Bruno Souza",
@@ -213,7 +213,7 @@
                 "cargo": "Desenvolvedor Full Stack"
             }
         ],
-        "aceita_mentoria": false,
+        "aceita_mentoria": true,
         "nivel_carreira": "Pleno",
         "senha": "RedeSocial@2026",
         "nome": "Daniel Almeida",
@@ -362,7 +362,7 @@
                 "cargo": "Engenheira de Software"
             }
         ],
-        "aceita_mentoria": false,
+        "aceita_mentoria": true,
         "nivel_carreira": "Júnior",
         "senha": "RedeSocial@2026",
         "nome": "Felipe Almeida",
@@ -497,7 +497,7 @@
                 "cargo": "Desenvolvedora Backend"
             }
         ],
-        "aceita_mentoria": false,
+        "aceita_mentoria": true,
         "nivel_carreira": "Sênior",
         "senha": "RedeSocial@2026",
         "nome": "Henrique Almeida",
@@ -639,7 +639,7 @@
                 "cargo": "Analista de Dados"
             }
         ],
-        "aceita_mentoria": false,
+        "aceita_mentoria": true,
         "nivel_carreira": "Pleno",
         "senha": "RedeSocial@2026",
         "nome": "João Almeida",
@@ -788,7 +788,7 @@
                 "cargo": "Designer de Produto"
             }
         ],
-        "aceita_mentoria": false,
+        "aceita_mentoria": true,
         "nivel_carreira": "Júnior",
         "senha": "RedeSocial@2026",
         "nome": "Marcos Almeida",
@@ -923,7 +923,7 @@
                 "cargo": "Desenvolvedor Full Stack"
             }
         ],
-        "aceita_mentoria": false,
+        "aceita_mentoria": true,
         "nivel_carreira": "Sênior",
         "senha": "RedeSocial@2026",
         "nome": "Otávio Barbosa",
@@ -1065,7 +1065,7 @@
                 "cargo": "Engenheira de Software"
             }
         ],
-        "aceita_mentoria": false,
+        "aceita_mentoria": true,
         "nivel_carreira": "Pleno",
         "senha": "RedeSocial@2026",
         "nome": "Rafael Barbosa",
@@ -1214,7 +1214,7 @@
                 "cargo": "Desenvolvedora Backend"
             }
         ],
-        "aceita_mentoria": false,
+        "aceita_mentoria": true,
         "nivel_carreira": "Júnior",
         "senha": "RedeSocial@2026",
         "nome": "Tiago Barbosa",
@@ -1349,7 +1349,7 @@
                 "cargo": "Analista de Dados"
             }
         ],
-        "aceita_mentoria": false,
+        "aceita_mentoria": true,
         "nivel_carreira": "Sênior",
         "senha": "RedeSocial@2026",
         "nome": "Victor Barbosa",
@@ -1491,7 +1491,7 @@
                 "cargo": "Designer de Produto"
             }
         ],
-        "aceita_mentoria": false,
+        "aceita_mentoria": true,
         "nivel_carreira": "Pleno",
         "senha": "RedeSocial@2026",
         "nome": "Caio Barbosa",
@@ -1640,7 +1640,7 @@
                 "cargo": "Desenvolvedor Full Stack"
             }
         ],
-        "aceita_mentoria": false,
+        "aceita_mentoria": true,
         "nivel_carreira": "Júnior",
         "senha": "RedeSocial@2026",
         "nome": "Daniel Barbosa",
@@ -1775,7 +1775,7 @@
                 "cargo": "Engenheira de Software"
             }
         ],
-        "aceita_mentoria": false,
+        "aceita_mentoria": true,
         "nivel_carreira": "Sênior",
         "senha": "RedeSocial@2026",
         "nome": "Felipe Barbosa",
@@ -1917,7 +1917,7 @@
                 "cargo": "Desenvolvedora Backend"
             }
         ],
-        "aceita_mentoria": false,
+        "aceita_mentoria": true,
         "nivel_carreira": "Pleno",
         "senha": "RedeSocial@2026",
         "nome": "Henrique Barbosa",
@@ -2066,7 +2066,7 @@
                 "cargo": "Analista de Dados"
             }
         ],
-        "aceita_mentoria": false,
+        "aceita_mentoria": true,
         "nivel_carreira": "Júnior",
         "senha": "RedeSocial@2026",
         "nome": "João Barbosa",
@@ -2201,7 +2201,7 @@
                 "cargo": "Designer de Produto"
             }
         ],
-        "aceita_mentoria": false,
+        "aceita_mentoria": true,
         "nivel_carreira": "Sênior",
         "senha": "RedeSocial@2026",
         "nome": "Marcos Barbosa",
@@ -2343,7 +2343,7 @@
                 "cargo": "Desenvolvedor Full Stack"
             }
         ],
-        "aceita_mentoria": false,
+        "aceita_mentoria": true,
         "nivel_carreira": "Pleno",
         "senha": "RedeSocial@2026",
         "nome": "Otávio Costa",
@@ -2492,7 +2492,7 @@
                 "cargo": "Engenheira de Software"
             }
         ],
-        "aceita_mentoria": false,
+        "aceita_mentoria": true,
         "nivel_carreira": "Júnior",
         "senha": "RedeSocial@2026",
         "nome": "Rafael Costa",
@@ -2627,7 +2627,7 @@
                 "cargo": "Desenvolvedora Backend"
             }
         ],
-        "aceita_mentoria": false,
+        "aceita_mentoria": true,
         "nivel_carreira": "Sênior",
         "senha": "RedeSocial@2026",
         "nome": "Tiago Costa",

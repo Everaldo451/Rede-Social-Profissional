@@ -42,13 +42,7 @@ def _profile_media(user_id):
 
 def render_profile_image(container, content, mime_type, size=150):
     if mime_type == "image/svg+xml":
-        with container:
-            st.html(
-                f'<div class="profile-photo-svg" role="img" '
-                f'aria-label="Foto de perfil" style="width:{size}px;'
-                f'height:{size}px">{content.decode("utf-8")}</div>'
-            )
-        return
+        content = content.decode("utf-8")
     container.image(content, width=size)
 
 

@@ -1,5 +1,8 @@
 from unittest.mock import Mock
 
+from controllers.sessions.online_presence_controller import (
+    OnlinePresenceController,
+)
 from controllers.sessions.session_controller import SessionController
 
 
@@ -14,3 +17,15 @@ def test_login_passes_validated_login_request_to_service():
     assert response.status is True
     assert response.data == "session-token"
     service.login.assert_called_once_with("ana@example.com", "secret")
+
+
+def test_presence_heartbeat_updates_last_seen_for_authenticated_session():
+    service = Mock()
+    service.update_last_seen.return_value = True
+
+    response = OnlinePresenceController(service).update_last_seen(
+        {"session_id": "session-token"}
+    )
+
+    assert response.status is True
+    service.update_last_seen.assert_called_once_with("session-token")

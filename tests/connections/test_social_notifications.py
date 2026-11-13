@@ -190,7 +190,7 @@ def test_mentor_search_paginates_with_bounded_offsets():
         _,
     ) = _mentorship_service()
     mentors.filter_mentors.return_value = [
-        {"id": mentor_id, "habilidade_ids": [skill_id]}
+        {"id": mentor_id, "habilidade_ids": [skill_id]},
     ]
 
     result = service.filter_mentors(
@@ -200,7 +200,21 @@ def test_mentor_search_paginates_with_bounded_offsets():
         limit=500,
     )
 
-    mentors.filter_mentors.assert_called_once_with(
-        mentee_id, "Bruno", skill_id, 0, 100
-    )
+    mentors.filter_mentors.assert_called_once_with(mentee_id, skill_id)
     assert result[0]["perfil"]["nome"] == "Bruno"
+    assert result[0]["habilidade_ids"] == [skill_id]
+
+
+def test_mentor_search_filters_by_profile_name_and_mentorship_availability():
+    service, mentors, _, mentee_id, mentor_id, skill_id, _ = _mentorship_service()
+    mentors.filter_mentors.return_value = [
+        {"id": mentor_id, "habilidade_ids": [skill_id]},
+    ]
+
+    result = service.filter_mentors(
+        mentee_id,
+        SimpleNamespace(nome="Ana", habilidade_id=skill_id),
+    )
+
+    mentors.filter_mentors.assert_called_once_with(mentee_id, skill_id)
+    assert result == []

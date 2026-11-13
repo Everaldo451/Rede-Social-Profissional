@@ -57,6 +57,8 @@ def test_concurrent_requests_and_recipient_only_decision():
         request_id = outgoing.data if outgoing.status else incoming.data
         request = {"solicitacao_id": request_id, "acao": "aceitar"}
         assert controller.get_shortest_path(ana, carla).data is None
+        assert controller.count_connections(ana).data == 0
+        assert controller.get_paginated_for_user(ana, 0, 10).data == []
         assert not controller.update_connection_request(sender, recipient, request).status
         assert controller.update_connection_request(recipient, sender, request).status
         assert controller.update_connection_request(recipient, sender, request).status
@@ -65,8 +67,16 @@ def test_concurrent_requests_and_recipient_only_decision():
         ).status
         assert not controller.request_connection(ana, bruno).status
         assert controller.count_connections(ana).data == 1
+        assert controller.get_paginated_for_user(ana, 0, 10).data[0]["nome"] == "Bruno"
+        assert controller.list_requests(ana).data == []
         assert controller.get_shortest_path(ana, carla).data == {
-            "graus": 2, "nomes": ["Ana", "Bruno", "Carla"]
+            "graus": 2,
+            "nomes": ["Ana", "Bruno", "Carla"],
+            "pessoas": [
+                {"id": ana, "nome": "Ana", "headline": None},
+                {"id": bruno, "nome": "Bruno", "headline": None},
+                {"id": carla, "nome": "Carla", "headline": None},
+            ],
         }
     finally:
         with get_neo4j_session() as session:

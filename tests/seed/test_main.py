@@ -1,11 +1,16 @@
 """Integration test for the seed entry point."""
 
+from types import SimpleNamespace
 from typing import Any
+from unittest.mock import Mock
 
 import bcrypt
 from gridfs import GridFSBucket
 
 import seed as seed_script
+from src.repositories.connections.mentorship_repository import MentorshipRepository
+from src.repositories.connections.professional_repository import ProfessionalRepository
+from src.services.connections.mentorship_service import MentorshipService
 
 
 def test_main(seed_test_environment: Any) -> None:
@@ -120,3 +125,31 @@ def test_main(seed_test_environment: Any) -> None:
         assert set(relationship["properties"]) == {
             key for key, value in expected_properties.items() if value is not None
         }
+
+
+def test_mentorship_search_and_recommendations_use_teaching_relationships(
+    seed_test_environment: Any,
+) -> None:
+    database = seed_test_environment["database"]
+    users = list(database["usuarios"].find({}, {"email": 1}))
+    user_ids = {user["email"]: str(user["_id"]) for user in users}
+    python_id = str(
+        database["habilidades"].find_one({"nome": "Python"}, {"_id": 1})["_id"]
+    )
+    repository = MentorshipRepository(seed_script.get_neo4j_session, database)
+    service = MentorshipService(
+        repository,
+        ProfessionalRepository(database),
+        Mock(),
+    )
+
+    search_results = service.filter_mentors(
+        user_ids["ana@example.com"],
+        SimpleNamespace(nome="Bruno", habilidade_id=python_id),
+    )
+    recommendations = service.recommend(user_ids["sofia.barbosa@example.com"])
+    bruno_desired = service.desired_skills(user_ids["bruno@example.com"])
+
+    assert any(row["id"] == user_ids["bruno@example.com"] for row in search_results)
+    assert any(row["id"] == user_ids["bruno@example.com"] for row in recommendations)
+    assert "Python" in bruno_desired

@@ -71,6 +71,9 @@ def _requests(controller, user_id):
         if not requests:
             st.caption("Nenhuma solicitação.")
         for row in requests:
+            request_key = row.get("id") or (
+                f"{row['remetente_id']}_{row['destinatario_id']}"
+            )
             other_id = (
                 row["remetente_id"] if row["recebida"] else row["destinatario_id"]
             )
@@ -78,16 +81,16 @@ def _requests(controller, user_id):
                 render_profile_identity(
                     other_id,
                     row["nome"],
-                    f"network_request_{row['id']}",
+                    f"network_request_{request_key}",
                     f"Status: {row['status'].capitalize()}",
                 )
                 if not received or row["status"] != "pendente":
                     continue
                 accept, decline = st.columns(2)
                 action = None
-                if accept.button("Aceitar", key=f"accept_{row['id']}"):
+                if accept.button("Aceitar", key=f"accept_{request_key}"):
                     action = "aceitar"
-                if decline.button("Recusar", key=f"decline_{row['id']}"):
+                if decline.button("Recusar", key=f"decline_{request_key}"):
                     action = "recusar"
                 if action:
                     decision = controller.update_connection_request(
@@ -162,6 +165,19 @@ def _degrees(controller, user_id):
             st.info("Não há um caminho de conexões entre vocês.")
         else:
             st.metric("Graus de separação", path.data["graus"])
+            intermediaries = path.data["pessoas"][1:-1]
+            if intermediaries:
+                st.subheader("Pessoas que conectam vocês")
+                for person in intermediaries:
+                    with st.container(border=True):
+                        render_profile_identity(
+                            person["id"],
+                            person["nome"],
+                            f"network_path_{target}_{person['id']}",
+                            person.get("headline"),
+                        )
+            else:
+                st.caption("Vocês têm uma conexão direta, sem intermediários.")
             st.text(" → ".join(path.data["nomes"]))
 
 

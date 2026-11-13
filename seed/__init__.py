@@ -52,7 +52,7 @@ RELATIONSHIP_PROPERTIES = {
     "ESTUDOU_EM": {"curso", "grau", "ano_inicio", "ano_conclusao"},
     "MEMBRO_DE": {"papel", "status", "desde"},
     "ENSINA": {"nivel", "experiencia_anos"},
-    "SOLICITOU_CONEXAO": {"status", "criada_em", "atualizada_em"},
+    "SOLICITOU_CONEXAO": {"id", "status", "criada_em", "atualizada_em"},
     "MENTORA": {
         "mentoria_id",
         "habilidade_id",

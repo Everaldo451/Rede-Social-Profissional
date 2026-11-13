@@ -128,13 +128,35 @@ class UserRepository:
             for user in cursor.skip(max(int(offset), 0)).limit(max(int(limit), 0))
         ]
 
-    def list_presence_profiles(self, current_user_id):
-        users = get_mongo_database().usuarios.find({}, {"nome": 1}).sort("nome", 1)
+    def list_presence_profiles(
+        self, current_user_id=None, offset=0, limit=None
+    ):
+        filters = {}
+        if current_user_id is not None:
+            object_id = self._object_id(current_user_id)
+            if object_id is None:
+                raise ValueError("Identificador de usuário inválido.")
+            filters["_id"] = {"$ne": object_id}
+
+        users = self.collection.find(filters, {"nome": 1}).sort(
+            [("nome", 1), ("_id", 1)]
+        )
+        users = users.skip(max(int(offset), 0))
+        if limit is not None:
+            users = users.limit(max(int(limit), 0))
         return [
             {"user_id": str(user["_id"]), "name": user.get("nome") or str(user["_id"])}
             for user in users
-            if str(user["_id"]) != current_user_id
         ]
+
+    def count_presence_profiles(self, current_user_id=None):
+        filters = {}
+        if current_user_id is not None:
+            object_id = self._object_id(current_user_id)
+            if object_id is None:
+                raise ValueError("Identificador de usuário inválido.")
+            filters["_id"] = {"$ne": object_id}
+        return self.collection.count_documents(filters)
 
     def update(self, user_id, data):
         object_id = self._object_id(user_id)
