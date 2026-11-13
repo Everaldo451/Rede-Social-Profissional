@@ -21,10 +21,13 @@ class MentorshipController:
     def get_by_id(self, mentorship_id):
         pass
 
-    def filter_mentors(self, user_id, data):
+    def filter_mentors(self, user_id, data, offset=0, limit=20):
         return run_action(
             lambda: self.service.filter_mentors(
-                user_id, ProfessionalSearchRequest.model_validate(data)
+                user_id,
+                ProfessionalSearchRequest.model_validate(data),
+                offset,
+                limit,
             )
         )
 
@@ -49,8 +52,8 @@ class MentorshipController:
     def delete(self, mentorship_id):
         pass
 
-    def recommend(self, user_id):
-        return run_action(self.service.recommend, user_id)
+    def recommend(self, user_id, offset=0, limit=20):
+        return run_action(self.service.recommend, user_id, offset, limit)
 
     def desired_skills(self, user_id):
         return run_action(self.service.desired_skills, user_id)

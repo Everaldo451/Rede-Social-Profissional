@@ -52,7 +52,11 @@ def render_sidebar():
         return
 
     sidebar.divider()
-    sidebar.page_link("pages/Profile.py", label="Perfil")
+    if sidebar.button("Perfil", key="current_profile", use_container_width=True):
+        st.switch_page(
+            "pages/Profile.py",
+            query_params={"user_id": str(user_id)},
+        )
     sidebar.page_link("pages/RedeDeConexoes.py", label="Rede de Conexões")
     sidebar.page_link("pages/Mentoria.py", label="Mentoria")
     sidebar.page_link("pages/Notificacoes.py", label="Notificações")

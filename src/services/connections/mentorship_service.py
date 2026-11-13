@@ -1,5 +1,7 @@
 from datetime import datetime, timezone
 
+MAX_PAGE_SIZE = 100
+
 
 class MentorshipService:
     def __init__(
@@ -45,10 +47,16 @@ class MentorshipService:
     def get_by_id(self, mentorship_id):
         return self.mentors.get_by_id(mentorship_id)
 
-    def filter_mentors(self, user_id, filters):
+    def filter_mentors(self, user_id, filters, offset=0, limit=20):
+        offset = max(int(offset or 0), 0)
+        limit = min(max(int(limit or 20), 1), MAX_PAGE_SIZE)
         return self._available_profiles(
             self.mentors.filter_mentors(
-                user_id, filters.nome.strip(), filters.habilidade_id
+                user_id,
+                filters.nome.strip(),
+                filters.habilidade_id,
+                offset,
+                limit,
             )
         )
 
@@ -128,8 +136,12 @@ class MentorshipService:
             if profiles.get(row["id"], {}).get("aceita_mentoria")
         ]
 
-    def recommend(self, user_id):
-        return self._available_profiles(self.mentors.recommend(user_id))
+    def recommend(self, user_id, offset=0, limit=20):
+        offset = max(int(offset or 0), 0)
+        limit = min(max(int(limit or 20), 1), MAX_PAGE_SIZE)
+        return self._available_profiles(
+            self.mentors.recommend(user_id, offset, limit)
+        )
 
     def desired_skills(self, user_id):
         return self.mentors.desired_skills(user_id)

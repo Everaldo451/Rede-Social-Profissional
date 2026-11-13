@@ -1,5 +1,4 @@
 from datetime import datetime, timezone
-from html import escape
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -75,58 +74,47 @@ def revoke_session(sessions, session, reference):
     st.session_state["session_revocation"] = result
 
 
-@st.fragment(run_every=20)
-def render_panels(sessions, session, users, presence):
+def render_sessions(sessions, session):
     viewer = sessions.get_current_user(session)
     if not viewer.status:
         st.rerun()
 
-    with st.container(key="presence_panel"):
-        heading, action = st.columns([4, 1.5], vertical_alignment="center")
-        with heading:
-            st.subheader("Presença online")
-        with action:
-            refresh = st.button("Atualizar presença")
-        professionals = [
-            {"user_id": profile["usuario_id"], "name": profile["nome"]}
-            for profile in users.list_all()
-            if profile.get("usuario_id") != viewer.data
-        ]
-        online = presence.get_online_users(
-            session, [user["user_id"] for user in professionals], activity=refresh
-        )
-        if not online.status:
-            st.rerun()
-        for user in professionals:
-            status = "Online" if user["user_id"] in online.data else "Offline"
-            st.html(
-                f'<div class="presence-row"><span>{escape(user["name"])}</span>'
-                f'<span class="presence-badge {status.lower()}">{status}</span></div>'
-            )
-        if not professionals:
-            st.caption("Nenhum outro profissional cadastrado.")
-
     with st.container(key="sessions_panel"):
-        st.subheader("Gerenciamento de sessões")
+        st.subheader("Suas sessões")
+        st.caption(
+            "Confira os acessos ativos à sua conta e encerre sessões que não reconhece."
+        )
         active = sessions.get_all_sessions_for_current_user(session)
-        if active.status:
-            st.metric("Sessões ativas", len(active.data))
-            result = st.session_state.pop("session_revocation", None)
-            if result is not None:
-                if result.status:
-                    st.success(result.message)
-                else:
-                    st.error(result.message)
+        if not active.status:
+            st.error(active.message)
+            return
 
-            for entry in sorted(active.data, key=lambda item: (not item["current"], item["reference"])):
-                reference = entry["reference"]
-                label = "Sessão atual" if entry["current"] else f"Sessão {reference[:10]}"
-                created_at = entry["created_at"]
+        st.metric("Sessões ativas", len(active.data))
+        result = st.session_state.pop("session_revocation", None)
+        if result is not None:
+            if result.status:
+                st.success(result.message)
+            else:
+                st.error(result.message)
+
+        if not active.data:
+            st.info("Não há sessões ativas para exibir.")
+            return
+
+        for entry in sorted(
+            active.data, key=lambda item: (not item["current"], item["reference"])
+        ):
+            reference = entry["reference"]
+            created_at = entry["created_at"]
+            with st.container(border=True):
+                details, action = st.columns([4, 1.5], vertical_alignment="center")
+                details.markdown(
+                    "**Esta sessão**" if entry["current"] else "**Outro dispositivo**"
+                )
+                details.caption(f"Identificador: {reference[:10]}")
                 if created_at is not None:
                     started = datetime.fromtimestamp(created_at, timezone.utc)
-                    label += f" · Iniciada em {started:%d/%m/%Y às %H:%M:%S} UTC"
-                details, action = st.columns([3, 2])
-                details.write(label)
+                    details.caption(f"Iniciada em {started:%d/%m/%Y às %H:%M} UTC")
                 if not entry["current"]:
                     action.button(
                         "Encerrar sessão",
@@ -136,20 +124,20 @@ def render_panels(sessions, session, users, presence):
                     )
 
 
-def render_dashboard(sessions, session, users, presence):
+def render_dashboard(sessions, session):
     st.html(THEME)
     st.html(ASSETS / "dashboard.css")
-    with st.container(key="dashboard_shell"):
+    with st.container(key="sessions_shell"):
         with st.container(key="dashboard_header"):
-            st.html('<div class="dashboard-eyebrow">Painel de presença</div>')
-            st.title("Rede Social Profissional")
-        render_panels(sessions, session, users, presence)
+            st.html('<div class="dashboard-eyebrow">Segurança da conta</div>')
+            st.title("Gerenciamento de sessões")
+        render_sessions(sessions, session)
 
 
 def render_page():
     st.set_page_config(page_title="Sessões", layout="wide")
     render_sidebar()
-    sessions, users, presence = build_runtime()
+    sessions, _, _ = build_runtime()
     cookies = get_cookie_controller()
     session = {"session_id": cookies.get(COOKIE_NAME)}
 
@@ -158,7 +146,7 @@ def render_page():
         st.page_link("pages/Login.py", label="Ir para o login")
         return
 
-    render_dashboard(sessions, session, users, presence)
+    render_dashboard(sessions, session)
 
 
 if __name__ == "__main__":

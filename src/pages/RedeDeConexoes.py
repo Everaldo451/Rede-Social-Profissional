@@ -7,6 +7,7 @@ from pymongo.errors import PyMongoError
 from redis.exceptions import RedisError
 
 from components.shared.sidebar import render_sidebar
+from components.shared.profile_identity import render_profile_identity
 from controllers.connections.connection_controller import ConnectionController
 from repositories.connections.connection_repository import ConnectionRepository
 from repositories.connections.professional_repository import ProfessionalRepository
@@ -32,7 +33,9 @@ def _search_fields(skills, key, label="Nome do profissional"):
 
 
 def _professionals(controller, user_id, users):
-    filters = _search_fields(users.list_skills(), "professionals")
+    with st.form("professional_search_form", border=False):
+        filters = _search_fields(users.list_skills(), "professionals")
+        st.form_submit_button("Pesquisar profissionais", type="primary")
     response = controller.search_professionals(user_id, filters)
     if not response.status:
         st.warning(response.message)
@@ -43,8 +46,12 @@ def _professionals(controller, user_id, users):
     for profile in response.data:
         other_id = str(profile["_id"])
         with st.container(border=True):
-            st.text(profile["nome"])
-            st.caption(profile.get("headline", ""))
+            render_profile_identity(
+                other_id,
+                profile["nome"],
+                f"network_search_{other_id}",
+                profile.get("headline"),
+            )
             if st.button("Enviar solicitação", key=f"request_{other_id}"):
                 sent = controller.request_connection(user_id, other_id)
                 if sent.status:
@@ -64,9 +71,16 @@ def _requests(controller, user_id):
         if not requests:
             st.caption("Nenhuma solicitação.")
         for row in requests:
+            other_id = (
+                row["remetente_id"] if row["recebida"] else row["destinatario_id"]
+            )
             with st.container(border=True):
-                st.text(row["nome"])
-                st.caption(f"Status: {row['status'].capitalize()}")
+                render_profile_identity(
+                    other_id,
+                    row["nome"],
+                    f"network_request_{row['id']}",
+                    f"Status: {row['status'].capitalize()}",
+                )
                 if not received or row["status"] != "pendente":
                     continue
                 accept, decline = st.columns(2)
@@ -103,8 +117,13 @@ def _connections(controller, user_id):
     )
     for profile in response.data:
         with st.container(border=True):
-            st.text(profile["nome"])
-            st.caption(profile.get("headline", ""))
+            other_id = str(profile["_id"])
+            render_profile_identity(
+                other_id,
+                profile["nome"],
+                f"network_connection_{other_id}",
+                profile.get("headline"),
+            )
 
 
 def _degrees(controller, user_id):
@@ -112,7 +131,11 @@ def _degrees(controller, user_id):
     st.caption("O cálculo considera somente conexões aceitas.")
     name = st.text_input("Filtrar por nome", max_chars=100, key="path_name")
     response = controller.search_professionals(user_id, {"nome": name})
-    people = {str(item["_id"]): item["nome"] for item in response.data}
+    if not response.status:
+        st.warning(response.message)
+        return
+    profiles = {str(item["_id"]): item for item in response.data}
+    people = {user_id: profile["nome"] for user_id, profile in profiles.items()}
     if not people:
         st.info("Nenhum profissional encontrado.")
         return
@@ -123,6 +146,14 @@ def _degrees(controller, user_id):
         placeholder="Selecione um profissional",
         format_func=people.__getitem__,
     )
+    if target:
+        profile = profiles[target]
+        render_profile_identity(
+            target,
+            profile["nome"],
+            f"network_degrees_{target}",
+            profile.get("headline"),
+        )
     if st.button("Calcular menor caminho", disabled=target is None):
         path = controller.get_shortest_path(user_id, target)
         if not path.status:
@@ -135,23 +166,31 @@ def _degrees(controller, user_id):
 
 
 def _render_network(controller, user_id, users):
-    st.title("Rede de Conexões Profissionais")
-    feedback = st.session_state.pop("network_feedback", None)
-    if feedback:
-        st.success(feedback)
-    section = st.radio(
-        "Seção da rede",
-        ("Buscar profissionais", "Solicitações", "Minhas conexões", "Graus de separação"),
-        horizontal=True,
-    )
-    if section == "Buscar profissionais":
-        _professionals(controller, user_id, users)
-    elif section == "Solicitações":
-        _requests(controller, user_id)
-    elif section == "Minhas conexões":
-        _connections(controller, user_id)
-    else:
-        _degrees(controller, user_id)
+    with st.container(key="network_shell"):
+        st.title("Rede de conexões")
+        st.caption("Descubra profissionais, acompanhe solicitações e explore sua rede.")
+        feedback = st.session_state.pop("network_feedback", None)
+        if feedback:
+            st.success(feedback)
+        section = st.radio(
+            "Seção da rede",
+            (
+                "Buscar profissionais",
+                "Solicitações",
+                "Minhas conexões",
+                "Graus de separação",
+            ),
+            horizontal=True,
+            key="network_section",
+        )
+        if section == "Buscar profissionais":
+            _professionals(controller, user_id, users)
+        elif section == "Solicitações":
+            _requests(controller, user_id)
+        elif section == "Minhas conexões":
+            _connections(controller, user_id)
+        else:
+            _degrees(controller, user_id)
 
 
 def _current_user_id():

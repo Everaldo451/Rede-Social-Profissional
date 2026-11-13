@@ -88,7 +88,7 @@ class MentorshipRepository:
             return None
         return self._serialize(self.collection.find_one({"_id": object_id}))
 
-    def filter_mentors(self, user_id, nome, habilidade_id):
+    def filter_mentors(self, user_id, nome, habilidade_id, offset=0, limit=20):
         with self.session_factory() as session:
             return session.execute_read(
                 lambda tx: tx.run(
@@ -99,11 +99,14 @@ class MentorshipRepository:
                       AND ($name = '' OR toLower(mentor.nome) CONTAINS toLower($name))
                     RETURN mentor.id AS id, mentor.nome AS nome,
                            collect(DISTINCT skill.id) AS habilidade_ids
-                    ORDER BY nome, id LIMIT 50
+                    ORDER BY nome, id
+                    SKIP $offset LIMIT $limit
                     """,
                     user_id=user_id,
                     name=nome,
                     skill_id=habilidade_id,
+                    offset=offset,
+                    limit=limit,
                 ).data()
             )
 
@@ -216,7 +219,7 @@ class MentorshipRepository:
                 ).single(strict=True)["has_skill"]
             )
 
-    def recommend(self, user_id):
+    def recommend(self, user_id, offset=0, limit=20):
         with self.session_factory() as session:
             return session.execute_read(
                 lambda tx: tx.run(
@@ -229,9 +232,12 @@ class MentorshipRepository:
                            collect(skill.nome) AS habilidades,
                            collect(skill.id) AS habilidade_ids,
                            count(skill) AS afinidade
-                    ORDER BY afinidade DESC, nome, id LIMIT 50
+                    ORDER BY afinidade DESC, nome, id
+                    SKIP $offset LIMIT $limit
                     """,
                     user_id=user_id,
+                    offset=offset,
+                    limit=limit,
                 ).data()
             )
 

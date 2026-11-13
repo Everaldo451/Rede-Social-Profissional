@@ -177,3 +177,30 @@ def test_only_the_mentor_can_accept_a_pending_mentorship():
     assert notification["destinatario_id"] == mentee_id
     assert notification["titulo"] == "Sua solicitação de mentoria foi aceita"
     assert notification["referencia_id"] == mentorship_id
+
+
+def test_mentor_search_paginates_with_bounded_offsets():
+    (
+        service,
+        mentors,
+        _,
+        mentee_id,
+        mentor_id,
+        skill_id,
+        _,
+    ) = _mentorship_service()
+    mentors.filter_mentors.return_value = [
+        {"id": mentor_id, "habilidade_ids": [skill_id]}
+    ]
+
+    result = service.filter_mentors(
+        mentee_id,
+        SimpleNamespace(nome=" Bruno ", habilidade_id=skill_id),
+        offset=-4,
+        limit=500,
+    )
+
+    mentors.filter_mentors.assert_called_once_with(
+        mentee_id, "Bruno", skill_id, 0, 100
+    )
+    assert result[0]["perfil"]["nome"] == "Bruno"

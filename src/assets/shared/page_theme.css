@@ -52,3 +52,60 @@
     background: #fff;
     padding: .8rem 1rem;
 }
+.profile-photo-svg {
+    overflow: hidden;
+    border-radius: 50%;
+}
+.profile-photo-svg svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.stApp [class*="st-key-profile_link_"] button {
+    min-height: 0;
+    padding: 0 .15rem;
+    border: 0;
+    background: transparent;
+    color: #302353;
+    text-align: left;
+}
+.stApp [class*="st-key-profile_link_"] button p {
+    color: #302353;
+    font-weight: 750;
+}
+.stApp [class*="st-key-profile_link_"] button:hover {
+    border: 0;
+    background: transparent;
+    color: #3f2a9e;
+    text-decoration: underline;
+}
+.stApp [class*="st-key-profile_link_"] button:hover p {
+    color: #3f2a9e;
+}
+.stApp:has(.st-key-mentorship_shell) .st-key-mentorship_shell,
+.stApp:has(.st-key-network_shell) .st-key-network_shell {
+    padding: clamp(1.25rem, 3vw, 2rem);
+    border: 1px solid #e8e0f6;
+    border-radius: 1.25rem;
+    background: #ffffffd9;
+    box-shadow: 0 10px 32px #49258b0d;
+}
+.stApp:has(.st-key-mentorship_shell) .st-key-mentorship_shell h1,
+.stApp:has(.st-key-network_shell) .st-key-network_shell h1 {
+    margin-bottom: .15rem;
+}
+.stApp:has(.st-key-mentorship_shell) .st-key-mentorship_shell [data-testid="stVerticalBlockBorderWrapper"],
+.stApp:has(.st-key-network_shell) .st-key-network_shell [data-testid="stVerticalBlockBorderWrapper"] {
+    border-color: #e8e0f6;
+    border-radius: .9rem;
+    background: #fff;
+}
+.stApp [class*="st-key-notification_card_"] [data-testid="stVerticalBlockBorderWrapper"] {
+    padding: .55rem .8rem;
+    border-color: #e8e0f6;
+    border-radius: .8rem;
+    background: #fff;
+}
+.stApp [class*="st-key-notification_card_"] [data-testid="stCaption"] {
+    margin-top: -.25rem;
+}

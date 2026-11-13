@@ -15,6 +15,7 @@ from repositories.profile.user_organizations_repository import (
 from repositories.profile.user_repository import UserRepository
 from repositories.profile.user_skill_repository import UserSkillRepository
 from repositories.shared.media_repository import MediaRepository
+from repositories.sessions.online_presence_repository import OnlinePresenceRepository
 from repositories.sessions.session_repository import SessionRepository
 
 BASE_URL = os.getenv("BASE_URL", "http://localhost:8501")
@@ -174,7 +175,25 @@ def test_profile_page_displays_read_only_user_and_relationship_data(
     assert "fake-test-hash" not in body
     assert page.get_by_role("textbox").count() == 0
     assert page.get_by_role("button", name="Conectar").count() == 0
-    assert page.locator("img").count() == 1
+    assert page.locator(".profile-photo-svg svg").count() == 1
+
+
+def test_profile_page_shows_presence_to_anonymous_visitors(
+    page: Page, repository_resources
+):
+    user = _create_profile_records(repository_resources)
+    presence = OnlinePresenceRepository()
+    key = f"presence:{user['_id']}"
+    presence.client.set(key, "online", ex=60)
+
+    try:
+        page.goto(f"{BASE_URL}/profile?user_id={user['_id']}")
+
+        page.get_by_role("heading", name="Ana Silva").wait_for()
+        page.get_by_text("Presença: 🟢 Online", exact=True).wait_for()
+        assert page.get_by_role("button", name="Conectar").count() == 0
+    finally:
+        presence.client.delete(key)
 
 
 def test_profile_page_displays_public_profile_photo(page: Page, repository_resources):
@@ -197,8 +216,8 @@ def test_profile_page_displays_public_profile_photo(page: Page, repository_resou
     )
     try:
         page.goto(f"{BASE_URL}/profile?user_id={user['_id']}")
-        page.locator("img").wait_for()
-        assert page.locator("img").count() == 1
+        page.locator(".profile-photo-svg svg").wait_for()
+        assert page.locator(".profile-photo-svg svg").count() == 1
     finally:
         GridFSBucket(
             repository_resources.mongo, bucket_name="midias"
@@ -230,7 +249,10 @@ def test_profile_page_allows_owner_to_edit_their_profile(
     )
 
     try:
-        page.goto(f"{BASE_URL}/profile?user_id={user['_id']}")
+        page.goto(BASE_URL)
+        page.get_by_role("button", name="Perfil").wait_for()
+        page.get_by_role("button", name="Perfil").click()
+        page.wait_for_url(f"**/profile?user_id={user['_id']}")
         page.get_by_role("button", name="Salvar perfil").wait_for()
         page.get_by_role("textbox", name="Título profissional").fill(
             "Engenheira de Plataforma"

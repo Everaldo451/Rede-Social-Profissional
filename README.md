@@ -57,17 +57,20 @@ docker compose -f docker/docker-compose.test.yaml down
 
 ## Carregar dados de exemplo
 
-Com MongoDB, Redis e Neo4j disponíveis, execute o seed a partir da raiz do projeto.
-As contas de demonstração usam a senha `RedeSocial@2026`; o seed converte as
-senhas para hashes bcrypt antes de gravá-las:
+Com os containers da aplicação em execução, entre no container `app`:
 
 ```powershell
-$env:MONGO_URI = "mongodb://localhost:27017"
-$env:MONGO_DATABASE = "rede_social"
-$env:REDIS_HOST = "localhost"
-$env:NEO4J_URI = "bolt://localhost:7687"
-uv run python -m seed
+docker compose -f docker/docker-compose.yaml exec app sh
 ```
+
+Dentro do container, execute o arquivo de seed a partir da raiz do projeto:
+
+```sh
+python seed/__init__.py
+```
+
+As contas de demonstração usam a senha `RedeSocial@2026`; o seed converte as
+senhas para hashes bcrypt antes de gravá-las.
 
 O comando atualiza ou insere os documentos dos arquivos em `seed/collections`,
 cria os índices definidos e recalcula `notifications:unread:<user_id>` com base

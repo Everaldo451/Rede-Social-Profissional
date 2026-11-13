@@ -10,6 +10,7 @@ from redis.exceptions import RedisError
 
 from common.choices import DEGREES, SKILL_LEVELS, SKILL_TYPES
 from components.shared.sidebar import render_sidebar
+from components.shared.profile_identity import render_profile_image
 from controllers.connections.connection_controller import ConnectionController
 from controllers.shared.media_controller import MediaController
 from controllers.profile.user_controller import UserController
@@ -24,6 +25,7 @@ from repositories.profile.user_skill_repository import UserSkillRepository
 from repositories.connections.connection_repository import ConnectionRepository
 from repositories.connections.professional_repository import ProfessionalRepository
 from repositories.notifications.notification_repository import NotificationRepository
+from repositories.sessions.online_presence_repository import OnlinePresenceRepository
 from repositories.shared.media_repository import MediaRepository
 from services.connections.connection_service import ConnectionService
 from services.profile.user_service import UserService
@@ -391,9 +393,17 @@ def _render_profile_identity(user, user_id, viewer_id):
     )
     photo, details, action = st.columns([1, 4, 1.5], vertical_alignment="center")
     if media_response.status:
-        photo.image(media_response.data["content"], width=150)
+        render_profile_image(
+            photo,
+            media_response.data["content"],
+            media_response.data["metadata"].get("tipo_mime"),
+        )
     else:
-        photo.image(str(DEFAULT_PROFILE_IMAGE), width=150)
+        render_profile_image(
+            photo,
+            DEFAULT_PROFILE_IMAGE.read_bytes(),
+            "image/svg+xml",
+        )
         if media_response.message != "Mídia não encontrada.":
             photo.caption("Exibindo a foto padrão; a foto de perfil está indisponível.")
 
@@ -423,6 +433,17 @@ def _render_profile_identity(user, user_id, viewer_id):
                 st.success("Solicitação de conexão enviada.")
             else:
                 st.warning(response.message)
+
+
+def _render_profile_presence(user_id):
+    try:
+        is_online = OnlinePresenceRepository().get_by_user_id(user_id)
+    except RedisError:
+        logger.exception("Falha ao consultar a presença do usuário %s.", user_id)
+        st.warning("Não foi possível consultar a presença agora.")
+        return
+    status = "🟢 Online" if is_online else "⚪ Offline"
+    st.caption(f"Presença: {status}")
 
 
 def _render_profile_editor(
@@ -659,6 +680,7 @@ def render_profile():
             st.success(feedback)
 
         _render_profile_identity(user, user_id, viewer_id)
+        _render_profile_presence(user_id)
 
         if user_controller:
             _render_profile_editor(

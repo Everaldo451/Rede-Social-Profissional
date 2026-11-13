@@ -7,6 +7,7 @@ from pymongo.errors import PyMongoError
 from redis.exceptions import RedisError
 
 from components.shared.sidebar import render_sidebar
+from components.shared.profile_identity import render_profile_identity
 from controllers.connections.mentorship_controller import MentorshipController
 from repositories.connections.mentorship_repository import MentorshipRepository
 from repositories.connections.professional_repository import ProfessionalRepository
@@ -15,6 +16,7 @@ from services.connections.mentorship_service import MentorshipService
 
 logger = logging.getLogger(__name__)
 THEME = Path(__file__).resolve().parents[1] / "assets" / "shared" / "page_theme.css"
+PAGE_SIZE = 6
 
 
 def _search_fields(skills, key, label="Nome do mentor"):
@@ -31,15 +33,62 @@ def _search_fields(skills, key, label="Nome do mentor"):
     return {"nome": name, "habilidade_id": skill_id}
 
 
-def _render_profile(profile):
+def _load_mentor_page(controller, user_id, key, filters=None, *, reset=False):
+    listing_key = f"mentor_listing_{key}"
+    if reset or listing_key not in st.session_state:
+        st.session_state[listing_key] = {
+            "filters": filters or {"nome": "", "habilidade_id": None},
+            "results": None,
+            "has_more": False,
+            "error": None,
+        }
+
+    listing = st.session_state[listing_key]
+    if listing["results"] is None:
+        if key == "recommendations":
+            response = controller.recommend(user_id, 0, PAGE_SIZE + 1)
+        else:
+            response = controller.filter_mentors(
+                user_id, listing["filters"], 0, PAGE_SIZE + 1
+            )
+        if not response.status:
+            listing["results"] = []
+            listing["error"] = response.message
+        else:
+            listing["results"] = response.data[:PAGE_SIZE]
+            listing["has_more"] = len(response.data) > PAGE_SIZE
+    return listing
+
+
+def _load_more_mentors(controller, user_id, key):
+    listing = st.session_state[f"mentor_listing_{key}"]
+    offset = len(listing["results"])
+    if key == "recommendations":
+        response = controller.recommend(user_id, offset, PAGE_SIZE + 1)
+    else:
+        response = controller.filter_mentors(
+            user_id, listing["filters"], offset, PAGE_SIZE + 1
+        )
+    if not response.status:
+        st.error(response.message)
+        return
+    listing["results"].extend(response.data[:PAGE_SIZE])
+    listing["has_more"] = len(response.data) > PAGE_SIZE
+    st.rerun()
+
+
+def _render_profile(profile, user_id):
     st.subheader("Perfil profissional")
-    st.text(profile["nome"])
-    st.caption(
+    render_profile_identity(
+        user_id,
+        profile["nome"],
+        f"mentor_details_{user_id}",
         " · ".join(
             profile[field]
             for field in ("headline", "localizacao", "nivel_carreira")
             if profile.get(field)
         )
+        or None,
     )
     if profile.get("aceita_mentoria"):
         st.success("Disponível para mentoria")
@@ -84,6 +133,7 @@ def _render_mentors(controller, user_id, users):
         "Seção de mentoria",
         ("Buscar mentores", "Recomendações", "Solicitações"),
         horizontal=True,
+        key="mentorship_section",
     )
     if section == "Solicitações":
         response = controller.list_requests(user_id)
@@ -99,8 +149,12 @@ def _render_mentors(controller, user_id, users):
             st.info("Você não tem solicitações de mentoria pendentes.")
         for item in incoming:
             with st.container(border=True):
-                st.text(item["nome"])
-                st.caption(f"Habilidade: {item['habilidade_nome']}")
+                render_profile_identity(
+                    item["mentorado_id"],
+                    item["nome"],
+                    f"mentorship_request_{item['_id']}",
+                    f"Habilidade: {item['habilidade_nome']}",
+                )
                 accept, decline = st.columns(2)
                 action = None
                 if accept.button("Aceitar", key=f"accept_mentorship_{item['_id']}"):
@@ -119,9 +173,17 @@ def _render_mentors(controller, user_id, users):
         return
 
     if section == "Buscar mentores":
-        response = controller.filter_mentors(
-            user_id, _search_fields(users.list_skills(), "mentors")
+        with st.form("mentor_search_form", border=False):
+            filters = _search_fields(users.list_skills(), "mentors")
+            submitted = st.form_submit_button("Pesquisar mentores", type="primary")
+        listing = _load_mentor_page(
+            controller,
+            user_id,
+            "search",
+            filters,
+            reset=submitted,
         )
+        listing_key = "search"
     else:
         desired = controller.desired_skills(user_id).data
         if not desired:
@@ -130,26 +192,38 @@ def _render_mentors(controller, user_id, users):
             )
             return
         st.text("Habilidades desejadas: " + ", ".join(desired))
-        response = controller.recommend(user_id)
+        listing = _load_mentor_page(controller, user_id, "recommendations")
+        listing_key = "recommendations"
 
-    if not response.status:
-        st.warning(response.message)
+    if listing["error"]:
+        st.warning(listing["error"])
         return
-    if not response.data:
+    if not listing["results"]:
         st.info("Nenhum mentor disponível para esses critérios.")
         return
 
-    mentors = {row["id"]: row for row in response.data}
+    mentors = {row["id"]: row for row in listing["results"]}
     skill_names = {
         str(skill["_id"]): skill["nome"]
         for skill in users.list_skills()
     }
-    for row in response.data:
+    st.caption(f"Exibindo {len(listing['results'])} mentores")
+    for row in listing["results"]:
         with st.container(border=True):
-            st.text(row["perfil"]["nome"])
-            st.caption(row["perfil"].get("headline", ""))
-            if row.get("habilidades"):
-                st.text("Habilidades compatíveis: " + ", ".join(row["habilidades"]))
+            render_profile_identity(
+                row["id"],
+                row["perfil"]["nome"],
+                f"mentor_result_{row['id']}",
+                row["perfil"].get("headline") or "Perfil profissional",
+            )
+            skills = row.get("habilidades") or []
+            if skills:
+                st.caption("Habilidades compatíveis: " + ", ".join(skills))
+    if listing["has_more"] and st.button(
+        "Carregar mais mentores", key=f"load_more_{listing_key}"
+    ):
+        _load_more_mentors(controller, user_id, listing_key)
+
     mentor_id = st.selectbox(
         "Consultar perfil de mentor",
         list(mentors),
@@ -161,7 +235,7 @@ def _render_mentors(controller, user_id, users):
     if mentor_id:
         response = controller.get_by_user_id(mentor_id)
         if response.status:
-            _render_profile(response.data)
+            _render_profile(response.data, mentor_id)
         else:
             st.warning(response.message)
         mentor_skills = {
@@ -221,15 +295,19 @@ def main():
             NotificationRepository(),
         )
     )
-    st.title("Mentoria")
-    feedback = st.session_state.pop("mentorship_feedback", None)
-    if feedback:
-        st.success(feedback)
-    try:
-        _render_mentors(controller, user_id, users)
-    except (PyMongoError, Neo4jError, DriverError, RedisError):
-        logger.exception("Falha ao carregar a página de mentoria.")
-        st.error("Não foi possível acessar os dados de mentoria. Tente novamente.")
+    with st.container(key="mentorship_shell"):
+        st.title("Mentoria")
+        st.caption(
+            "Encontre profissionais experientes para apoiar seu desenvolvimento."
+        )
+        feedback = st.session_state.pop("mentorship_feedback", None)
+        if feedback:
+            st.success(feedback)
+        try:
+            _render_mentors(controller, user_id, users)
+        except (PyMongoError, Neo4jError, DriverError, RedisError):
+            logger.exception("Falha ao carregar a página de mentoria.")
+            st.error("Não foi possível acessar os dados de mentoria. Tente novamente.")
 
 
 if __name__ == "__main__":

@@ -7,6 +7,7 @@ from pymongo.errors import PyMongoError
 from redis.exceptions import RedisError
 
 from components.shared.sidebar import render_sidebar
+from components.shared.profile_identity import render_profile_identity
 from controllers.connections.connection_controller import ConnectionController
 from controllers.connections.mentorship_controller import MentorshipController
 from controllers.notifications.notification_controller import NotificationController
@@ -31,8 +32,7 @@ if not user_id:
     st.page_link("pages/Login.py", label="Ir para o login")
     st.stop()
 
-PAGE_SIZE = 10
-MAX_ITEMS = 90  # o DTO de paginação aceita no máximo 100 (buscamos 1 a mais)
+PAGE_SIZE = 6
 
 
 @st.cache_resource
@@ -90,10 +90,8 @@ def _mark_notification_as_read(notification_id):
     return True
 
 
-if "notificacoes_limit" not in st.session_state:
-    st.session_state.notificacoes_limit = PAGE_SIZE
-
 st.title("Notificações")
+st.caption("Acompanhe atualizações e solicitações da sua rede.")
 
 # ---------------------------------------------------------------- resumo e ações
 unread_response = controller.count_unread_by_user_id(user_id)
@@ -126,28 +124,43 @@ if col_test.button("Gerar notificação de teste"):
     st.error(response.message)
 
 # ---------------------------------------------------------------------- filtro
-mostrar = st.radio("Mostrar", ["Todas", "Não lidas"], horizontal=True)
+mostrar = st.radio(
+    "Mostrar",
+    ["Todas", "Não lidas"],
+    horizontal=True,
+    key="notifications_filter",
+)
 filters = {"destinatario_id": user_id}
 if mostrar == "Não lidas":
     filters["lida"] = False
 
 # ----------------------------------------------------------------------- lista
-limit = st.session_state.notificacoes_limit
-list_response = controller.get_paginated(0, limit + 1, filters)
+if st.session_state.get("notifications_last_filter") != mostrar:
+    st.session_state.notifications_page = 1
+    st.session_state.notifications_last_filter = mostrar
+if "notifications_page" not in st.session_state:
+    st.session_state.notifications_page = 1
+
+page = st.session_state.notifications_page
+list_response = controller.get_paginated(
+    (page - 1) * PAGE_SIZE,
+    PAGE_SIZE + 1,
+    filters,
+)
 
 if not list_response.status:
     st.error(list_response.message)
     st.stop()
 
 notifications = list_response.data
-has_more = len(notifications) > limit
-notifications = notifications[:limit]
+has_more = len(notifications) > PAGE_SIZE
+notifications = notifications[:PAGE_SIZE]
 
 connection_requests = []
 mentorship_requests = []
 try:
     if any(
-        item["tipo"] == "nova_conexao"
+        item["tipo"] in {"nova_conexao", "conexao_aceita"}
         and item.get("referencia_tipo") == "usuario"
         for item in notifications
     ):
@@ -179,13 +192,55 @@ for notification in notifications:
     reference_type = notification.get("referencia_tipo")
     reference_id = notification.get("referencia_id")
 
-    with st.container(border=True):
-        info, actions = st.columns([4, 1])
+    with st.container(key=f"notification_card_{notification_id}", border=True):
+        info, actions = st.columns([5, 1.4], vertical_alignment="center")
 
         marcador = "⚪" if lida else "🔵"
         info.markdown(f"{marcador} **{notification['titulo']}**")
         criado_em = notification["criado_em"].strftime("%d/%m/%Y %H:%M")
-        info.caption(f"{notification['tipo']} · {criado_em} (UTC)")
+        info.caption(f"{notification['tipo']} · {criado_em} UTC")
+
+        if (
+            notification["tipo"] in {"nova_conexao", "conexao_aceita"}
+            and reference_type == "usuario"
+        ):
+            connection_person = next(
+                (
+                    item
+                    for item in connection_requests
+                    if reference_id
+                    in {item["remetente_id"], item["destinatario_id"]}
+                ),
+                None,
+            )
+            if connection_person:
+                render_profile_identity(
+                    reference_id,
+                    connection_person["nome"],
+                    f"notification_connection_{notification_id}",
+                )
+
+        mentorship_person = None
+        if notification["tipo"] == "mentoria" and reference_type == "mentoria":
+            mentorship_person = next(
+                (
+                    item
+                    for item in mentorship_requests
+                    if item["_id"] == reference_id
+                ),
+                None,
+            )
+            if mentorship_person:
+                other_user_id = (
+                    mentorship_person["mentorado_id"]
+                    if mentorship_person["recebida"]
+                    else mentorship_person["mentor_id"]
+                )
+                render_profile_identity(
+                    other_user_id,
+                    mentorship_person["nome"],
+                    f"notification_mentorship_{notification_id}",
+                )
 
         if (
             notification["tipo"] == "nova_conexao"
@@ -202,36 +257,38 @@ for notification in notifications:
                 None,
             )
             if request:
-                st.caption("Solicitação de conexão")
-                accept, decline = st.columns(2)
-                action = None
-                if accept.button(
-                    "Aceitar", key=f"accept_connection_{notification_id}"
-                ):
-                    action = "aceitar"
-                if decline.button(
-                    "Recusar", key=f"decline_connection_{notification_id}"
-                ):
-                    action = "recusar"
-                if action:
-                    try:
-                        response = (
-                            get_connection_controller().update_connection_request(
-                                user_id,
-                                request["remetente_id"],
-                                {"solicitacao_id": request["id"], "acao": action},
+                with st.expander("Responder à solicitação de conexão"):
+                    accept, decline = st.columns(2)
+                    action = None
+                    if accept.button(
+                        "Aceitar", key=f"accept_connection_{notification_id}"
+                    ):
+                        action = "aceitar"
+                    if decline.button(
+                        "Recusar", key=f"decline_connection_{notification_id}"
+                    ):
+                        action = "recusar"
+                    if action:
+                        try:
+                            response = (
+                                get_connection_controller().update_connection_request(
+                                    user_id,
+                                    request["remetente_id"],
+                                    {"solicitacao_id": request["id"], "acao": action},
+                                )
                             )
-                        )
-                    except (DriverError, Neo4jError, PyMongoError, RedisError):
-                        logger.exception("Falha ao responder à solicitação de conexão.")
-                        st.error("Não foi possível responder à solicitação.")
-                    else:
-                        if response.status:
-                            if _mark_notification_as_read(notification_id):
-                                st.rerun()
-                            st.success("Solicitação de conexão respondida.")
+                        except (DriverError, Neo4jError, PyMongoError, RedisError):
+                            logger.exception(
+                                "Falha ao responder à solicitação de conexão."
+                            )
+                            st.error("Não foi possível responder à solicitação.")
                         else:
-                            st.error(response.message)
+                            if response.status:
+                                if _mark_notification_as_read(notification_id):
+                                    st.rerun()
+                                st.success("Solicitação de conexão respondida.")
+                            else:
+                                st.error(response.message)
 
         if (
             notification["tipo"] == "mentoria"
@@ -248,37 +305,37 @@ for notification in notifications:
                 None,
             )
             if request:
-                st.caption(
-                    f"Solicitação de {request['nome']} · "
-                    f"{request['habilidade_nome']}"
-                )
-                accept, decline = st.columns(2)
-                action = None
-                if accept.button(
-                    "Aceitar", key=f"accept_mentorship_{notification_id}"
-                ):
-                    action = "aceitar"
-                if decline.button(
-                    "Recusar", key=f"decline_mentorship_{notification_id}"
-                ):
-                    action = "recusar"
-                if action:
-                    try:
-                        response = get_mentorship_controller().update(
-                            user_id,
-                            reference_id,
-                            {"acao": action},
-                        )
-                    except (DriverError, Neo4jError, PyMongoError, RedisError):
-                        logger.exception("Falha ao responder à solicitação de mentoria.")
-                        st.error("Não foi possível responder à solicitação.")
-                    else:
-                        if response.status:
-                            if _mark_notification_as_read(notification_id):
-                                st.rerun()
-                            st.success("Solicitação de mentoria respondida.")
+                with st.expander("Responder à solicitação de mentoria"):
+                    st.caption(f"Habilidade: {request['habilidade_nome']}")
+                    accept, decline = st.columns(2)
+                    action = None
+                    if accept.button(
+                        "Aceitar", key=f"accept_mentorship_{notification_id}"
+                    ):
+                        action = "aceitar"
+                    if decline.button(
+                        "Recusar", key=f"decline_mentorship_{notification_id}"
+                    ):
+                        action = "recusar"
+                    if action:
+                        try:
+                            response = get_mentorship_controller().update(
+                                user_id,
+                                reference_id,
+                                {"acao": action},
+                            )
+                        except (DriverError, Neo4jError, PyMongoError, RedisError):
+                            logger.exception(
+                                "Falha ao responder à solicitação de mentoria."
+                            )
+                            st.error("Não foi possível responder à solicitação.")
                         else:
-                            st.error(response.message)
+                            if response.status:
+                                if _mark_notification_as_read(notification_id):
+                                    st.rerun()
+                                st.success("Solicitação de mentoria respondida.")
+                            else:
+                                st.error(response.message)
 
         if not lida and actions.button(
             "Marcar como lida", key=f"read-{notification_id}"
@@ -292,7 +349,11 @@ for notification in notifications:
                 st.rerun()
             st.error(response.message)
 
-if has_more and limit < MAX_ITEMS:
-    if st.button("Ver mais"):
-        st.session_state.notificacoes_limit = min(limit + PAGE_SIZE, MAX_ITEMS)
-        st.rerun()
+previous, page_label, next_page = st.columns([1, 2, 1])
+if previous.button("Página anterior", disabled=page <= 1):
+    st.session_state.notifications_page = page - 1
+    st.rerun()
+page_label.caption(f"Página {page}")
+if next_page.button("Próxima página", disabled=not has_more):
+    st.session_state.notifications_page = page + 1
+    st.rerun()
