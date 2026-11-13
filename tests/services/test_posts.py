@@ -1,6 +1,6 @@
 import unittest
 
-from core.errors import AuthenticationFailed, NotFound, PermissionDenied, ValidationFailed
+from services.shared.errors import AuthenticationFailed, NotFound, PermissionDenied, ValidationFailed
 from services.posts.comment_service import CommentService
 from services.posts.post_service import PostService
 from services.shared.media_service import MAX_FILES, MediaFile, MediaService

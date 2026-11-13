@@ -59,21 +59,13 @@ docker compose -f docker/docker-compose.test.yaml down
 
 | Requisito | O que faz | Onde está |
 |-----------|-----------|-----------|
-| RF009 Criar Publicação | Texto + categoria de TI, tags, trecho de código e mídia (imagem, vídeo, PDF) | `components/post_form.py`, `services/posts/post_service.py` |
-| RF010 Editar e Excluir | Só o proprietário edita/exclui (checado no service); exclusão remove comentários e mídia | `components/post_card.py` |
-| RF011 Consultar Feed | Mais recentes primeiro, com conteúdo, autor e data; paginação e filtros por categoria/tag | `components/feed.py` |
-| RF012 Comentar | Comentários em publicações de outros usuários | `components/comments.py`, `services/posts/comment_service.py` |
+| RF009 Criar Publicação | Texto + categoria de TI, tags, trecho de código e mídia (imagem, vídeo, PDF) | `src/pages/Feed.py`, `src/services/posts/post_service.py` |
+| RF010 Editar e Excluir | Só o proprietário edita/exclui (checado no service); exclusão remove comentários e mídia | `src/pages/Feed.py` |
+| RF011 Consultar Feed | Mais recentes primeiro, com conteúdo, autor e data; paginação e filtros por categoria/tag | `src/pages/Feed.py` |
+| RF012 Comentar | Comentários em publicações de outros usuários | `src/pages/Feed.py`, `src/services/posts/comment_service.py` |
 
 Pré-condição "usuário autenticado": cadastro e login (bcrypt) com sessão em Redis.
 Dados: usuários, posts e comentários no MongoDB; mídia no GridFS (MongoDB); sessões no Redis.
-
-Dados de exemplo (opcional), com a aplicação no ar:
-
-```powershell
-docker compose -f docker/docker-compose.yaml exec app python seed/__init__.py
-```
-
-Usuários de exemplo: `ana@exemplo.com`, `bruno@exemplo.com`, `carla@exemplo.com` (senha `senha1234`).
 
 Testes das regras de negócio (não precisam de bancos):
 

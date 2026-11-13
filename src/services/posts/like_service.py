@@ -1,4 +1,4 @@
-from core.errors import NotFound, AuthenticationFailed
+from services.shared.errors import NotFound, AuthenticationFailed
 class LikeService:
     def __init__(self,repo,post_repository,user_repository,notification_service=None): self._repo=repo; self._posts=post_repository; self._users=user_repository; self._notifications=notification_service
     def create(self,user_id,post_id):

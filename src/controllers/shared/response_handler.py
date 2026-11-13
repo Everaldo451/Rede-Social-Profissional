@@ -1,7 +1,7 @@
 from pydantic import ValidationError
 
-from core.errors import AppError
 from dto.shared.response.base_response import BaseResponse
+from services.shared.errors import AppError
 
 
 def run(action) -> BaseResponse:

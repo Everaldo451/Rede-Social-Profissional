@@ -1,7 +1,7 @@
 from datetime import datetime, timezone
 
-from core.errors import AuthenticationFailed, NotFound, PermissionDenied
 from services.shared.presenters import comment_view
+from services.shared.errors import AuthenticationFailed, NotFound, PermissionDenied
 
 
 class CommentService:

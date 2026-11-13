@@ -1,4 +1,4 @@
-"""Erros de domínio. Os controllers os convertem em mensagens para a interface."""
+"""Erros esperados das regras de negócio."""
 
 
 class AppError(Exception):
