@@ -15,6 +15,7 @@ from services.shared.media_errors import (
     MediaPersistenceError,
     MediaValidationError,
 )
+from services.shared.media_service import MediaFile
 
 
 logger = logging.getLogger(__name__)
@@ -32,6 +33,12 @@ class MediaController:
         return self._execute(
             lambda: self.media_service.create(request.model_dump()),
             success_message="Mídia criada com sucesso.",
+        )
+
+    def create_profile_image(self, file: MediaFile, owner_id: str):
+        return self._execute(
+            lambda: self.media_service.create_profile_image(file, owner_id),
+            success_message="Foto de perfil atualizada.",
         )
 
     def get_by_id(self, media_id):

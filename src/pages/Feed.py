@@ -6,6 +6,7 @@ from types import SimpleNamespace
 import streamlit as st
 
 from common.errors import NotFoundError
+from components.shared.profile_identity import render_profile_identity
 from components.shared.sidebar import render_sidebar
 from controllers.connections.connection_controller import ConnectionController
 from controllers.posts.comment_controller import CommentController
@@ -351,11 +352,14 @@ def _render_social_actions(
 def _render_post_header(post) -> None:
     author = post["author"]
     edited = " · editado" if post["updated_at"] else ""
-    headline = f" · {html.escape(author['headline'])}" if author["headline"] else ""
+    render_profile_identity(
+        author["id"],
+        author["name"],
+        key=f"post_author_{post['id']}",
+        caption=author["headline"] or None,
+    )
     st.markdown(
-        f"<span class='author'>{html.escape(author['name'])}</span>"
-        f"<span class='muted'>{headline}</span> "
-        f"<span class='pill'>{html.escape(post['category'])}</span><br>"
+        f"<span class='pill'>{html.escape(post['category'])}</span> "
         f"<span class='muted'>{format_datetime(post['created_at'])}{edited}</span>",
         unsafe_allow_html=True,
     )

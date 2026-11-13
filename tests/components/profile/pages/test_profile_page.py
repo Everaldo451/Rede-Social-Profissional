@@ -260,6 +260,7 @@ def test_profile_page_allows_owner_to_edit_their_profile(
         page.get_by_role("button", name="Salvar perfil").click()
         page.get_by_text("Perfil atualizado com sucesso.").wait_for()
         page.get_by_text("Engenheira de Plataforma", exact=True).wait_for()
+        page.get_by_text("Alterar imagem de perfil", exact=True).wait_for()
     finally:
         sessions.delete(session_id)
 
@@ -302,6 +303,7 @@ def test_profile_page_does_not_allow_editing_another_user_profile(
         page.get_by_role("link", name="Mentoria").wait_for()
         page.get_by_role("link", name="Notificações").wait_for()
         page.get_by_role("link", name="Sessões").wait_for()
+        assert page.get_by_text("Alterar imagem de perfil", exact=True).count() == 0
         assert page.get_by_role("button", name="Salvar perfil").count() == 0
         assert page.get_by_role("button", name="Adicionar habilidade").count() == 0
         page.get_by_role("button", name="Logout").click()

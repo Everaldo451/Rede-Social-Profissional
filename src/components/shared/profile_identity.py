@@ -40,6 +40,10 @@ def _profile_media(user_id):
     return None, None, response.message
 
 
+def clear_profile_media_cache():
+    _profile_media.clear()
+
+
 def render_profile_image(container, content, mime_type, size=150):
     if mime_type == "image/svg+xml":
         content = content.decode("utf-8")

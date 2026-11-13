@@ -7,6 +7,7 @@ from bson import ObjectId
 
 from controllers.shared.media_controller import MediaController
 from services.shared.media_errors import MediaPersistenceError
+from services.shared.media_service import MediaFile
 
 
 ASSETS_DIRECTORY = Path(__file__).parent / "assets"
@@ -77,6 +78,21 @@ def test_controller_returns_standard_response_for_missing_media() -> None:
     assert response.status is False
     assert response.data is None
     assert response.message == "Mídia não encontrada."
+
+
+def test_controller_returns_standard_response_for_profile_image() -> None:
+    service = Mock()
+    media = {"media_id": str(ObjectId()), "filename": "profile.png"}
+    service.create_profile_image.return_value = media
+    controller = MediaController(service)
+    upload = MediaFile("profile.png", "image/png", b"\x89PNG\r\n\x1a\n")
+    owner_id = str(ObjectId())
+
+    response = controller.create_profile_image(upload, owner_id)
+
+    assert response.status is True
+    assert response.data == media
+    service.create_profile_image.assert_called_once_with(upload, owner_id)
 
 
 @pytest.mark.parametrize(

@@ -34,6 +34,22 @@ class MediaService:
         )
         return self.media_repository.create({**data, "metadata": metadata})
 
+    def create_profile_image(self, file: MediaFile, owner_id: str):
+        self._validate_upload(file)
+        return self.create(
+            {
+                "filename": file.filename,
+                "content": file.data,
+                "metadata": {
+                    "proprietario_tipo": "usuario",
+                    "tipo_mime": file.content_type,
+                    "tipo": "imagem_perfil",
+                    "visibilidade": "publica",
+                    "proprietario_id": owner_id,
+                },
+            }
+        )
+
     def get_by_id(self, media_id):
         return self.media_repository.get_by_id(media_id)
 

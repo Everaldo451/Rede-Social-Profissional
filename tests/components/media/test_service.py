@@ -5,7 +5,7 @@ import pytest
 from bson import ObjectId
 
 from services.shared.media_errors import MediaValidationError
-from services.shared.media_service import MediaService
+from services.shared.media_service import MediaFile, MediaService
 
 
 ASSETS_DIRECTORY = Path(__file__).parent / "assets"
@@ -13,6 +13,7 @@ IMAGE_CASES = (
     ("profile-test.svg", "usuario", "imagem_perfil"),
     ("post-test.svg", "post", "imagem_publicacao"),
 )
+PNG_CONTENT = b"\x89PNG\r\n\x1a\n" + b"test-image"
 
 
 @pytest.mark.parametrize(
@@ -68,3 +69,39 @@ def test_service_reports_invalid_filter_as_media_validation_error() -> None:
         service.list({"unknown": "value"})
 
     repository.list.assert_not_called()
+
+
+def test_service_creates_profile_image_with_profile_metadata() -> None:
+    repository = Mock()
+    owner_id = ObjectId()
+    repository.create.return_value = {"media_id": str(ObjectId())}
+    service = MediaService(repository)
+
+    service.create_profile_image(
+        MediaFile("profile.png", "image/png", PNG_CONTENT),
+        str(owner_id),
+    )
+
+    saved_data = repository.create.call_args.args[0]
+    assert saved_data["filename"] == "profile.png"
+    assert saved_data["content"] == PNG_CONTENT
+    assert saved_data["metadata"] == {
+        "proprietario_tipo": "usuario",
+        "tipo_mime": "image/png",
+        "tipo": "imagem_perfil",
+        "visibilidade": "publica",
+        "proprietario_id": owner_id,
+    }
+
+
+def test_service_rejects_invalid_profile_image_before_saving() -> None:
+    repository = Mock()
+    service = MediaService(repository)
+
+    with pytest.raises(MediaValidationError):
+        service.create_profile_image(
+            MediaFile("profile.png", "image/png", b"not a PNG"),
+            str(ObjectId()),
+        )
+
+    repository.create.assert_not_called()

@@ -10,7 +10,10 @@ from redis.exceptions import RedisError
 
 from common.choices import DEGREES, SKILL_LEVELS, SKILL_TYPES
 from components.shared.sidebar import render_sidebar
-from components.shared.profile_identity import render_profile_image
+from components.shared.profile_identity import (
+    clear_profile_media_cache,
+    render_profile_image,
+)
 from controllers.connections.connection_controller import ConnectionController
 from controllers.shared.media_controller import MediaController
 from controllers.profile.user_controller import UserController
@@ -29,7 +32,7 @@ from repositories.sessions.online_presence_repository import OnlinePresenceRepos
 from repositories.shared.media_repository import MediaRepository
 from services.connections.connection_service import ConnectionService
 from services.profile.user_service import UserService
-from services.shared.media_service import MediaService
+from services.shared.media_service import MediaFile, MediaService
 
 logger = logging.getLogger(__name__)
 THEME = Path(__file__).resolve().parents[1] / "assets" / "shared" / "page_theme.css"
@@ -55,6 +58,7 @@ SKILL_TYPE_LABELS = {
     "wants": "Quer desenvolver",
     "teaches": "Ensina",
 }
+PROFILE_IMAGE_TYPES = ["png", "jpg", "jpeg", "gif", "webp"]
 
 
 def _format_date(value, missing="Não informado"):
@@ -415,7 +419,9 @@ def _render_profile_identity(user, user_id, viewer_id):
     ]
     details.write(" · ".join(value for value in profile_details if value) or " ")
 
-    if viewer_id and str(viewer_id) != user_id:
+    if viewer_id and str(viewer_id) == user_id:
+        _render_profile_image_editor(media_controller, user_id, media_response)
+    elif viewer_id:
         from database import get_mongo_database, get_neo4j_session
 
         database = get_mongo_database()
@@ -433,6 +439,52 @@ def _render_profile_identity(user, user_id, viewer_id):
                 st.success("Solicitação de conexão enviada.")
             else:
                 st.warning(response.message)
+
+
+def _render_profile_image_editor(media_controller, user_id, current_media):
+    with st.expander("Alterar imagem de perfil"):
+        with st.form(f"profile_image_form_{user_id}", clear_on_submit=True):
+            uploaded_file = st.file_uploader(
+                "Nova imagem (PNG, JPG, GIF ou WEBP; até 10 MB)",
+                type=PROFILE_IMAGE_TYPES,
+            )
+            submitted = st.form_submit_button("Salvar imagem", type="primary")
+
+        if not submitted:
+            return
+        if uploaded_file is None:
+            st.error("Selecione uma imagem.")
+            return
+
+        result = media_controller.create_profile_image(
+            MediaFile(
+                uploaded_file.name,
+                uploaded_file.type or "application/octet-stream",
+                uploaded_file.getvalue(),
+            ),
+            user_id,
+        )
+        if not result.status:
+            st.error(result.message)
+            return
+
+        feedback = result.message or "Foto de perfil atualizada."
+        if current_media.status:
+            delete_result = media_controller.delete(
+                current_media.data["media_id"]
+            )
+            if not delete_result.status:
+                logger.warning(
+                    "Não foi possível remover a imagem de perfil anterior: %s",
+                    delete_result.message,
+                )
+                feedback = (
+                    "Foto atualizada, mas não foi possível remover a imagem anterior."
+                )
+
+        clear_profile_media_cache()
+        st.session_state["profile_feedback"] = feedback
+        st.rerun()
 
 
 def _render_profile_presence(user_id):
