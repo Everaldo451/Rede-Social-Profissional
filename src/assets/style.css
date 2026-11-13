@@ -1,0 +1,72 @@
+.brand { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+.brand h1 { margin: 0; font-size: 1.8rem; }
+.brand .accent { color: #22d3a5; }
+.brand p { margin: 0.2rem 0 0; opacity: 0.7; }
+.pill {
+    display: inline-block;
+    padding: 0 .6rem;
+    border: 1px solid #bca5eb;
+    border-radius: 999px;
+    color: #53348d;
+    font-family: ui-monospace, Menlo, monospace;
+    font-size: .75rem;
+}
+.author { font-weight: 600; }
+.muted { opacity: 0.65; font-size: 0.85rem; }
+
+.stApp:has(.st-key-feed_shell) {
+    background:
+        radial-gradient(ellipse at 90% 0%, #f2e2fa, transparent 42%),
+        linear-gradient(150deg, #fbf8ff, #edf0ff);
+    color-scheme: light;
+}
+.stApp:has(.st-key-feed_shell) [data-testid="stHeader"] {
+    background: transparent;
+}
+.stApp:has(.st-key-feed_shell) [data-testid="stMainBlockContainer"] {
+    max-width: 66rem;
+    padding: clamp(1.5rem, 5vh, 3.5rem) 1.25rem;
+}
+.stApp:has(.st-key-feed_shell) [data-testid="stSidebar"],
+.stApp:has(.st-key-feed_shell) [data-testid="stSidebarCollapsedControl"] {
+    display: none;
+}
+.st-key-feed_shell {
+    color: #302353;
+    color-scheme: light;
+}
+.st-key-feed_shell [data-testid="stVerticalBlockBorderWrapper"] {
+    border-color: #e8e0f6;
+    border-radius: .9rem;
+    background: #fff;
+}
+.st-key-feed_composer [data-testid="stForm"] {
+    padding: clamp(1.25rem, 3vw, 2rem);
+    border: 1px solid #e8e0f6;
+    border-radius: 1.25rem;
+    background: #ffffffd9;
+    box-shadow: 0 8px 26px #49258b0d;
+}
+.st-key-feed_shell [data-baseweb="input"],
+.st-key-feed_shell [data-baseweb="select"] > div {
+    border-color: #dfd4f5;
+    background: #fff;
+}
+.st-key-feed_shell [data-testid="stFormSubmitButton"] button,
+.st-key-feed_shell [data-testid="stButton"] button {
+    border-color: #5944d6;
+    border-radius: .65rem;
+    background: #5944d6;
+    color: #fff;
+    font-weight: 700;
+}
+.st-key-feed_shell [data-testid="stFormSubmitButton"] button:hover,
+.st-key-feed_shell [data-testid="stButton"] button:hover {
+    border-color: #4632b8;
+    background: #4632b8;
+    color: #fff;
+}
+.st-key-feed_shell [data-testid="stCaption"],
+.st-key-feed_shell [data-testid="stExpander"] {
+    color: #51416f;
+}

@@ -99,6 +99,19 @@ class UserRepository:
             return None
         return self._serialize(self.collection.find_one({"_id": object_id}))
 
+    def get_many_by_ids(self, user_ids):
+        object_ids = {
+            object_id
+            for object_id in (self._object_id(user_id) for user_id in user_ids)
+            if object_id is not None
+        }
+        if not object_ids:
+            return {}
+        return {
+            str(user["_id"]): self._serialize(user)
+            for user in self.collection.find({"_id": {"$in": list(object_ids)}})
+        }
+
     def get_by_email(self, email):
         return self._serialize(self.collection.find_one({"email": email}))
 

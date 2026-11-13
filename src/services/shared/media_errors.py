@@ -1,8 +1,11 @@
-class MediaError(Exception):
+from common.errors import AppError, InvalidDataError
+
+
+class MediaError(AppError):
     """Base exception for media operations."""
 
 
-class MediaValidationError(MediaError, ValueError):
+class MediaValidationError(InvalidDataError):
     """Raised when media data is invalid outside the controller boundary."""
 
 
