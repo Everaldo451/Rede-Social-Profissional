@@ -1,0 +1,8 @@
+.brand { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+.brand h1 { margin: 0; font-size: 1.8rem; }
+.brand .accent { color: #22d3a5; }
+.brand p { margin: 0.2rem 0 0; opacity: 0.7; }
+.pill { display: inline-block; padding: 0 0.6rem; border-radius: 999px; font-size: 0.75rem;
+        border: 1px solid #22d3a5; color: #22d3a5; font-family: ui-monospace, Menlo, monospace; }
+.author { font-weight: 600; }
+.muted { opacity: 0.65; font-size: 0.85rem; }

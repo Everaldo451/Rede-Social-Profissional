@@ -1,18 +1,13 @@
+from controllers.shared.response_handler import run
+from dto.posts.request.post_requests import CreateCommentRequest
+
+
 class CommentController:
     def __init__(self, comment_service):
-        pass
+        self._service = comment_service
 
-    def create(self, data):
-        pass
+    def create(self, author_id, post_id, data: dict):
+        return run(lambda: self._service.create(author_id, post_id, CreateCommentRequest(**data)))
 
-    def get_by_id(self, comment_id):
-        pass
-
-    def get_paginated(self, offset, limit, filters=None):
-        pass
-
-    def update(self, comment_id, data):
-        pass
-
-    def delete(self, comment_id):
-        pass
+    def list_by_post(self, post_id):
+        return run(lambda: self._service.list_by_post(post_id))
