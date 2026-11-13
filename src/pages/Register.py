@@ -1,4 +1,5 @@
 import logging
+from pathlib import Path
 
 import streamlit as st
 from pymongo.errors import PyMongoError
@@ -12,6 +13,7 @@ from repositories.profile.user_skill_repository import UserSkillRepository
 from services.profile.user_service import UserService
 
 logger = logging.getLogger(__name__)
+THEME = Path(__file__).resolve().parents[1] / "assets" / "shared" / "page_theme.css"
 
 
 def _create_user_controller():
@@ -25,6 +27,7 @@ def _create_user_controller():
 
 def render_registration():
     st.set_page_config(page_title="Criar conta", layout="centered")
+    st.html(THEME)
     st.title("Crie sua conta")
     st.write("Faça parte da Rede Social Profissional.")
 
@@ -36,6 +39,8 @@ def render_registration():
             "Confirme sua senha", type="password"
         )
         submitted = st.form_submit_button("Criar conta", type="primary")
+
+    st.page_link("pages/Login.py", label="Já tem conta? Entre")
 
     if not submitted:
         return

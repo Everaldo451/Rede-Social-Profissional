@@ -1,0 +1,54 @@
+.stApp {
+    background:
+        radial-gradient(ellipse at 90% 0%, #f2e2fa, transparent 42%),
+        linear-gradient(150deg, #fbf8ff, #edf0ff);
+    color-scheme: light;
+}
+.stApp [data-testid="stHeader"] {
+    background: transparent;
+}
+.stApp [data-testid="stMainBlockContainer"] {
+    max-width: 76rem;
+    padding: clamp(2rem, 6vh, 4.5rem) 1.25rem;
+}
+.stApp h1,
+.stApp h2,
+.stApp h3 {
+    color: #302353;
+}
+.stApp p,
+.stApp [data-testid="stCaption"],
+.stApp [data-testid="stWidgetLabel"] p {
+    color: #51416f;
+}
+.stApp [data-testid="stForm"] {
+    padding: clamp(1.25rem, 3vw, 2rem);
+    border: 1px solid #e8e0f6;
+    border-radius: 1.25rem;
+    background: #fff;
+}
+.stApp [data-baseweb="input"],
+.stApp [data-baseweb="select"] > div {
+    border-color: #dfd4f5;
+    background: #fff;
+}
+.stApp [data-testid="stFormSubmitButton"] button,
+.stApp [data-testid="stButton"] button {
+    border-color: #5944d6;
+    border-radius: .65rem;
+    background: #5944d6;
+    color: #fff;
+    font-weight: 700;
+}
+.stApp [data-testid="stFormSubmitButton"] button:hover,
+.stApp [data-testid="stButton"] button:hover {
+    border-color: #4632b8;
+    background: #4632b8;
+    color: #fff;
+}
+.stApp [data-testid="stMetric"] {
+    border: 1px solid #e8e0f6;
+    border-radius: .9rem;
+    background: #fff;
+    padding: .8rem 1rem;
+}

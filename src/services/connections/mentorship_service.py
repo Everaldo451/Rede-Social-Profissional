@@ -1,17 +1,55 @@
+from datetime import datetime, timezone
+
+
 class MentorshipService:
-    def __init__(self, mentorship_repository, professional_repository):
+    def __init__(
+        self, mentorship_repository, professional_repository, notification_repository
+    ):
         self.mentors = mentorship_repository
         self.professionals = professional_repository
+        self.notifications = notification_repository
 
-    def create(self, data):
-        pass
+    def create(self, mentee_id, data):
+        if mentee_id == data["mentor_id"]:
+            raise ValueError("Não é possível solicitar mentoria para si mesmo.")
+        mentee = self.professionals.get_by_id(mentee_id)
+        if mentee is None:
+            raise ValueError("O mentorado não está cadastrado.")
+        self.get_by_user_id(data["mentor_id"])
+        if not self.mentors.mentor_has_skill(
+            data["mentor_id"], data["habilidade_id"]
+        ):
+            raise ValueError("O mentor não possui essa habilidade.")
+
+        mentorship = self.mentors.create(
+            {
+                "mentor_id": data["mentor_id"],
+                "mentorado_id": mentee_id,
+                "habilidade_id": data["habilidade_id"],
+            }
+        )
+        self.notifications.create(
+            {
+                "destinatario_id": data["mentor_id"],
+                "tipo": "mentoria",
+                "titulo": (
+                    "Nova solicitação de mentoria de "
+                    f"{mentee.get('nome', 'um profissional')}"
+                ),
+                "referencia_tipo": "mentoria",
+                "referencia_id": mentorship["_id"],
+            }
+        )
+        return mentorship
 
     def get_by_id(self, mentorship_id):
-        pass
+        return self.mentors.get_by_id(mentorship_id)
 
     def filter_mentors(self, user_id, filters):
         return self._available_profiles(
-            self.mentors.filter_mentors(user_id, filters.nome.strip(), filters.habilidade_id)
+            self.mentors.filter_mentors(
+                user_id, filters.nome.strip(), filters.habilidade_id
+            )
         )
 
     def get_by_user_id(self, user_id):
@@ -23,8 +61,61 @@ class MentorshipService:
     def list_all(self):
         pass
 
-    def update(self, mentorship_id, data):
-        pass
+    def list_requests(self, user_id):
+        requests = self.mentors.list_requests(user_id)
+        other_ids = {
+            item["mentorado_id"]
+            if item["mentor_id"] == user_id
+            else item["mentor_id"]
+            for item in requests
+        }
+        profiles = self.professionals.get_by_ids(other_ids)
+        skills = {
+            str(skill["_id"]): skill["nome"]
+            for skill in self.professionals.list_skills()
+        }
+        for item in requests:
+            item["recebida"] = item["mentor_id"] == user_id
+            other_id = (
+                item["mentorado_id"] if item["recebida"] else item["mentor_id"]
+            )
+            item["nome"] = profiles.get(other_id, {}).get(
+                "nome", "Profissional indisponível"
+            )
+            item["habilidade_nome"] = skills.get(
+                item["habilidade_id"], "Habilidade indisponível"
+            )
+        return requests
+
+    def update(self, user_id, mentorship_id, data):
+        mentorship = self.mentors.get_by_id(mentorship_id)
+        if mentorship is None:
+            raise ValueError("Solicitação de mentoria não encontrada.")
+        if mentorship["mentor_id"] != user_id:
+            raise ValueError("Somente o mentor pode responder à solicitação.")
+        if mentorship["status"] != "solicitado":
+            raise ValueError("A solicitação de mentoria não está pendente.")
+
+        now = datetime.now(timezone.utc)
+        if data.acao == "aceitar":
+            updates = {"status": "ativa", "iniciada_em": now, "encerrada_em": None}
+            title = "Sua solicitação de mentoria foi aceita"
+        else:
+            updates = {"status": "cancelada", "iniciada_em": None, "encerrada_em": now}
+            title = "Sua solicitação de mentoria foi recusada"
+        updated = self.mentors.update(mentorship_id, updates)
+        if updated is None:
+            raise ValueError("A solicitação de mentoria já foi respondida.")
+        self.notifications.create(
+            {
+                "destinatario_id": mentorship["mentorado_id"],
+                "tipo": "mentoria",
+                "titulo": title,
+                "referencia_tipo": "mentoria",
+                "referencia_id": mentorship_id,
+            }
+        )
+        return updated
 
     def delete(self, mentorship_id):
         pass

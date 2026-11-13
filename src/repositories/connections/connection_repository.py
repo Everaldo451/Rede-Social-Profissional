@@ -106,7 +106,7 @@ class ConnectionRepository:
             if existing is None or existing["status"] not in {"pendente", status}:
                 raise ValueError("Solicitação pendente não encontrada para o destinatário.")
             if existing["status"] == status:
-                return
+                return False
 
             tx.run(
                 """
@@ -120,9 +120,10 @@ class ConnectionRepository:
                 """,
                 **params,
             ).consume()
+            return True
 
         with self.session_factory() as session:
-            session.execute_write(respond)
+            return session.execute_write(respond)
 
     def get_mutual_connections(self, user_id, connected_user_id):
         pass

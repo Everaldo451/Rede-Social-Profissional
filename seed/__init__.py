@@ -365,6 +365,8 @@ def build_graph_data(
                 "source_id": mentor_id,
                 "target_id": mentorado_id,
                 "properties": {
+                    "mentoria_id": str(mentorship["_id"]),
+                    "habilidade_id": skill_id,
                     "status": mentorship["status"],
                     "criada_em": requested_at,
                     "atualizada_em": (

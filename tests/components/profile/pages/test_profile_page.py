@@ -1,7 +1,10 @@
 import os
 from datetime import datetime, timezone
+from pathlib import Path
+from secrets import token_urlsafe
 
 from bson import ObjectId
+from gridfs import GridFSBucket
 from playwright.sync_api import Page
 
 from repositories.profile.organization_repository import OrganizationRepository
@@ -11,6 +14,8 @@ from repositories.profile.user_organizations_repository import (
 )
 from repositories.profile.user_repository import UserRepository
 from repositories.profile.user_skill_repository import UserSkillRepository
+from repositories.shared.media_repository import MediaRepository
+from repositories.sessions.session_repository import SessionRepository
 
 BASE_URL = os.getenv("BASE_URL", "http://localhost:8501")
 
@@ -168,6 +173,35 @@ def test_profile_page_displays_read_only_user_and_relationship_data(
     assert user["email"] not in body
     assert "fake-test-hash" not in body
     assert page.get_by_role("textbox").count() == 0
+    assert page.get_by_role("button", name="Conectar").count() == 0
+
+
+def test_profile_page_displays_public_profile_photo(page: Page, repository_resources):
+    user = _create_profile_records(repository_resources)
+    media_repository = MediaRepository(repository_resources.mongo)
+    media = media_repository.create(
+        {
+            "filename": "profile-test.svg",
+            "content": (
+                Path(__file__).parents[2] / "media" / "assets" / "profile-test.svg"
+            ).read_bytes(),
+            "metadata": {
+                "proprietario_tipo": "usuario",
+                "tipo_mime": "image/svg+xml",
+                "tipo": "imagem_perfil",
+                "visibilidade": "publica",
+                "proprietario_id": user["_id"],
+            },
+        }
+    )
+    try:
+        page.goto(f"{BASE_URL}/profile?user_id={user['_id']}")
+        page.locator("img").wait_for()
+        assert page.locator("img").count() == 1
+    finally:
+        GridFSBucket(
+            repository_resources.mongo, bucket_name="midias"
+        ).delete(ObjectId(media["media_id"]))
 
 
 def test_profile_page_reports_missing_user(page: Page, repository_resources):
@@ -175,6 +209,75 @@ def test_profile_page_reports_missing_user(page: Page, repository_resources):
     page.goto(f"{BASE_URL}/profile?user_id={missing_user_id}")
 
     page.get_by_text("Usuário não encontrado.", exact=True).wait_for()
+
+
+def test_profile_page_allows_owner_to_edit_their_profile(
+    page: Page, repository_resources
+):
+    user = _create_profile_records(repository_resources)
+    session_id = token_urlsafe(32)
+    sessions = SessionRepository()
+    sessions.create(session_id, user["_id"])
+    page.context.add_cookies(
+        [
+            {
+                "name": "rede_social_session",
+                "value": session_id,
+                "url": BASE_URL,
+            }
+        ]
+    )
+
+    try:
+        page.goto(f"{BASE_URL}/profile?user_id={user['_id']}")
+        page.get_by_role("button", name="Salvar perfil").wait_for()
+        page.get_by_role("textbox", name="Título profissional").fill(
+            "Engenheira de Plataforma"
+        )
+        page.get_by_role("button", name="Salvar perfil").click()
+        page.get_by_text("Perfil atualizado com sucesso.").wait_for()
+        page.get_by_text("Engenheira de Plataforma", exact=True).wait_for()
+    finally:
+        sessions.delete(session_id)
+
+
+def test_profile_page_does_not_allow_editing_another_user_profile(
+    page: Page, repository_resources
+):
+    viewer = _create_profile_records(repository_resources)
+    profile_owner = UserRepository(repository_resources.mongo).create(
+        {
+            "nome": "Bruno Costa",
+            "email": f"bruno+{ObjectId()}@example.com",
+            "senha": "$2b$12$fake-test-hash",
+            "headline": "Analista de Dados",
+            "experiencias": [],
+            "formacao": [],
+            "certificacoes": [],
+        }
+    )
+    repository_resources.track_document("usuarios", profile_owner["_id"])
+    session_id = token_urlsafe(32)
+    sessions = SessionRepository()
+    sessions.create(session_id, viewer["_id"])
+    page.context.add_cookies(
+        [
+            {
+                "name": "rede_social_session",
+                "value": session_id,
+                "url": BASE_URL,
+            }
+        ]
+    )
+
+    try:
+        page.goto(f"{BASE_URL}/profile?user_id={profile_owner['_id']}")
+        page.get_by_role("heading", name="Bruno Costa").wait_for()
+        page.get_by_role("button", name="Conectar").wait_for()
+        assert page.get_by_role("button", name="Salvar perfil").count() == 0
+        assert page.get_by_role("button", name="Adicionar habilidade").count() == 0
+    finally:
+        sessions.delete(session_id)
 
 
 def test_profile_page_rejects_invalid_user_id(page: Page):

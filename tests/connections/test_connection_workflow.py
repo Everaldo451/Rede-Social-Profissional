@@ -1,5 +1,6 @@
 from concurrent.futures import ThreadPoolExecutor
 from threading import Barrier
+from unittest.mock import Mock
 
 from bson import ObjectId
 
@@ -33,7 +34,11 @@ def test_concurrent_requests_and_recipient_only_decision():
             ).consume()
 
         controller = ConnectionController(
-            ConnectionService(ConnectionRepository(get_neo4j_session), ProfessionalRepository(db))
+            ConnectionService(
+                ConnectionRepository(get_neo4j_session),
+                ProfessionalRepository(db),
+                notification_repository=Mock(),
+            )
         )
         start = Barrier(2)
 

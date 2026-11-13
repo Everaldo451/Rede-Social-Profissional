@@ -1,7 +1,10 @@
 class ConnectionService:
-    def __init__(self, connection_repository, professional_repository):
+    def __init__(
+        self, connection_repository, professional_repository, notification_repository
+    ):
         self.connections = connection_repository
         self.professionals = professional_repository
+        self.notifications = notification_repository
 
     def create(self, user_id, connected_user_id, data):
         pass
@@ -15,7 +18,18 @@ class ConnectionService:
         profiles = self.professionals.get_by_ids([user_id, connected_user_id])
         if user_id not in profiles or connected_user_id not in profiles:
             raise ValueError("Os dois profissionais devem estar cadastrados.")
-        return self.connections.request_connection(user_id, connected_user_id)
+        request_id = self.connections.request_connection(user_id, connected_user_id)
+        sender = profiles[user_id]
+        self.notifications.create(
+            {
+                "destinatario_id": connected_user_id,
+                "tipo": "nova_conexao",
+                "titulo": f"Solicitação de conexão de {sender.get('nome', 'um profissional')}",
+                "referencia_tipo": "usuario",
+                "referencia_id": user_id,
+            }
+        )
+        return request_id
 
     def list_all(self):
         pass
@@ -27,9 +41,23 @@ class ConnectionService:
 
     def update_connection_request(self, user_id, connected_user_id, data):
         status = "aceita" if data.acao == "aceitar" else "recusada"
-        self.connections.update_connection_request(
+        changed = self.connections.update_connection_request(
             user_id, connected_user_id, str(data.solicitacao_id), status
         )
+        if changed and status == "aceita":
+            recipient = self.professionals.get_by_ids([user_id]).get(user_id, {})
+            self.notifications.create(
+                {
+                    "destinatario_id": connected_user_id,
+                    "tipo": "conexao_aceita",
+                    "titulo": (
+                        f"{recipient.get('nome', 'Um profissional')} "
+                        "aceitou sua solicitação de conexão"
+                    ),
+                    "referencia_tipo": "usuario",
+                    "referencia_id": user_id,
+                }
+            )
         return status
 
     def get_mutual_connections(self, user_id, connected_user_id):

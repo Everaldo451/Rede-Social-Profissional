@@ -1,3 +1,7 @@
+from src.dto.connections.request.mentorship_requests import (
+    CreateMentorshipRequest,
+    MentorshipDecisionRequest,
+)
 from src.dto.connections.request.network_requests import ProfessionalSearchRequest
 
 from ._response import run_action
@@ -7,8 +11,12 @@ class MentorshipController:
     def __init__(self, mentorship_service):
         self.service = mentorship_service
 
-    def create(self, data):
-        pass
+    def create(self, mentee_id, data):
+        return run_action(
+            lambda: self.service.create(
+                mentee_id, CreateMentorshipRequest.model_validate(data).model_dump()
+            )
+        )
 
     def get_by_id(self, mentorship_id):
         pass
@@ -26,8 +34,17 @@ class MentorshipController:
     def list_all(self):
         pass
 
-    def update(self, mentorship_id, data):
-        pass
+    def list_requests(self, user_id):
+        return run_action(self.service.list_requests, user_id)
+
+    def update(self, user_id, mentorship_id, data):
+        return run_action(
+            lambda: self.service.update(
+                user_id,
+                mentorship_id,
+                MentorshipDecisionRequest.model_validate(data),
+            )
+        )
 
     def delete(self, mentorship_id):
         pass
