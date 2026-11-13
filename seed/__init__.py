@@ -12,7 +12,7 @@ from pymongo import ASCENDING, DESCENDING
 from pymongo.database import Database
 from redis import Redis
 
-from src.database import get_mongo_database, get_neo4j_session, get_redis_client
+from database import get_mongo_database, get_neo4j_session, get_redis_client
 
 
 COLLECTIONS_DIR = Path(__file__).parent / "collections"
@@ -53,7 +53,13 @@ RELATIONSHIP_PROPERTIES = {
     "MEMBRO_DE": {"papel", "status", "desde"},
     "ENSINA": {"nivel", "experiencia_anos"},
     "SOLICITOU_CONEXAO": {"status", "criada_em", "atualizada_em"},
-    "MENTORA": {"status", "criada_em", "atualizada_em"},
+    "MENTORA": {
+        "mentoria_id",
+        "habilidade_id",
+        "status",
+        "criada_em",
+        "atualizada_em",
+    },
 }
 FILE_RELATIONSHIPS = (
     "CONECTADO_COM",

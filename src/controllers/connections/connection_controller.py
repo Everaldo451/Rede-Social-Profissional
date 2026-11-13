@@ -1,4 +1,4 @@
-from src.dto.connections.request.network_requests import (
+from dto.connections.request.network_requests import (
     ConnectionDecisionRequest,
     ProfessionalSearchRequest,
 )

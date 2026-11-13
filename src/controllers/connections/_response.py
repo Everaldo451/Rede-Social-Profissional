@@ -1,6 +1,6 @@
 from pydantic import ValidationError
 
-from src.dto.shared.response.base_response import BaseResponse
+from dto.shared.response.base_response import BaseResponse
 
 
 def run_action(action, *args):

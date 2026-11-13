@@ -1,10 +1,11 @@
+import atexit
 import os
 
 from neo4j import Driver, GraphDatabase, Session
 
 
 def _get_neo4j_auth() -> tuple[str, str] | None:
-    auth = os.getenv("NEO4J_AUTH", "neo4j/neo4j").strip()
+    auth = os.getenv("NEO4J_AUTH", "neo4j/neo4jdev123").strip()
     if auth.lower() == "none":
         return None
 
@@ -19,6 +20,7 @@ neo4j_driver = GraphDatabase.driver(
     os.getenv("NEO4J_URI", "bolt://neo4j:7687"),
     auth=_get_neo4j_auth(),
 )
+atexit.register(neo4j_driver.close)
 neo4j_database = os.getenv("NEO4J_DATABASE", "neo4j")
 
 

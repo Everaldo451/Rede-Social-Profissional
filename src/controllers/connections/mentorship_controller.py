@@ -1,8 +1,8 @@
-from src.dto.connections.request.mentorship_requests import (
+from dto.connections.request.mentorship_requests import (
     CreateMentorshipRequest,
     MentorshipDecisionRequest,
 )
-from src.dto.connections.request.network_requests import ProfessionalSearchRequest
+from dto.connections.request.network_requests import ProfessionalSearchRequest
 
 from ._response import run_action
 

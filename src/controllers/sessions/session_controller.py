@@ -17,7 +17,7 @@ class SessionController:
             request = LoginRequest.model_validate(data)
         except ValidationError:
             return BaseResponse(status=False, message="Informe um e-mail e uma senha válidos.")
-        session_id = self.service.login(request.email, request.password)
+        session_id = self.service.login(request.email, request.senha)
         if session_id is None:
             return BaseResponse(status=False, message="E-mail ou senha inválidos.")
         return BaseResponse(status=True, data=session_id)

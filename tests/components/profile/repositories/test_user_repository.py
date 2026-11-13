@@ -48,7 +48,16 @@ def test_create_persists_portuguese_profile_and_serializes_object_ids(
     assert created["_id"] == str(stored["_id"])
     assert created["habilidades"][0]["habilidade_id"] == skill_id
     index = repository_resources.mongo["usuarios"].index_information()
-    assert index["user_email_unique"]["unique"] is True
+    assert index["email_1"]["unique"] is True
+
+
+def test_repository_reuses_seed_created_email_index(repository_resources):
+    collection = repository_resources.mongo["usuarios"]
+    collection.create_index("email", unique=True)
+
+    UserRepository(repository_resources.mongo)
+
+    assert collection.index_information()["email_1"]["unique"] is True
 
 
 def test_create_rejects_plaintext_password_and_maps_duplicate_email(

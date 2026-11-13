@@ -16,7 +16,7 @@ class UserRepository:
         if database is None:
             database = get_mongo_database()
         self.collection = database["usuarios"]
-        self.collection.create_index("email", unique=True, name="user_email_unique")
+        self.collection.create_index("email", unique=True)
 
     @staticmethod
     def _object_id(user_id):

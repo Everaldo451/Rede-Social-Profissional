@@ -38,7 +38,7 @@ def render_login(sessions, *, logout_requested, logout_error=None):
                     )
                     login_feedback = st.empty()
     if submitted:
-        result = sessions.login({"email": email, "password": password})
+        result = sessions.login({"email": email, "senha": password})
         if not result.status:
             login_feedback.error(result.message)
             return None
