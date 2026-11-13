@@ -69,14 +69,16 @@ def to_media_files(uploaded_files) -> list[MediaFile]:
 
 def render_comments(services, post, user) -> None:
     comments = post["comments"]
-    with st.expander(f"💬 Comentários ({len(comments)})"):
-        for comment in comments:
-            st.markdown(
-                f"**{comment['author']['name']}** · :gray[{format_datetime(comment['created_at'])}]"
-            )
-            st.write(comment["text"])
-        if not comments:
-            st.caption("Ainda não há comentários.")
+    with st.expander(f"Comentários ({len(comments)})", icon=":material/chat_bubble_outline:"):
+        with st.container(key=f"post_comments_{post['id']}", gap="xxsmall"):
+            for index, comment in enumerate(comments):
+                with st.container(key=f"post_comment_{post['id']}_{index}", gap="xxsmall"):
+                    st.markdown(
+                        f"**{comment['author']['name']}** · :gray[{format_datetime(comment['created_at'])}]"
+                    )
+                    st.write(comment["text"])
+            if not comments:
+                st.caption("Ainda não há comentários.")
 
         if user is None:
             return
@@ -84,9 +86,15 @@ def render_comments(services, post, user) -> None:
             st.caption("Você é o autor desta publicação; apenas outros usuários podem comentá-la.")
             return
 
-        with st.form(f"comment_form_{post['id']}", clear_on_submit=True):
-            text = st.text_input("Escreva um comentário", max_chars=MAX_COMMENT)
-            submitted = st.form_submit_button("Comentar")
+        with st.form(f"comment_form_{post['id']}", clear_on_submit=True, border=False):
+            with st.container(horizontal=True, vertical_alignment="bottom", gap="small"):
+                text = st.text_input(
+                    "Escreva um comentário",
+                    max_chars=MAX_COMMENT,
+                    placeholder="Escreva um comentário…",
+                    label_visibility="collapsed",
+                )
+                submitted = st.form_submit_button("Comentar")
         if submitted:
             result = services.comments.create(
                 user["usuario_id"], post["id"], {"text": text}
@@ -175,7 +183,10 @@ def render_feed(services, user, connection_controller=None) -> None:
         st.session_state["feed_page"] = max(0, (total - 1) // PAGE_SIZE)
         st.rerun()
     if not items:
-        st.info("Nenhuma publicação encontrada. Que tal publicar a primeira?")
+        if user:
+            st.info("Ainda não há publicações. Use o formulário acima para publicar.")
+        else:
+            st.info("Ainda não há publicações.")
         return
 
     connected_ids, pending = (set(), {})
@@ -184,7 +195,7 @@ def render_feed(services, user, connection_controller=None) -> None:
             connection_controller, user["usuario_id"]
         )
 
-    st.caption(f"{total} publicação(ões)")
+    st.caption(f"{total} publicação" if total == 1 else f"{total} publicações")
     feedback = st.session_state.pop("feed_feedback", None)
     if feedback:
         st.success(feedback)
@@ -253,15 +264,14 @@ def render_post_form(services, user) -> None:
             max_chars=MAX_TEXT,
             placeholder="Uma dica, dúvida, projeto, vaga ou artigo... (Markdown permitido)",
         )
-        col_category, col_tags = st.columns([1, 2])
-        category = col_category.selectbox("Categoria", CATEGORIES)
-        tags = col_tags.text_input("Tags (até 5, separadas por vírgula)", placeholder="python, docker, c#")
-        with st.expander("Adicionar trecho de código"):
+        category = st.selectbox("Categoria", CATEGORIES)
+        with st.expander("Tags, código e anexos"):
+            tags = st.text_input("Tags (até 5, separadas por vírgula)", placeholder="python, docker, c#")
             code_language = st.selectbox("Linguagem", CODE_LANGUAGES)
             code = st.text_area("Código", height=140)
-        files = st.file_uploader(
-            "Mídia (opcional)", type=UPLOAD_TYPES, accept_multiple_files=True, help=UPLOAD_HELP
-        )
+            files = st.file_uploader(
+                "Mídia (opcional)", type=UPLOAD_TYPES, accept_multiple_files=True, help=UPLOAD_HELP
+            )
         submitted = st.form_submit_button("Publicar", type="primary")
 
     if submitted:
@@ -287,77 +297,64 @@ def render_post_card(
 ) -> None:
     editing_key = f"editing_{post['id']}"
     is_owner = user is not None and post["author"]["id"] == user["usuario_id"]
+    is_editing = is_owner and st.session_state.get(editing_key, False)
 
-    with st.container(border=True, key=f"post_card_{post['id']}"):
-        _render_post_header(post)
-        if is_owner and st.session_state.get(editing_key):
+    with st.container(border=True, key=f"post_card_{post['id']}", gap="small"):
+        _render_post_header(post, user, connection_controller, connected_ids, pending)
+        if is_editing:
             _render_edit_form(services, post, user, editing_key)
         else:
             _render_post_body(services, post)
-            if is_owner:
-                _render_owner_actions(services, post, user, editing_key)
-        _render_social_actions(
-            services,
-            post,
-            user,
-            connection_controller,
-            connected_ids,
-            pending,
-        )
+        _render_social_actions(services, post, user, editing_key if is_owner and not is_editing else None)
         render_comments(services, post, user)
 
 
-def _render_social_actions(
-    services,
-    post,
-    user,
-    connection_controller,
-    connected_ids,
-    pending,
-):
+def _render_social_actions(services, post, user, editing_key):
     response = services.likes.get_by_post_id(post["id"])
     likes = response.data if response.status else []
     if not response.status:
         st.warning(response.message)
 
-    if user is None:
-        st.caption(f"💖 {len(likes)} curtidas")
-        return
-
-    user_id = str(user["usuario_id"])
-    liked = any(str(item["user_id"]) == user_id for item in likes)
-    like_col, connection_col = st.columns([1, 2])
-    label = "💖 Curtido" if liked else "🤍 Curtir"
-    if like_col.button(label, key=f"like_{post['id']}"):
-        result = (
-            services.likes.delete_user_like(user_id, post["id"])
-            if liked
-            else services.likes.create(user_id, post["id"])
-        )
-        if result.status:
-            st.rerun()
-        st.error(result.message)
-
-    with connection_col:
-        _render_connection_action(
-            connection_controller,
-            post,
-            user,
-            connected_ids,
-            pending,
-        )
-    st.caption(f"{len(likes)} curtidas")
+    with st.container(
+        key=f"post_actions_{post['id']}",
+        horizontal=True,
+        vertical_alignment="center",
+        gap="xsmall",
+    ):
+        if user is not None:
+            user_id = str(user["usuario_id"])
+            liked = any(str(item["user_id"]) == user_id for item in likes)
+            if st.button(
+                "Curtido" if liked else "Curtir",
+                icon=":material/favorite:" if liked else ":material/favorite_border:",
+                key=f"like_{post['id']}",
+            ):
+                result = (
+                    services.likes.delete_user_like(user_id, post["id"])
+                    if liked
+                    else services.likes.create(user_id, post["id"])
+                )
+                if result.status:
+                    st.rerun()
+                st.error(result.message)
+        st.caption("1 curtida" if len(likes) == 1 else f"{len(likes)} curtidas")
+        if editing_key:
+            _render_owner_actions(services, post, user, editing_key)
 
 
-def _render_post_header(post) -> None:
+def _render_post_header(post, user, connection_controller, connected_ids, pending) -> None:
     author = post["author"]
     edited = " · editado" if post["updated_at"] else ""
-    render_profile_identity(
-        author["id"],
-        author["name"],
-        key=f"post_author_{post['id']}",
-        caption=author["headline"] or None,
-    )
+    identity, connection = st.columns([3, 1], gap="small", vertical_alignment="center")
+    with identity:
+        render_profile_identity(
+            author["id"],
+            author["name"],
+            key=f"post_author_{post['id']}",
+            caption=author["headline"] or None,
+        )
+    with connection:
+        _render_connection_action(connection_controller, post, user, connected_ids, pending)
     st.markdown(
         f"<span class='pill'>{html.escape(post['category'])}</span> "
         f"<span class='muted'>{format_datetime(post['created_at'])}{edited}</span>",
@@ -375,19 +372,19 @@ def _render_post_body(services, post) -> None:
 
 
 def _render_owner_actions(services, post, user, editing_key) -> None:
-    col_edit, col_delete, _ = st.columns([1, 1, 4])
-    if col_edit.button("✏️ Editar", key=f"edit_{post['id']}"):
-        st.session_state[editing_key] = True
-        st.rerun()
-    with col_delete.popover("🗑️ Excluir"):
-        st.write("Excluir esta publicação e seus comentários?")
-        if st.button("Confirmar exclusão", type="primary", key=f"confirm_delete_{post['id']}"):
-            result = services.posts.delete(user["usuario_id"], post["id"])
-            set_flash(
-                "success" if result.status else "error",
-                "Publicação excluída." if result.status else result.message,
-            )
+    with st.popover("Opções", icon=":material/more_horiz:"):
+        if st.button("Editar", icon=":material/edit:", key=f"edit_{post['id']}"):
+            st.session_state[editing_key] = True
             st.rerun()
+        with st.expander("Excluir publicação", icon=":material/delete:"):
+            st.write("Excluir esta publicação e seus comentários?")
+            if st.button("Confirmar exclusão", type="primary", key=f"confirm_delete_{post['id']}"):
+                result = services.posts.delete(user["usuario_id"], post["id"])
+                set_flash(
+                    "success" if result.status else "error",
+                    "Publicação excluída." if result.status else result.message,
+                )
+                st.rerun()
 
 
 def _render_edit_form(services, post, user, editing_key) -> None:
@@ -518,6 +515,11 @@ def render_page():
         user = current_user()
         services = get_feed_services()
         connection_controller = get_connection_controller() if user else None
+        with st.container(key="feed_header"):
+            st.title("Feed profissional")
+            if not user:
+                st.caption("Entre para publicar, comentar e fazer conexões.")
+                st.page_link("pages/Login.py", label="Entrar", icon=":material/login:")
         if user:
             with st.container(key="feed_composer"):
                 render_post_form(services, user)

@@ -1,68 +1,76 @@
-.brand { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
-.brand h1 { margin: 0; font-size: 1.8rem; }
-.brand .accent { color: #22d3a5; }
-.brand p { margin: 0.2rem 0 0; opacity: 0.7; }
 .pill {
     display: inline-block;
-    padding: 0 .6rem;
-    border: 1px solid #bca5eb;
+    padding: .15rem .6rem;
     border-radius: 999px;
+    background: #f2ebfc;
     color: #53348d;
-    font-family: ui-monospace, Menlo, monospace;
     font-size: .75rem;
+    font-weight: 650;
 }
-.author { font-weight: 600; }
-.muted { opacity: 0.65; font-size: 0.85rem; }
-
-.stApp:has(.st-key-feed_shell) {
-    background:
-        radial-gradient(ellipse at 90% 0%, #f2e2fa, transparent 42%),
-        linear-gradient(150deg, #fbf8ff, #edf0ff);
-    color-scheme: light;
-}
-.stApp:has(.st-key-feed_shell) [data-testid="stHeader"] {
-    background: transparent;
+.muted {
+    color: #665975;
+    font-size: .85rem;
 }
 .stApp:has(.st-key-feed_shell) [data-testid="stMainBlockContainer"] {
-    max-width: 66rem;
-    padding: clamp(1.5rem, 5vh, 3.5rem) 1.25rem;
+    max-width: 57rem;
 }
-.st-key-feed_shell {
-    color: #302353;
-    color-scheme: light;
+.st-key-feed_header {
+    padding: clamp(1.25rem, 4vw, 2.5rem);
+    border: 1px solid #e6dcf5;
+    border-radius: 1.25rem;
+    background: linear-gradient(110deg, #fcfaff, #eee4fe);
 }
-.st-key-feed_shell [data-testid="stVerticalBlockBorderWrapper"] {
-    border-color: #e8e0f6;
-    border-radius: .9rem;
-    background: #fff;
+.st-key-feed_header h1 {
+    padding: 0;
 }
 .st-key-feed_composer [data-testid="stForm"] {
-    padding: clamp(1.25rem, 3vw, 2rem);
-    border: 1px solid #e8e0f6;
-    border-radius: 1.25rem;
-    background: #ffffffd9;
-    box-shadow: 0 8px 26px #49258b0d;
+    padding: clamp(1rem, 3vw, 1.5rem);
+    box-shadow: 0 6px 24px #49258b0a;
 }
-.st-key-feed_shell [data-baseweb="input"],
-.st-key-feed_shell [data-baseweb="select"] > div {
-    border-color: #dfd4f5;
-    background: #fff;
+.st-key-feed_shell [class*="st-key-post_card_"] {
+    overflow-wrap: anywhere;
 }
-.st-key-feed_shell [data-testid="stFormSubmitButton"] button,
-.st-key-feed_shell [data-testid="stButton"] button {
-    border-color: #5944d6;
+.st-key-feed_shell [class*="st-key-post_card_"] button[data-testid="stBaseButton-secondary"],
+.st-key-feed_shell [class*="st-key-post_card_"] button[data-testid="stBaseButton-secondaryFormSubmit"],
+.st-key-feed_shell [class*="st-key-post_card_"] [data-testid="stPopoverButton"] {
+    min-height: 2.1rem;
+    padding: .25rem .65rem;
+    font-size: .85rem;
+}
+.st-key-feed_shell [class*="st-key-post_card_"] button:not([data-testid="stBaseButton-tertiary"]) p {
+    font-size: .85rem;
+}
+.st-key-feed_shell [class*="st-key-post_comment_"] {
+    padding: .5rem .7rem;
     border-radius: .65rem;
-    background: #5944d6;
-    color: #fff;
-    font-weight: 700;
+    background: #fefdfd;
+    font-size: .875rem;
 }
-.st-key-feed_shell [data-testid="stFormSubmitButton"] button:hover,
-.st-key-feed_shell [data-testid="stButton"] button:hover {
-    border-color: #4632b8;
-    background: #4632b8;
-    color: #fff;
+.st-key-feed_shell [class*="st-key-post_comment_"] p {
+    font-size: inherit;
 }
-.st-key-feed_shell [data-testid="stCaption"],
-.st-key-feed_shell [data-testid="stExpander"] {
-    color: #51416f;
+.st-key-feed_shell [class*="st-key-post_card_"] [data-testid="stExpander"] [data-testid="stForm"] {
+    padding: .25rem 0 0;
+    border: 0;
+    background: transparent;
+}
+.st-key-feed_shell [class*="st-key-post_actions_"] {
+    padding-top: .35rem;
+    border-top: 1px solid #e8e0f6;
+}
+.st-key-feed_shell [class*="st-key-post_actions_"] button[data-testid="stBaseButton-secondary"],
+.st-key-feed_shell [class*="st-key-post_actions_"] [data-testid="stPopoverButton"] {
+    min-height: 2rem;
+    border-color: transparent;
+    background: #f2ebfc;
+    color: #4b326d;
+}
+.st-key-feed_shell [class*="st-key-post_actions_"] button:hover {
+    background: #e9ddf7;
+}
+.st-key-feed_shell [class*="st-key-post_card_"] [data-testid="stExpander"] > details > summary {
+    min-height: 2rem;
+    padding-top: .25rem;
+    padding-bottom: .25rem;
+    font-size: .85rem;
 }

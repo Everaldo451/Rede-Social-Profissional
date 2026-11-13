@@ -16,7 +16,6 @@
 .stApp h3 {
     color: #302353;
 }
-.stApp p,
 .stApp [data-testid="stCaption"],
 .stApp [data-testid="stWidgetLabel"] p {
     color: #51416f;
@@ -32,19 +31,44 @@
     border-color: #dfd4f5;
     background: #fff;
 }
-.stApp [data-testid="stFormSubmitButton"] button,
-.stApp [data-testid="stButton"] button {
-    border-color: #5944d6;
+.stApp button[data-testid^="stBaseButton-"]:not([data-testid*="tertiary"]) {
     border-radius: .65rem;
-    background: #5944d6;
-    color: #fff;
-    font-weight: 700;
 }
-.stApp [data-testid="stFormSubmitButton"] button:hover,
-.stApp [data-testid="stButton"] button:hover {
-    border-color: #4632b8;
-    background: #4632b8;
-    color: #fff;
+.stApp button[data-testid="stBaseButton-secondary"]:enabled,
+.stApp button[data-testid="stBaseButton-secondaryFormSubmit"]:enabled {
+    border-color: #e0d6f0;
+    color: #4b326d;
+}
+.stApp button[data-testid="stBaseButton-secondary"]:enabled:hover,
+.stApp button[data-testid="stBaseButton-secondaryFormSubmit"]:enabled:hover {
+    background: #f2ebfb;
+    border-color: #c4afdf;
+}
+.stApp [data-testid="stSidebar"] {
+    background: #fcfaff;
+    border-right: 1px solid #e8e0f6;
+}
+.stApp [data-testid="stSidebar"] a[data-testid="stPageLink-NavLink"] {
+    border-radius: .65rem;
+}
+.stApp [data-testid="stSidebar"] a[aria-current="page"] {
+    background: #eee5fa;
+    font-weight: 650;
+}
+.stApp [data-testid="stSidebar"] [data-testid="stCaptionContainer"] p {
+    margin-top: .65rem;
+    color: #695684;
+    font-size: .75rem;
+    font-weight: 650;
+}
+.stApp [data-testid="stVerticalBlockBorderWrapper"] {
+    border-color: #e8e0f6;
+    border-radius: 1rem;
+    background: #fff;
+}
+.stApp :focus-visible {
+    outline: 2px solid #7655be;
+    outline-offset: 2px;
 }
 .stApp [data-testid="stMetric"] {
     border: 1px solid #e8e0f6;

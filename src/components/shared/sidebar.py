@@ -50,7 +50,7 @@ def _logout():
 
 def render_sidebar():
     sidebar = st.sidebar
-    sidebar.title("Rede Social")
+    sidebar.markdown("### Rede Social")
 
     try:
         from pages.Sessoes import get_authenticated_user_id
@@ -61,10 +61,10 @@ def render_sidebar():
         sidebar.error("Não foi possível verificar sua sessão.")
         return
 
-    sidebar.page_link("app.py", label="Home")
+    sidebar.page_link("app.py", label="Feed", icon=":material/dynamic_feed:")
     if not user_id:
-        sidebar.page_link("pages/Login.py", label="Login")
-        sidebar.page_link("pages/Register.py", label="Cadastro")
+        sidebar.page_link("pages/Login.py", label="Entrar", icon=":material/login:")
+        sidebar.page_link("pages/Register.py", label="Criar conta", icon=":material/person_add:")
         return
 
     from pages.Sessoes import COOKIE_NAME, get_cookie_controller
@@ -73,17 +73,17 @@ def render_sidebar():
     if session_id:
         _update_presence(session_id)
 
-    sidebar.divider()
-    if sidebar.button("Perfil", key="current_profile", use_container_width=True):
+    sidebar.caption("Minha rede")
+    sidebar.page_link("pages/RedeDeConexoes.py", label="Conexões", icon=":material/hub:")
+    sidebar.page_link("pages/Mentoria.py", label="Mentoria", icon=":material/school:")
+    sidebar.page_link("pages/Presence.py", label="Presenças", icon=":material/groups:")
+    sidebar.page_link("pages/Notificacoes.py", label="Notificações", icon=":material/notifications:")
+    sidebar.caption("Minha conta")
+    if sidebar.button("Meu perfil", key="current_profile", icon=":material/person:", width="stretch"):
         st.switch_page(
             "pages/Profile.py",
             query_params={"user_id": str(user_id)},
         )
-    sidebar.page_link("pages/RedeDeConexoes.py", label="Rede de Conexões")
-    sidebar.page_link("pages/Mentoria.py", label="Mentoria")
-    sidebar.page_link("pages/Presence.py", label="Presenças")
-    sidebar.page_link("pages/Notificacoes.py", label="Notificações")
-    sidebar.page_link("pages/Sessoes.py", label="Sessões")
-    sidebar.divider()
-    if sidebar.button("Logout", type="secondary", use_container_width=True):
+    sidebar.page_link("pages/Sessoes.py", label="Sessões", icon=":material/devices:")
+    if sidebar.button("Sair", icon=":material/logout:"):
         _logout()

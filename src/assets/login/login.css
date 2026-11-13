@@ -39,9 +39,10 @@
     background: #fff;
     color: #382763;
 }
-.st-key-login_card [data-testid="stForm"] {
+.stApp .st-key-login_card [data-testid="stForm"] {
     padding: 0;
     border: 0;
+    background: transparent;
 }
 .login-brand {
     color: #6740b3;
@@ -83,15 +84,27 @@
     background: #4632b8;
     border-color: #4632b8;
 }
+.stApp .st-key-login_card [data-testid="stFormSubmitButton"] button p {
+    color: #fff;
+}
+.stApp:has(.st-key-login_card) [data-testid="stHeader"] button {
+    color: #fff;
+}
 @media (max-width: 700px) {
     .st-key-login_card [data-testid="stHorizontalBlock"] {
         flex-direction: column;
     }
     .st-key-login_card [data-testid="stColumn"] {
-        width: 100%;
+        flex: 0 0 auto;
+        width: 100% !important;
     }
     .st-key-login_card [data-testid="stImage"] {
-        max-width: 24rem;
+        max-width: 18rem;
         margin: auto;
+        justify-content: center;
+    }
+    .st-key-login_card [data-testid="stColumn"]:first-child {
+        display: grid;
+        justify-items: center;
     }
 }
