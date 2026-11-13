@@ -27,10 +27,6 @@
     max-width: 66rem;
     padding: clamp(1.5rem, 5vh, 3.5rem) 1.25rem;
 }
-.stApp:has(.st-key-feed_shell) [data-testid="stSidebar"],
-.stApp:has(.st-key-feed_shell) [data-testid="stSidebarCollapsedControl"] {
-    display: none;
-}
 .st-key-feed_shell {
     color: #302353;
     color-scheme: light;

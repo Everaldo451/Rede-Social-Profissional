@@ -6,6 +6,7 @@ from types import SimpleNamespace
 import streamlit as st
 
 from common.errors import NotFoundError
+from components.shared.sidebar import render_sidebar
 from controllers.connections.connection_controller import ConnectionController
 from controllers.posts.comment_controller import CommentController
 from controllers.posts.like_controller import LikeController
@@ -219,8 +220,7 @@ def render_media(services, post) -> None:
             st.caption(f"Arquivo indisponível: {item['filename']}")
         elif item["content_type"].startswith("image/"):
             if item["content_type"] == "image/svg+xml":
-                st.html(content.decode("utf-8"))
-                st.caption(item["filename"])
+                st.image(content.decode("utf-8"), caption=item["filename"])
             else:
                 st.image(content, caption=item["filename"])
         elif item["content_type"].startswith("video/"):
@@ -504,6 +504,7 @@ def current_user():
 
 
 def render_page():
+    render_sidebar()
     assets = Path(__file__).parents[1] / "assets"
     st.html(assets / "shared" / "page_theme.css")
     st.html(assets / "style.css")

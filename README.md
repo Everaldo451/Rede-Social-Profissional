@@ -17,6 +17,8 @@ docker compose -f docker/docker-compose.yaml up --build
 ```
 
 O container inicia o Streamlit automaticamente. Acesse `http://localhost:8501`.
+O Compose padrão preserva os dados do MongoDB e do Neo4j nos volumes nomeados
+`mongodb_data` e `neo4j_data`. O Compose de testes permanece sem volumes.
 
 Para executar a aplicação ou os testes localmente, use:
 
