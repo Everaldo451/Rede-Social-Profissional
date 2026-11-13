@@ -174,6 +174,7 @@ def test_profile_page_displays_read_only_user_and_relationship_data(
     assert "fake-test-hash" not in body
     assert page.get_by_role("textbox").count() == 0
     assert page.get_by_role("button", name="Conectar").count() == 0
+    assert page.locator("img").count() == 1
 
 
 def test_profile_page_displays_public_profile_photo(page: Page, repository_resources):
@@ -274,8 +275,16 @@ def test_profile_page_does_not_allow_editing_another_user_profile(
         page.goto(f"{BASE_URL}/profile?user_id={profile_owner['_id']}")
         page.get_by_role("heading", name="Bruno Costa").wait_for()
         page.get_by_role("button", name="Conectar").wait_for()
+        page.get_by_role("button", name="Logout").wait_for()
+        page.get_by_role("link", name="Rede de Conexões").wait_for()
+        page.get_by_role("link", name="Mentoria").wait_for()
+        page.get_by_role("link", name="Notificações").wait_for()
+        page.get_by_role("link", name="Sessões").wait_for()
         assert page.get_by_role("button", name="Salvar perfil").count() == 0
         assert page.get_by_role("button", name="Adicionar habilidade").count() == 0
+        page.get_by_role("button", name="Logout").click()
+        page.get_by_text("Sessão encerrada.", exact=True).wait_for()
+        assert sessions.get_by_id(session_id) is None
     finally:
         sessions.delete(session_id)
 

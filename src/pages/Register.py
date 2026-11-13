@@ -4,6 +4,7 @@ from pathlib import Path
 import streamlit as st
 from pymongo.errors import PyMongoError
 
+from components.shared.sidebar import render_sidebar
 from controllers.profile.user_controller import UserController
 from repositories.profile.user_organizations_repository import (
     UserOrganizationsRepository,
@@ -27,6 +28,7 @@ def _create_user_controller():
 
 def render_registration():
     st.set_page_config(page_title="Criar conta", layout="centered")
+    render_sidebar()
     st.html(THEME)
     st.title("Crie sua conta")
     st.write("Faça parte da Rede Social Profissional.")

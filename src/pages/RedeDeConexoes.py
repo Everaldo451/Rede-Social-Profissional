@@ -6,6 +6,7 @@ from neo4j.exceptions import DriverError, Neo4jError
 from pymongo.errors import PyMongoError
 from redis.exceptions import RedisError
 
+from components.shared.sidebar import render_sidebar
 from controllers.connections.connection_controller import ConnectionController
 from repositories.connections.connection_repository import ConnectionRepository
 from repositories.connections.professional_repository import ProfessionalRepository
@@ -166,6 +167,7 @@ def _current_user_id():
 
 def main():
     st.set_page_config(page_title="Rede de conexões", layout="wide")
+    render_sidebar()
     st.html(THEME)
     user_id = _current_user_id()
 

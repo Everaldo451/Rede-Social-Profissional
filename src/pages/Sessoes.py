@@ -6,6 +6,7 @@ from types import SimpleNamespace
 import streamlit as st
 from streamlit_cookies_controller import CookieController
 
+from components.shared.sidebar import render_sidebar
 from common.errors import UnauthorizedError
 from controllers.sessions.online_presence_controller import OnlinePresenceController
 from controllers.sessions.session_controller import SessionController
@@ -67,10 +68,6 @@ def get_authenticated_user_id():
     sessions, _, _ = build_runtime()
     response = sessions.get_current_user({"session_id": session_id})
     return response.data if response.status else None
-
-
-def request_logout():
-    st.session_state["logout_requested"] = True
 
 
 def revoke_session(sessions, session, reference):
@@ -144,31 +141,17 @@ def render_dashboard(sessions, session, users, presence):
     st.html(ASSETS / "dashboard.css")
     with st.container(key="dashboard_shell"):
         with st.container(key="dashboard_header"):
-            title, account = st.columns([4, 1], vertical_alignment="center")
-            with title:
-                st.html('<div class="dashboard-eyebrow">Painel de presença</div>')
-                st.title("Rede Social Profissional")
-            with account:
-                st.button("Sair", on_click=request_logout)
+            st.html('<div class="dashboard-eyebrow">Painel de presença</div>')
+            st.title("Rede Social Profissional")
         render_panels(sessions, session, users, presence)
 
 
 def render_page():
     st.set_page_config(page_title="Sessões", layout="wide")
+    render_sidebar()
     sessions, users, presence = build_runtime()
     cookies = get_cookie_controller()
     session = {"session_id": cookies.get(COOKIE_NAME)}
-    logout_requested = st.session_state.pop("logout_requested", False)
-
-    if logout_requested:
-        sessions.logout(session)
-        if session["session_id"]:
-            cookies.remove(
-                COOKIE_NAME,
-                secure=(st.context.url or "").startswith("https://"),
-            )
-        st.switch_page("pages/Login.py")
-        return
 
     if not sessions.get_current_user(session).status:
         st.info("Entre na sua conta para acessar as sessões.")

@@ -9,6 +9,19 @@ from repositories.profile.user_repository import UserRepository
 BASE_URL = os.getenv("BASE_URL", "http://localhost:8501")
 
 
+def test_login_and_registration_pages_link_to_each_other(page: Page):
+    page.goto(f"{BASE_URL}/login")
+    page.get_by_role("link", name="Home").wait_for()
+    page.get_by_role("link", name="Login").wait_for()
+    page.get_by_role("link", name="Cadastro").wait_for()
+    page.get_by_role(
+        "link", name="Não tem uma conta? Cadastre-se"
+    ).click()
+    page.get_by_role("heading", name="Crie sua conta").wait_for()
+    page.get_by_role("link", name="Já tem conta? Entre").click()
+    page.get_by_role("button", name="Entrar").wait_for()
+
+
 def _fill_registration_form(page, *, name, email, password, confirmation=None):
     page.get_by_label("Nome completo").fill(name)
     page.get_by_label("E-mail").fill(email)

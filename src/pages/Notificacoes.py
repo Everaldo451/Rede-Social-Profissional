@@ -6,6 +6,7 @@ from neo4j.exceptions import DriverError, Neo4jError
 from pymongo.errors import PyMongoError
 from redis.exceptions import RedisError
 
+from components.shared.sidebar import render_sidebar
 from controllers.connections.connection_controller import ConnectionController
 from controllers.connections.mentorship_controller import MentorshipController
 from controllers.notifications.notification_controller import NotificationController
@@ -19,6 +20,7 @@ from services.notifications.notification_service import NotificationService
 
 logger = logging.getLogger(__name__)
 st.set_page_config(page_title="Notificações", layout="wide")
+render_sidebar()
 st.html(Path(__file__).resolve().parents[1] / "assets" / "shared" / "page_theme.css")
 
 from pages.Sessoes import get_authenticated_user_id

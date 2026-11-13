@@ -4,7 +4,7 @@ from neo4j import Driver, GraphDatabase, Session
 
 
 def _get_neo4j_auth() -> tuple[str, str] | None:
-    auth = os.getenv("NEO4J_AUTH", "none").strip()
+    auth = os.getenv("NEO4J_AUTH", "neo4j/neo4j").strip()
     if auth.lower() == "none":
         return None
 

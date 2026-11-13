@@ -9,6 +9,7 @@ from pymongo.errors import PyMongoError
 from redis.exceptions import RedisError
 
 from common.choices import DEGREES, SKILL_LEVELS, SKILL_TYPES
+from components.shared.sidebar import render_sidebar
 from controllers.connections.connection_controller import ConnectionController
 from controllers.shared.media_controller import MediaController
 from controllers.profile.user_controller import UserController
@@ -30,6 +31,12 @@ from services.shared.media_service import MediaService
 
 logger = logging.getLogger(__name__)
 THEME = Path(__file__).resolve().parents[1] / "assets" / "shared" / "page_theme.css"
+DEFAULT_PROFILE_IMAGE = (
+    Path(__file__).resolve().parents[1]
+    / "assets"
+    / "profile"
+    / "default_profile.svg"
+)
 
 SKILL_RELATION_LABELS = {
     "has": "Possui habilidade",
@@ -385,8 +392,10 @@ def _render_profile_identity(user, user_id, viewer_id):
     photo, details, action = st.columns([1, 4, 1.5], vertical_alignment="center")
     if media_response.status:
         photo.image(media_response.data["content"], width=150)
-    elif media_response.message != "Mídia não encontrada.":
-        photo.caption("Foto indisponível")
+    else:
+        photo.image(str(DEFAULT_PROFILE_IMAGE), width=150)
+        if media_response.message != "Mídia não encontrada.":
+            photo.caption("Exibindo a foto padrão; a foto de perfil está indisponível.")
 
     details.header(user.get("nome", "Perfil sem nome"))
     profile_details = [
@@ -587,6 +596,7 @@ def _render_profile_editor(
 
 def render_profile():
     st.set_page_config(page_title="Perfil profissional", layout="wide")
+    render_sidebar()
     st.html(THEME)
     st.title("Perfil profissional")
 
